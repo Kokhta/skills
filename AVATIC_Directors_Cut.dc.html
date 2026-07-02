@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <!-- Core Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<!-- Three.js Post-Processing Addons (Compatibility Layer) -->
+<!-- Three.js Post-Processing Addons -->
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/postprocessing/EffectComposer.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/postprocessing/RenderPass.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/postprocessing/ShaderPass.js"></script>
@@ -59,7 +59,7 @@
     100% { transform: translateY(100vh) translateX(90vw) rotate(15deg); opacity: 0; }
   }
 
-  /* Keyframes from original plus new */
+  /* Keyframes */
   @keyframes spin{to{transform:rotate(360deg)}}
   @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
   @keyframes dataPulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
@@ -74,6 +74,7 @@
     backdrop-filter: blur(20px) saturate(140%);
     border: 1px solid rgba(233, 195, 73, 0.15);
     box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 0 20px rgba(43,184,236,0.05);
+    position: relative;
   }
   .glass-panel::before {
     content: ''; position: absolute; inset: 0; border-radius: inherit;
@@ -168,9 +169,6 @@
                <button style="padding:16px; border:none; border-radius:12px; background:rgba(43,184,236,0.1); border:1px solid rgba(43,184,236,0.3); color:#8fd6f4; font:700 15px Vazirmatn; cursor:pointer">ارسال سیگنال همکاری</button>
             </div>
          </div>
-         <!-- Decorative Orbits -->
-         <div style="position:absolute; inset:-30px; border:1px dashed rgba(43,184,236,0.1); border-radius:50%; animation:spin 20s linear infinite"></div>
-         <div style="position:absolute; inset:-60px; border:1px dashed rgba(233,195,73,0.05); border-radius:50%; animation:spin 35s linear reverse infinite"></div>
       </div>
     </div>
   </section>
@@ -186,8 +184,6 @@
            <div>>> SYNCING_NEURAL_STRATEGY...</div>
            <div>>> DETECTING_GROWTH_LEAKS...</div>
            <div style="color:#e9c349">>> OPPORTUNITY_FOUND: 94.2%</div>
-           <div>>> CALCULATING_ROI_VECTOR...</div>
-           <div>>> DEPLOYING_CAMPAIGN_BEAMS...</div>
            <div>>> STATUS: OPTIMAL</div>
         </div>
       </div>
@@ -198,15 +194,12 @@
             <div style="text-align:center; position:relative; z-index:5">
                <h2 style="font:800 32px Vazirmatn; margin-bottom:10px">کنسول استراتژی آواتک</h2>
                <p style="font:500 15px Vazirmatn; color:#a9c4d2">نقشه راه برای تسخیر فضای دیجیتال</p>
-               <!-- SVG Strategy Map Placeholder -->
                <svg width="400" height="300" viewBox="0 0 400 300" style="margin-top:30px; opacity:0.6">
                   <circle cx="200" cy="150" r="80" fill="none" stroke="#e9c349" stroke-width="1" stroke-dasharray="5,5" />
                   <circle cx="200" cy="150" r="120" fill="none" stroke="#2bb8ec" stroke-width="0.5" />
                   <line x1="200" y1="150" x2="350" y2="50" stroke="#e9c349" stroke-width="1" />
                   <line x1="200" y1="150" x2="50" y2="80" stroke="#2bb8ec" stroke-width="1" />
                   <line x1="200" y1="150" x2="100" y2="250" stroke="#e9c349" stroke-width="1" />
-                  <rect x="340" y="40" width="20" height="20" fill="#e9c349" opacity="0.3" />
-                  <rect x="40" y="70" width="20" height="20" fill="#2bb8ec" opacity="0.3" />
                </svg>
             </div>
             <!-- HUD Scanning Lines -->
@@ -226,29 +219,18 @@
               <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:5px; color:#fff"><span>CONVERSION</span><span>62%</span></div>
               <div style="height:2px; background:rgba(255,255,255,0.1); width:100%"><div style="height:100%; width:62%; background:#e9c349"></div></div>
            </div>
-           <div>
-              <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:5px; color:#fff"><span>RETENTION</span><span>91%</span></div>
-              <div style="height:2px; background:rgba(255,255,255,0.1); width:100%"><div style="height:100%; width:91%; background:#2bb8ec"></div></div>
-           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 03 PORTFOLIO (HUD Expansion) -->
+  <!-- 03 PORTFOLIO -->
   <section id="portfolio" data-screen-label="03 Projects" style="min-height:100vh;display:flex;align-items:center;padding:80px 24px">
     <div style="max-width:1100px;margin:0 auto;width:100%;text-align:center">
       <h2 data-reveal style="margin:0;font:900 clamp(28px,4vw,48px)/1.2 Vazirmatn">پروژه‌های <span class="metallic-gold">بهینه‌سازی شده</span></h2>
       <div data-reveal style="display:flex;justify-content:center;gap:30px;margin:40px 0 60px">
-         <div class="glass-panel" style="width:240px; height:360px; border-radius:20px; transform:perspective(1000px) rotateY(15deg); display:flex; align-items:center; justify-content:center; position:relative">
-            <span style="font-family:'Space Mono'; font-size:10px; color:rgba(255,255,255,0.2)">PROJ_REF: ALPHA</span>
-         </div>
-         <div class="glass-panel" style="width:280px; height:420px; border-radius:20px; z-index:10; border-color:#e9c349; box-shadow:0 0 40px rgba(233,195,73,0.15); display:flex; align-items:center; justify-content:center; position:relative">
-            <div style="position:absolute; inset:10px; border:1px solid rgba(233,195,73,0.1)"></div>
-            <span style="font:800 18px Vazirmatn; color:#e9c349">نمونه کار برتر</span>
-         </div>
-         <div class="glass-panel" style="width:240px; height:360px; border-radius:20px; transform:perspective(1000px) rotateY(-15deg); display:flex; align-items:center; justify-content:center; position:relative">
-            <span style="font-family:'Space Mono'; font-size:10px; color:rgba(255,255,255,0.2)">PROJ_REF: GAMMA</span>
+         <div class="glass-panel" style="width:280px; height:420px; border-radius:20px; border-color:#e9c349; box-shadow:0 0 40px rgba(233,195,73,0.15); display:flex; align-items:center; justify-content:center">
+            <span style="font:800 18px Vazirmatn; color:#e9c349">PORTFOLIO_ALPHA</span>
          </div>
       </div>
     </div>
@@ -269,11 +251,6 @@
   <footer data-screen-label="05 End" style="padding:80px 24px 40px; background:linear-gradient(180deg,transparent,rgba(233,195,73,0.03)); border-top:1px solid rgba(233,195,73,0.1)">
     <div style="max-width:1000px; margin:0 auto; text-align:center">
        <div style="font:800 24px 'Space Mono'; letter-spacing:0.3em; color:#fff; margin-bottom:20px">AVATIC</div>
-       <div style="display:flex; justify-content:center; gap:30px; font-size:14px; color:#5a8aa0">
-          <a href="#" style="color:inherit; text-decoration:none">INSTAGRAM</a>
-          <a href="#" style="color:inherit; text-decoration:none">TELEGRAM</a>
-          <a href="#" style="color:inherit; text-decoration:none">LINKEDIN</a>
-       </div>
        <div style="margin-top:40px; font:400 10px 'Space Mono'; color:rgba(255,255,255,0.2); direction:ltr">
           © 2026 AVATIC DIGITAL COMMAND CENTER // ALL SYSTEMS OPERATIONAL
        </div>
@@ -307,10 +284,9 @@ class Component extends DCLogic {
   }
 
   _initReveals(){
-    // Standard data-reveal handling
     document.querySelectorAll('[data-reveal]').forEach(el=>{
       el.style.opacity='0';
-      el.style.transform='translateY(40px) perspective(1000px) rotateX(10deg)';
+      el.style.transform='translateY(40px) perspective(1000px) rotateX(5deg)';
       el.style.transition='all 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
     });
 
@@ -326,104 +302,127 @@ class Component extends DCLogic {
     if(!canvas) return;
 
     const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x050505, 10, 150);
+    scene.fog = new THREE.Fog(0x050505, 10, 300);
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 50;
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0x2bb8ec, 0.5);
+    // Advanced Lighting
+    const ambientLight = new THREE.AmbientLight(0x0a0f1a, 0.5);
     scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0xe9c349, 2, 100);
-    pointLight.position.set(20, 20, 20);
-    scene.add(pointLight);
+    const p1 = new THREE.PointLight(0xe9c349, 3, 150); p1.position.set(20, 20, 20); scene.add(p1);
+    const p2 = new THREE.PointLight(0x2bb8ec, 2, 100); p2.position.set(-30, -10, 15); scene.add(p2);
 
-    // Particle Nebula
-    const particleCount = 2000;
-    const particles = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-    const col1 = new THREE.Color(0x2bb8ec);
-    const col2 = new THREE.Color(0xe9c349);
+    // Fresnel Shader Material
+    const fresnelMat = new THREE.ShaderMaterial({
+      uniforms: {
+        time: { value: 0 },
+        color1: { value: new THREE.Color(0x2bb8ec) },
+        color2: { value: new THREE.Color(0xe9c349) },
+      },
+      vertexShader: `
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          vViewPosition = -mvPosition.xyz;
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 color1;
+        uniform vec3 color2;
+        uniform float time;
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        void main() {
+          vec3 viewDir = normalize(vViewPosition);
+          float fresnel = pow(1.0 - dot(viewDir, vNormal), 3.0);
+          vec3 color = mix(color1, color2, fresnel + sin(time * 0.5) * 0.2);
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `,
+      transparent: true,
+    });
 
-    for(let i=0; i<particleCount; i++){
-      positions[i*3] = (Math.random() - 0.5) * 200;
-      positions[i*3+1] = (Math.random() - 0.5) * 200;
-      positions[i*3+2] = (Math.random() - 0.5) * 200;
-
-      const mix = Math.random();
-      colors[i*3] = col1.r + (col2.r - col1.r) * mix;
-      colors[i*3+1] = col1.g + (col2.g - col1.g) * mix;
-      colors[i*3+2] = col1.b + (col2.b - col1.b) * mix;
+    // Signature Objects (Artifacts)
+    const geometries = [new THREE.IcosahedronGeometry(1.5, 0), new THREE.TorusGeometry(1, 0.4, 16, 32), new THREE.OctahedronGeometry(1.2, 0)];
+    const artifacts = [];
+    for(let i=0; i<20; i++) {
+      const mesh = new THREE.Mesh(geometries[i % geometries.length], fresnelMat);
+      mesh.position.set((Math.random()-0.5)*100, (Math.random()-0.5)*100, (Math.random()-0.5)*150);
+      mesh.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, 0);
+      scene.add(mesh);
+      artifacts.push(mesh);
     }
-    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    const pMaterial = new THREE.PointsMaterial({ size:0.5, vertexColors:true, transparent:true, opacity:0.6, blending:THREE.AdditiveBlending });
-    const particleSystem = new THREE.Points(particles, pMaterial);
-    scene.add(particleSystem);
 
-    // Post-Processing
+    // Volumetric Nebula Background
+    const nebulaGeo = new THREE.SphereGeometry(200, 32, 32);
+    const nebulaMat = new THREE.ShaderMaterial({
+      uniforms: { time: { value: 0 }, baseColor: { value: new THREE.Color(0x050505) }, accentColor: { value: new THREE.Color(0x1a2a4a) } },
+      vertexShader: `varying vec3 vPosition; void main(){ vPosition = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: `
+        uniform float time; uniform vec3 baseColor; uniform vec3 accentColor; varying vec3 vPosition;
+        float noise(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453); }
+        void main(){
+          float n = noise(vPosition * 0.02 + time * 0.05);
+          vec3 color = mix(baseColor, accentColor, n);
+          gl_FragColor = vec4(color, 0.3);
+        }
+      `,
+      side: THREE.BackSide, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+    });
+    const nebula = new THREE.Mesh(nebulaGeo, nebulaMat);
+    scene.add(nebula);
+
+    // EffectComposer
     const composer = new THREE.EffectComposer(renderer);
-    const renderPass = new THREE.RenderPass(scene, camera);
-    composer.addPass(renderPass);
-
-    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.0, 0.4, 0.8);
+    composer.addPass(new THREE.RenderPass(scene, camera));
+    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.2, 0.4, 0.85);
     composer.addPass(bloomPass);
 
-    // Render Loop
+    const clock = new THREE.Clock();
     const animate = () => {
       requestAnimationFrame(animate);
-      particleSystem.rotation.y += 0.001;
-      particleSystem.rotation.x += 0.0005;
+      const dt = clock.getDelta();
+      const et = clock.getElapsedTime();
+      fresnelMat.uniforms.time.value = et;
+      nebulaMat.uniforms.time.value = et;
+      artifacts.forEach(a => { a.rotation.y += dt * 0.2; a.position.y += Math.sin(et + a.position.x) * 0.01; });
       composer.render();
     };
     animate();
 
     this._camera = camera;
-    this._particleSystem = particleSystem;
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
-    });
+    this._nebula = nebula;
+    this._artifacts = artifacts;
   }
 
   _initGSAP(){
     const camera = this._camera;
     gsap.registerPlugin(ScrollTrigger);
 
-    const tl = gsap.timeline({
+    const mainTl = gsap.timeline({
       scrollTrigger: {
-        trigger: "main",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5,
+        trigger: "main", start: "top top", end: "bottom bottom", scrub: 1.5,
         onUpdate: (self) => {
           if(this.railRef.current) this.railRef.current.style.height = (self.progress * 100) + '%';
-          if(this.stopRef.current){
-             const stops = ["INIT", "HUD_S", "PORT", "LNCH"];
-             const idx = Math.min(stops.length-1, Math.floor(self.progress * stops.length));
-             this.stopRef.current.innerHTML = stops[idx] + '<span style="color:rgba(233,195,73,0.3)">/CRSE</span>';
-          }
+          const stops = ["INIT", "HUD_S", "PORT", "LNCH"];
+          const idx = Math.min(stops.length-1, Math.floor(self.progress * stops.length));
+          if(this.stopRef.current) this.stopRef.current.innerHTML = stops[idx] + '<span style="color:rgba(233,195,73,0.3)">/CRSE</span>';
         }
       }
     });
 
-    // Sequence Camera
-    tl.to(camera.position, { z: 20, y: 5, ease: "none" }, 0);
-    tl.to(this._particleSystem.rotation, { y: Math.PI, ease: "none" }, 0);
-
-    tl.to(camera.position, { x: -15, z: 40, y: -5, ease: "none" }, 1);
-    tl.to(camera.rotation, { y: 0.2, ease: "none" }, 1);
-
-    tl.to(camera.position, { x: 0, z: 60, y: 0, ease: "none" }, 2);
-    tl.to(camera.rotation, { y: 0, ease: "none" }, 2);
+    mainTl.to(camera.position, { x: -15, y: 5, z: 20, ease: "power2.inOut" }, 0);
+    mainTl.to(camera.position, { x: 15, y: -10, z: 80, ease: "power2.inOut" }, 1);
+    mainTl.to(this._nebula.scale, { x: 1.5, y: 1.5, z: 1.5, ease: "none" }, 0);
   }
 }
 </script>
