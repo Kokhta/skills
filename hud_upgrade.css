@@ -1,0 +1,48 @@
+/* Enhanced HUD UI - 'Mission Control' Evolution */
+
+.hud-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.hud-grid {
+  background-image:
+    linear-gradient(rgba(43, 184, 236, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43, 184, 236, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+}
+
+.hud-beam {
+  position: absolute;
+  width: 1px;
+  height: 200px;
+  background: linear-gradient(transparent, #8fd6f4, transparent);
+  box-shadow: 0 0 15px #2bb8ec;
+  animation: beamScan 8s linear infinite;
+}
+
+@keyframes beamScan {
+  0% { transform: translateY(-100vh) translateX(20vw); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(100vh) translateX(80vw); opacity: 0; }
+}
+
+.z-depth-advanced {
+  border-left: 1px solid rgba(233, 195, 73, 0.2);
+  padding: 10px;
+  background: rgba(8, 14, 20, 0.4);
+  backdrop-filter: blur(5px);
+  font-family: 'Space Mono', monospace;
+  color: #e9c349;
+}
+
+.technical-readout {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}

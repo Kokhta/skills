@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVATIC | Digital Evolution HUD</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Core Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Three.js Post-Processing Addons (Compatibility Layer) -->
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<!-- GSAP for Cinematic Motion -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; overflow-x:hidden}
+  body{margin:0;background:#050505;font-family:'Vazirmatn',system-ui,sans-serif;direction:rtl;color:#eaf6fb;overflow-x:hidden}
+
+  /* Selection & Scrollbar */
+  ::selection{background:rgba(43,184,236,.35)}
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:#050505}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(#e9c349,#d4af37);border-radius:6px}
+
+  /* HUD Elements */
+  .hud-overlay { position:fixed; inset:0; pointer-events:none; z-index:25; }
+  .hud-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(43,184,236, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(43,184,236, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 90%);
+  }
+  .hud-beam {
+    position: absolute; width: 1px; height: 300px;
+    background: linear-gradient(transparent, #7fe0ff, transparent);
+    box-shadow: 0 0 20px #2bb8ec;
+    animation: beamScan 12s linear infinite;
+    opacity: 0.4;
+  }
+  @keyframes beamScan {
+    0% { transform: translateY(-100vh) translateX(10vw) rotate(15deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(100vh) translateX(90vw) rotate(15deg); opacity: 0; }
+  }
+
+  /* Keyframes from original plus new */
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+  @keyframes dataPulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
+
+  /* Typography Enhancements */
+  h1, h2 { letter-spacing: -0.02em; text-shadow: 0 0 30px rgba(43,184,236,0.2); }
+  .metallic-gold { background: linear-gradient(135deg, #f9df7b, #e9c349, #b58d1b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Glassmorphism Classes */
+  .glass-panel {
+    background: rgba(8, 14, 20, 0.45);
+    backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(233, 195, 73, 0.15);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 0 20px rgba(43,184,236,0.05);
+  }
+  .glass-panel::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1px; background: linear-gradient(135deg, rgba(233,195,73,0.3), transparent, rgba(43,184,236,0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+</style>
+</helmet>
+
+<canvas ref="{{ canvasRef }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block"></canvas>
+
+<!-- ===== HUD OVERLAY ===== -->
+<div class="hud-overlay">
+  <div class="hud-grid"></div>
+  <div class="hud-beam" style="left:15vw; animation-delay: 0s"></div>
+  <div class="hud-beam" style="left:65vw; animation-delay: -4s"></div>
+
+  <!-- Mission Readout -->
+  <div style="position:absolute; top:20px; left:26px; font-family:'Space Mono'; font-size:9px; color:#5a8aa0; line-height:1.6; direction:ltr">
+    [ SYSTEM_SYNC: ONLINE ]<br>
+    [ NEURAL_VECT: 0.8872 ]<br>
+    [ LOC: 35.6892° N, 51.3890° E ]
+  </div>
+</div>
+
+<!-- ===== Z-DEPTH TECHNICAL RAIL ===== -->
+<div style="position:fixed; top:50%; left:22px; transform:translateY(-50%); z-index:40; display:flex; flex-direction:column; align-items:center; gap:12px; direction:ltr; pointer-events:none">
+  <div style="font:700 8px 'Space Mono',monospace; color:#e9c349; letter-spacing:.2em; writing-mode:vertical-rl; opacity:0.8">AETHER_DEPTH</div>
+  <div style="width:2px; height:240px; background:rgba(233, 195, 73, 0.1); position:relative; overflow:visible">
+    <div ref="{{ railRef }}" style="position:absolute; left:-1px; right:-1px; top:0; height:0%; background:#e9c349; box-shadow:0 0 10px #e9c349; transition:height 0.1s linear">
+       <div style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:12px; height:1px; background:#e9c349"></div>
+    </div>
+    <!-- Markers -->
+    <div style="position:absolute; top:0; left:6px; height:100%; display:flex; flex-direction:column; justify-content:space-between; font-size:6px; color:rgba(255,255,255,0.2)">
+      <span>0.0</span><span>2.5</span><span>5.0</span><span>7.5</span><span>10.0</span>
+    </div>
+  </div>
+  <div ref="{{ stopRef }}" style="font:700 10px 'Space Mono',monospace; color:#e9c349">INIT<span style="color:rgba(233,195,73,0.3)">/CRSE</span></div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header style="position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:20px 32px;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);background:linear-gradient(180deg,rgba(5,5,5,0.8),rgba(5,5,5,0))">
+  <button onClick="{{ toggleMenu }}" aria-label="menu" style="width:48px;height:48px;border-radius:14px;border:1px solid rgba(233,195,73,.2);background:rgba(8,14,20,.6);color:#e9c349;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px">
+    <span style="width:20px;height:1px;background:currentColor"></span>
+    <span style="width:14px;height:1px;background:currentColor;margin-left:auto;margin-right:2px"></span>
+    <span style="width:20px;height:1px;background:currentColor"></span>
+  </button>
+  <a href="#hero" style="display:flex;align-items:center;gap:12px;text-decoration:none">
+    <div style="width:40px;height:40px;border:1px solid #e9c349;display:flex;align-items:center;justify-content:center;transform:rotate(45deg);box-shadow:0 0 15px rgba(233,195,73,0.3)">
+      <div style="width:100%;height:100%;background:rgba(233,195,73,0.1);transform:scale(0.8)"></div>
+    </div>
+    <div style="line-height:1">
+      <div style="font:800 22px 'Space Mono',monospace;letter-spacing:.2em;color:#eaf6fb">AVATIC</div>
+      <div style="font:600 11px Vazirmatn;color:#e9c349;margin-top:4px;letter-spacing:0.1em">COMMAND_CENTER</div>
+    </div>
+  </a>
+  <div style="display:flex;gap:12px">
+    <a href="#cta" class="glass-panel" style="display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;color:#e9c349;font:700 13px Vazirmatn;text-decoration:none;letter-spacing:0.05em">دوره تــورنــادو</a>
+    <a href="https://wa.me/989966330107" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;background:linear-gradient(135deg,#e9c349,#b58d1b);color:#050505;font:800 13px Vazirmatn;text-decoration:none;box-shadow:0 10px 30px rgba(233,195,73,0.2)">ارتباط مستقیم</a>
+  </div>
+</header>
+
+<!-- ===== SCROLLING CONTENT ===== -->
+<main style="position:relative;z-index:2">
+
+  <!-- 01 HERO (Galactic) -->
+  <section id="hero" data-screen-label="01 Hero" style="min-height:100vh;display:flex;align-items:center;padding:120px 24px 70px">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%">
+      <div data-reveal>
+        <div style="display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;border:1px solid rgba(233,195,73,0.3);background:rgba(233,195,73,0.05);font:700 11px 'Space Mono',monospace;color:#e9c349;margin-bottom:24px">
+           <span style="width:6px;height:6px;background:#e9c349;border-radius:50%;animation:dataPulse 1s infinite"></span>
+           MISSION_AUTH: VERIFIED
+        </div>
+        <h1 style="margin:0;font:900 clamp(32px,5vw,62px)/1.15 Vazirmatn">تکامل دیجیتال در <span class="metallic-gold">پهنه سحابی</span></h1>
+        <p style="margin:24px 0 0;font:400 17px/1.8 Vazirmatn;color:#a9c4d2;max-width:540px;opacity:0.9">آژانس آواتک؛ معماران استراتژی‌های هوشمند برای فتح بازارهای جدید. ما با تکنولوژی‌های نوین، مسیر رشد کسب‌وکار شما را در فضای بی‌انتهای دیجیتال ترسیم می‌کنیم.</p>
+
+        <div style="display:flex;gap:16px;margin-top:40px">
+           <button style="padding:16px 32px;border:none;border-radius:14px;background:linear-gradient(135deg,#e9c349,#b58d1b);color:#050505;font:800 16px Vazirmatn;cursor:pointer;box-shadow:0 15px 35px rgba(233,195,73,0.3)">آغاز ماموریت</button>
+           <button class="glass-panel" style="padding:16px 32px;border-radius:14px;color:#fff;font:700 16px Vazirmatn;cursor:pointer">مشاهده پروژه‌ها</button>
+        </div>
+      </div>
+
+      <div data-reveal style="position:relative">
+         <div class="glass-panel" style="padding:40px; border-radius:30px; position:relative; overflow:hidden">
+            <div style="position:absolute; top:0; right:0; padding:15px; font-family:'Space Mono'; font-size:10px; color:rgba(233,195,73,0.3)">CONSOLE_V3.0</div>
+            <div style="font:800 20px Vazirmatn; margin-bottom:20px; color:#fff">فرم اتصال به مرکز</div>
+            <div style="display:flex; flex-direction:column; gap:14px">
+               <input type="text" placeholder="نام شناسه / کسب و کار" style="width:100%; padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); color:#fff; outline:none; font-family:Vazirmatn">
+               <input type="tel" placeholder="شماره تماس عملیاتی" style="width:100%; padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); color:#fff; outline:none; font-family:Vazirmatn">
+               <textarea placeholder="شرح ماموریت درخواستی..." style="width:100%; padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); color:#fff; outline:none; font-family:Vazirmatn; height:100px; resize:none"></textarea>
+               <button style="padding:16px; border:none; border-radius:12px; background:rgba(43,184,236,0.1); border:1px solid rgba(43,184,236,0.3); color:#8fd6f4; font:700 15px Vazirmatn; cursor:pointer">ارسال سیگنال همکاری</button>
+            </div>
+         </div>
+         <!-- Decorative Orbits -->
+         <div style="position:absolute; inset:-30px; border:1px dashed rgba(43,184,236,0.1); border-radius:50%; animation:spin 20s linear infinite"></div>
+         <div style="position:absolute; inset:-60px; border:1px dashed rgba(233,195,73,0.05); border-radius:50%; animation:spin 35s linear reverse infinite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 STRATEGY (HUD Interface) -->
+  <section id="strategy" data-screen-label="02 Console" style="min-height:100vh;display:flex;align-items:center;padding:100px 24px">
+    <div style="max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:280px 1fr 280px;gap:30px">
+      <!-- Left HUD Module -->
+      <div data-reveal class="glass-panel" style="padding:20px; border-radius:20px; height:500px; display:flex; flex-direction:column; gap:20px">
+        <div style="font:700 12px 'Space Mono'; color:#e9c349; border-bottom:1px solid rgba(233,195,73,0.2); padding-bottom:10px">SYSTEM_LOGS</div>
+        <div style="flex:1; overflow:hidden; font-family:'Space Mono'; font-size:8px; color:#5a8aa0; line-height:2">
+           <div style="animation:dataPulse 2s infinite">>> ANALYZING_MARKET_NODES...</div>
+           <div>>> SYNCING_NEURAL_STRATEGY...</div>
+           <div>>> DETECTING_GROWTH_LEAKS...</div>
+           <div style="color:#e9c349">>> OPPORTUNITY_FOUND: 94.2%</div>
+           <div>>> CALCULATING_ROI_VECTOR...</div>
+           <div>>> DEPLOYING_CAMPAIGN_BEAMS...</div>
+           <div>>> STATUS: OPTIMAL</div>
+        </div>
+      </div>
+
+      <!-- Center Console -->
+      <div data-reveal style="position:relative; height:600px">
+         <div class="glass-panel" style="width:100%; height:100%; border-radius:30px; display:flex; align-items:center; justify-content:center; overflow:hidden">
+            <div style="text-align:center; position:relative; z-index:5">
+               <h2 style="font:800 32px Vazirmatn; margin-bottom:10px">کنسول استراتژی آواتک</h2>
+               <p style="font:500 15px Vazirmatn; color:#a9c4d2">نقشه راه برای تسخیر فضای دیجیتال</p>
+               <!-- SVG Strategy Map Placeholder -->
+               <svg width="400" height="300" viewBox="0 0 400 300" style="margin-top:30px; opacity:0.6">
+                  <circle cx="200" cy="150" r="80" fill="none" stroke="#e9c349" stroke-width="1" stroke-dasharray="5,5" />
+                  <circle cx="200" cy="150" r="120" fill="none" stroke="#2bb8ec" stroke-width="0.5" />
+                  <line x1="200" y1="150" x2="350" y2="50" stroke="#e9c349" stroke-width="1" />
+                  <line x1="200" y1="150" x2="50" y2="80" stroke="#2bb8ec" stroke-width="1" />
+                  <line x1="200" y1="150" x2="100" y2="250" stroke="#e9c349" stroke-width="1" />
+                  <rect x="340" y="40" width="20" height="20" fill="#e9c349" opacity="0.3" />
+                  <rect x="40" y="70" width="20" height="20" fill="#2bb8ec" opacity="0.3" />
+               </svg>
+            </div>
+            <!-- HUD Scanning Lines -->
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(rgba(233,195,73,0.02) 0px, rgba(233,195,73,0.02) 1px, transparent 1px, transparent 4px); pointer-events:none"></div>
+         </div>
+      </div>
+
+      <!-- Right HUD Module -->
+      <div data-reveal class="glass-panel" style="padding:20px; border-radius:20px; height:500px; display:flex; flex-direction:column; gap:20px; text-align:left">
+        <div style="font:700 12px 'Space Mono'; color:#2bb8ec; border-bottom:1px solid rgba(43,184,236,0.2); padding-bottom:10px">GROWTH_METRICS</div>
+        <div style="display:flex; flex-direction:column; gap:25px; margin-top:10px">
+           <div>
+              <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:5px; color:#fff"><span>REACH</span><span>85%</span></div>
+              <div style="height:2px; background:rgba(255,255,255,0.1); width:100%"><div style="height:100%; width:85%; background:#2bb8ec"></div></div>
+           </div>
+           <div>
+              <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:5px; color:#fff"><span>CONVERSION</span><span>62%</span></div>
+              <div style="height:2px; background:rgba(255,255,255,0.1); width:100%"><div style="height:100%; width:62%; background:#e9c349"></div></div>
+           </div>
+           <div>
+              <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:5px; color:#fff"><span>RETENTION</span><span>91%</span></div>
+              <div style="height:2px; background:rgba(255,255,255,0.1); width:100%"><div style="height:100%; width:91%; background:#2bb8ec"></div></div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PORTFOLIO (HUD Expansion) -->
+  <section id="portfolio" data-screen-label="03 Projects" style="min-height:100vh;display:flex;align-items:center;padding:80px 24px">
+    <div style="max-width:1100px;margin:0 auto;width:100%;text-align:center">
+      <h2 data-reveal style="margin:0;font:900 clamp(28px,4vw,48px)/1.2 Vazirmatn">پروژه‌های <span class="metallic-gold">بهینه‌سازی شده</span></h2>
+      <div data-reveal style="display:flex;justify-content:center;gap:30px;margin:40px 0 60px">
+         <div class="glass-panel" style="width:240px; height:360px; border-radius:20px; transform:perspective(1000px) rotateY(15deg); display:flex; align-items:center; justify-content:center; position:relative">
+            <span style="font-family:'Space Mono'; font-size:10px; color:rgba(255,255,255,0.2)">PROJ_REF: ALPHA</span>
+         </div>
+         <div class="glass-panel" style="width:280px; height:420px; border-radius:20px; z-index:10; border-color:#e9c349; box-shadow:0 0 40px rgba(233,195,73,0.15); display:flex; align-items:center; justify-content:center; position:relative">
+            <div style="position:absolute; inset:10px; border:1px solid rgba(233,195,73,0.1)"></div>
+            <span style="font:800 18px Vazirmatn; color:#e9c349">نمونه کار برتر</span>
+         </div>
+         <div class="glass-panel" style="width:240px; height:360px; border-radius:20px; transform:perspective(1000px) rotateY(-15deg); display:flex; align-items:center; justify-content:center; position:relative">
+            <span style="font-family:'Space Mono'; font-size:10px; color:rgba(255,255,255,0.2)">PROJ_REF: GAMMA</span>
+         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 FINAL CTA -->
+  <section id="cta" data-screen-label="04 Launch" style="min-height:100vh;display:flex;align-items:center;padding:90px 24px">
+    <div style="max-width:700px;margin:0 auto;width:100%;text-align:center">
+      <h2 data-reveal style="margin:0;font:900 clamp(32px,5vw,56px)/1.3 Vazirmatn">آماده <span class="metallic-gold">تسخیر بازار</span> هستید؟</h2>
+      <p data-reveal style="margin:24px 0 40px;font:500 18px/1.8 Vazirmatn;color:#a9c4d2">بزرگ‌ترین سهم از بازار در انتظار شماست. همین حالا سیگنال خود را ارسال کنید.</p>
+      <div data-reveal>
+        <button style="padding:20px 60px; border:none; border-radius:18px; background:linear-gradient(135deg,#e9c349,#b58d1b); color:#050505; font:900 20px Vazirmatn; cursor:pointer; box-shadow:0 20px 45px rgba(233,195,73,0.4)">ثبت درخواست مشاوره رایگان</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 FOOTER -->
+  <footer data-screen-label="05 End" style="padding:80px 24px 40px; background:linear-gradient(180deg,transparent,rgba(233,195,73,0.03)); border-top:1px solid rgba(233,195,73,0.1)">
+    <div style="max-width:1000px; margin:0 auto; text-align:center">
+       <div style="font:800 24px 'Space Mono'; letter-spacing:0.3em; color:#fff; margin-bottom:20px">AVATIC</div>
+       <div style="display:flex; justify-content:center; gap:30px; font-size:14px; color:#5a8aa0">
+          <a href="#" style="color:inherit; text-decoration:none">INSTAGRAM</a>
+          <a href="#" style="color:inherit; text-decoration:none">TELEGRAM</a>
+          <a href="#" style="color:inherit; text-decoration:none">LINKEDIN</a>
+       </div>
+       <div style="margin-top:40px; font:400 10px 'Space Mono'; color:rgba(255,255,255,0.2); direction:ltr">
+          © 2026 AVATIC DIGITAL COMMAND CENTER // ALL SYSTEMS OPERATIONAL
+       </div>
+    </div>
+  </footer>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.canvasRef = React.createRef();
+    this.railRef = React.createRef();
+    this.stopRef = React.createRef();
+    this.state = { menuOpen:false };
+  }
+
+  renderVals(){
+    return {
+      canvasRef:this.canvasRef, railRef:this.railRef, stopRef:this.stopRef,
+      toggleMenu:()=>this.setState(s=>({menuOpen:!s.menuOpen})),
+      closeMenu:()=>this.setState({menuOpen:false}),
+    };
+  }
+
+  componentDidMount(){
+    this._initThree();
+    this._initGSAP();
+    this._initReveals();
+  }
+
+  _initReveals(){
+    // Standard data-reveal handling
+    document.querySelectorAll('[data-reveal]').forEach(el=>{
+      el.style.opacity='0';
+      el.style.transform='translateY(40px) perspective(1000px) rotateX(10deg)';
+      el.style.transition='all 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
+    });
+
+    ScrollTrigger.batch("[data-reveal]", {
+      onEnter: batch => gsap.to(batch, {opacity: 1, y: 0, rotationX: 0, stagger: 0.15}),
+      start: "top 85%"
+    });
+  }
+
+  _initThree(){
+    const THREE = window.THREE;
+    const canvas = this.canvasRef.current;
+    if(!canvas) return;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.toneMapping = THREE.ReinhardToneMapping;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x050505, 10, 150);
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 50;
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0x2bb8ec, 0.5);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xe9c349, 2, 100);
+    pointLight.position.set(20, 20, 20);
+    scene.add(pointLight);
+
+    // Particle Nebula
+    const particleCount = 2000;
+    const particles = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const col1 = new THREE.Color(0x2bb8ec);
+    const col2 = new THREE.Color(0xe9c349);
+
+    for(let i=0; i<particleCount; i++){
+      positions[i*3] = (Math.random() - 0.5) * 200;
+      positions[i*3+1] = (Math.random() - 0.5) * 200;
+      positions[i*3+2] = (Math.random() - 0.5) * 200;
+
+      const mix = Math.random();
+      colors[i*3] = col1.r + (col2.r - col1.r) * mix;
+      colors[i*3+1] = col1.g + (col2.g - col1.g) * mix;
+      colors[i*3+2] = col1.b + (col2.b - col1.b) * mix;
+    }
+    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const pMaterial = new THREE.PointsMaterial({ size:0.5, vertexColors:true, transparent:true, opacity:0.6, blending:THREE.AdditiveBlending });
+    const particleSystem = new THREE.Points(particles, pMaterial);
+    scene.add(particleSystem);
+
+    // Post-Processing
+    const composer = new THREE.EffectComposer(renderer);
+    const renderPass = new THREE.RenderPass(scene, camera);
+    composer.addPass(renderPass);
+
+    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.0, 0.4, 0.8);
+    composer.addPass(bloomPass);
+
+    // Render Loop
+    const animate = () => {
+      requestAnimationFrame(animate);
+      particleSystem.rotation.y += 0.001;
+      particleSystem.rotation.x += 0.0005;
+      composer.render();
+    };
+    animate();
+
+    this._camera = camera;
+    this._particleSystem = particleSystem;
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      composer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+
+  _initGSAP(){
+    const camera = this._camera;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "main",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5,
+        onUpdate: (self) => {
+          if(this.railRef.current) this.railRef.current.style.height = (self.progress * 100) + '%';
+          if(this.stopRef.current){
+             const stops = ["INIT", "HUD_S", "PORT", "LNCH"];
+             const idx = Math.min(stops.length-1, Math.floor(self.progress * stops.length));
+             this.stopRef.current.innerHTML = stops[idx] + '<span style="color:rgba(233,195,73,0.3)">/CRSE</span>';
+          }
+        }
+      }
+    });
+
+    // Sequence Camera
+    tl.to(camera.position, { z: 20, y: 5, ease: "none" }, 0);
+    tl.to(this._particleSystem.rotation, { y: Math.PI, ease: "none" }, 0);
+
+    tl.to(camera.position, { x: -15, z: 40, y: -5, ease: "none" }, 1);
+    tl.to(camera.rotation, { y: 0.2, ease: "none" }, 1);
+
+    tl.to(camera.position, { x: 0, z: 60, y: 0, ease: "none" }, 2);
+    tl.to(camera.rotation, { y: 0, ease: "none" }, 2);
+  }
+}
+</script>
+</body>
+</html>
