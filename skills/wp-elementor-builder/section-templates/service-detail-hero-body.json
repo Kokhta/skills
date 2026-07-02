@@ -1,0 +1,182 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "flex_align_items": "stretch",
+    "flex_gap": { "size": 32, "unit": "px", "column": "32", "row": "32", "isLinked": true },
+    "padding": { "unit": "px", "top": "40", "right": "20", "bottom": "60", "left": "20", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "30", "right": "16", "bottom": "40", "left": "16", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "content_width": "full",
+        "flex_direction": "row",
+        "flex_align_items": "center",
+        "flex_gap": { "size": 16, "unit": "px", "column": "16", "row": "16", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "icon",
+          "settings": {
+            "selected_icon": { "value": "__CONTENT_ICON__", "library": "fa-solid" },
+            "size": { "unit": "px", "size": 32 },
+            "__globals__": { "primary_color": "globals/colors?id=primary" }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "__CONTENT_TITLE__",
+            "header_size": "h1",
+            "size": "xxl",
+            "align": "left",
+            "__globals__": {
+              "title_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=primary"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "image",
+      "settings": {
+        "image": { "id": "__ASSET_HERO_PHOTO__", "url": "__ASSET_HERO_PHOTO_URL__" },
+        "image_size": "full",
+        "_border_radius": { "unit": "px", "top": "16", "right": "16", "bottom": "16", "left": "16", "isLinked": true }
+      },
+      "elements": []
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "text-editor",
+      "settings": {
+        "editor": "<p>__CONTENT_BODY_INTRO__</p>",
+        "align": "center",
+        "__globals__": {
+          "text_color": "globals/colors?id=text",
+          "typography_typography": "globals/typography?id=secondary"
+        }
+      },
+      "elements": []
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "content_width": "full",
+        "flex_direction": "row",
+        "flex_align_items": "flex-start",
+        "flex_gap": { "size": 32, "unit": "px", "column": "32", "row": "32", "isLinked": true },
+        "flex_direction_mobile": "column"
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "container",
+          "settings": {
+            "width": { "unit": "%", "size": 40 },
+            "width_mobile": { "unit": "%", "size": 100 }
+          },
+          "elements": [
+            {
+              "id": "PLACEHOLDER",
+              "elType": "widget",
+              "widgetType": "image",
+              "settings": {
+                "image": { "id": "__ASSET_SIDE_PHOTO__", "url": "__ASSET_SIDE_PHOTO_URL__" },
+                "image_size": "medium_large",
+                "_border_radius": { "unit": "px", "top": "16", "right": "16", "bottom": "16", "left": "16", "isLinked": true }
+              },
+              "elements": []
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "container",
+          "settings": {
+            "width": { "unit": "%", "size": 60 },
+            "width_mobile": { "unit": "%", "size": 100 }
+          },
+          "elements": [
+            {
+              "id": "PLACEHOLDER",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>__CONTENT_BODY_DETAIL__</p>",
+                "__globals__": {
+                  "text_color": "globals/colors?id=text",
+                  "typography_typography": "globals/typography?id=secondary"
+                }
+              },
+              "elements": []
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "content_width": "full",
+        "flex_direction": "row",
+        "flex_justify_content": "space-between",
+        "flex_align_items": "center",
+        "_padding": { "unit": "px", "top": "32", "right": "0", "bottom": "0", "left": "0", "isLinked": false }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "button",
+          "settings": {
+            "text": "Regresar",
+            "link": { "url": "__CONTENT_BACK_URL__", "is_external": "", "nofollow": "" },
+            "size": "md",
+            "border_radius": { "unit": "px", "top": "30", "right": "30", "bottom": "30", "left": "30", "isLinked": true },
+            "button_text_color": "#FFFFFF",
+            "background_color": "#000000"
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "button",
+          "settings": {
+            "text": "__CONTENT_CTA_TEXT__",
+            "link": { "url": "__CONTENT_CTA_URL__", "is_external": "", "nofollow": "" },
+            "size": "md",
+            "border_radius": { "unit": "px", "top": "30", "right": "30", "bottom": "30", "left": "30", "isLinked": true },
+            "button_text_color": "#FFFFFF",
+            "background_color": "#000000"
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    }
+  ],
+  "isInner": false
+}

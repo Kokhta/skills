@@ -1,0 +1,127 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "flex_align_items": "flex-start",
+    "flex_gap": { "size": 12, "unit": "px", "column": "12", "row": "12", "isLinked": true },
+    "padding": { "unit": "px", "top": "60", "right": "20", "bottom": "30", "left": "20", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "40", "right": "16", "bottom": "20", "left": "16", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "content_width": "full",
+        "flex_direction": "row",
+        "flex_align_items": "flex-start",
+        "flex_gap": { "size": 16, "unit": "px", "column": "16", "row": "16", "isLinked": true },
+        "_padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "icon",
+          "settings": {
+            "selected_icon": { "value": "fas fa-arrow-left", "library": "fa-solid" },
+            "size": { "unit": "px", "size": 24 },
+            "link": { "url": "__CONTENT_BACK_URL__", "is_external": "", "nofollow": "" },
+            "__globals__": { "primary_color": "globals/colors?id=text" }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "__CONTENT_TITLE__",
+            "header_size": "h1",
+            "size": "xl",
+            "align": "left",
+            "__globals__": {
+              "title_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=primary"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "heading",
+      "settings": {
+        "title": "Escrito por: __CONTENT_AUTHOR__",
+        "header_size": "h6",
+        "size": "default",
+        "align": "left",
+        "__globals__": {
+          "title_color": "globals/colors?id=primary",
+          "typography_typography": "globals/typography?id=secondary"
+        }
+      },
+      "elements": []
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "content_width": "full",
+        "flex_direction": "row",
+        "flex_align_items": "center",
+        "flex_gap": { "size": 24, "unit": "px", "column": "24", "row": "24", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "text-editor",
+          "settings": {
+            "editor": "<p>__CONTENT_DATE_AND_READTIME__ &nbsp;&nbsp;&nbsp; Compartir</p>",
+            "align": "left",
+            "__globals__": {
+              "text_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=secondary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "share-buttons",
+          "settings": {
+            "share_buttons": [
+              { "_id": "fb", "button": "facebook" },
+              { "_id": "wa", "button": "whatsapp" },
+              { "_id": "em", "button": "email" }
+            ],
+            "skin": "minimal",
+            "view": "icon",
+            "columns": "0"
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "divider",
+      "settings": {
+        "color": "#E5E7EB",
+        "weight": { "unit": "px", "size": 1 },
+        "width": { "unit": "%", "size": 100 }
+      },
+      "elements": []
+    }
+  ],
+  "isInner": false
+}

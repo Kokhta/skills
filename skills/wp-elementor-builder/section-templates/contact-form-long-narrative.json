@@ -1,0 +1,112 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "boxed",
+    "flex_direction": "row",
+    "flex_align_items": "flex-start",
+    "flex_gap": { "size": 64, "unit": "px", "column": "64", "row": "64", "isLinked": true },
+    "flex_direction_mobile": "column",
+    "padding": { "unit": "px", "top": "80", "right": "20", "bottom": "80", "left": "20", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "40", "right": "16", "bottom": "40", "left": "16", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 45 },
+        "width_mobile": { "unit": "%", "size": 100 },
+        "flex_direction": "column",
+        "flex_align_items": "flex-start",
+        "flex_gap": { "size": 32, "unit": "px", "column": "32", "row": "32", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "__CONTENT_HEADLINE_HTML__",
+            "header_size": "h1",
+            "size": "xxl",
+            "align": "left",
+            "__globals__": {
+              "title_color": "globals/colors?id=primary",
+              "typography_typography": "globals/typography?id=primary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "text-editor",
+          "settings": {
+            "editor": "<p>__CONTENT_BODY_LONG__</p>",
+            "__globals__": {
+              "text_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=secondary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "text-editor",
+          "settings": {
+            "editor": "<p>__CONTENT_BODY_DETAIL__</p>",
+            "__globals__": {
+              "text_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=secondary"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 55 },
+        "width_mobile": { "unit": "%", "size": 100 }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "form",
+          "settings": {
+            "form_name": "Quote",
+            "form_fields": [
+              { "_id": "name",    "field_label": "Nombre",   "field_type": "text", "placeholder": "Nombre",   "required": "true", "width": "100" },
+              { "_id": "lastname","field_label": "Apellido", "field_type": "text", "placeholder": "Apellido", "required": "true", "width": "100" },
+              { "_id": "email",   "field_label": "Email",    "field_type": "email","placeholder": "Email",    "required": "true", "width": "100" },
+              { "_id": "company", "field_label": "Empresa",  "field_type": "text", "placeholder": "Empresa",  "required": "false","width": "100" },
+              { "_id": "role",    "field_label": "Cargo",    "field_type": "text", "placeholder": "Cargo en su trabajo","required": "false","width": "100" },
+              { "_id": "source",  "field_label": "Fuente",   "field_type": "text", "placeholder": "¿Dónde escuchaste de nosotros?","required": "false","width": "100" },
+              { "_id": "message", "field_label": "Mensaje",  "field_type": "textarea","placeholder": "Mensaje","required": "true","width": "100","rows": 4 }
+            ],
+            "button_text": "__CONTENT_SUBMIT_TEXT__",
+            "button_size": "md",
+            "button_align": "left",
+            "email_to": "__CONTENT_EMAIL_TO__",
+            "email_subject": "Nueva solicitud desde la web",
+            "success_message": "Gracias, te contactaremos pronto.",
+            "field_background_color": "#FFFFFF",
+            "field_border_color": "#E5E7EB",
+            "__globals__": {
+              "button_background_color": "globals/colors?id=primary"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    }
+  ],
+  "isInner": false
+}

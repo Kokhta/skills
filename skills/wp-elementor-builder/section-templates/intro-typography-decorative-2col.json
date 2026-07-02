@@ -1,0 +1,15 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {"content_width":"boxed","flex_direction":"row","flex_align_items":"center","flex_gap":{"size":48,"unit":"px","column":"48","row":"48","isLinked":true},"flex_direction_mobile":"column","padding":{"unit":"px","top":"80","right":"20","bottom":"60","left":"20","isLinked":false},"padding_mobile":{"unit":"px","top":"40","right":"16","bottom":"40","left":"16","isLinked":false}},
+  "elements": [
+    {"id":"PLACEHOLDER","elType":"container","settings":{"width":{"unit":"%","size":50},"width_mobile":{"unit":"%","size":100},"flex_direction":"column","flex_align_items":"flex-start"},"elements":[
+      {"id":"PLACEHOLDER","elType":"widget","widgetType":"heading","settings":{"title":"__CONTENT_OVERTITLE__","header_size":"h2","size":"large","align":"left","__globals__":{"title_color":"globals/colors?id=primary","typography_typography":"globals/typography?id=primary"}},"elements":[]},
+      {"id":"PLACEHOLDER","elType":"widget","widgetType":"heading","settings":{"title":"__CONTENT_DECORATIVE__","header_size":"h1","size":"xxl","align":"left","_typography_typography":"custom","_typography_font_size":{"unit":"vw","size":18},"_typography_font_size_mobile":{"unit":"vw","size":30},"_typography_line_height":{"unit":"em","size":0.9},"_typography_font_weight":"900","__globals__":{"title_color":"globals/colors?id=primary","typography_typography":"globals/typography?id=primary"}},"elements":[]}
+    ],"isInner":true},
+    {"id":"PLACEHOLDER","elType":"container","settings":{"width":{"unit":"%","size":50},"width_mobile":{"unit":"%","size":100},"flex_direction":"column","flex_gap":{"size":16,"unit":"px","column":"16","row":"16","isLinked":true}},"elements":[
+      {"id":"PLACEHOLDER","elType":"widget","widgetType":"text-editor","settings":{"editor":"<p>__CONTENT_BODY1__</p><p>__CONTENT_BODY2__</p><p>__CONTENT_BODY3__</p>","__globals__":{"text_color":"globals/colors?id=text","typography_typography":"globals/typography?id=secondary"}},"elements":[]}
+    ],"isInner":true}
+  ],
+  "isInner": false
+}

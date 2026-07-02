@@ -1,0 +1,101 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "boxed",
+    "flex_direction": "row",
+    "flex_align_items": "flex-start",
+    "flex_gap": { "size": 48, "unit": "px", "column": "48", "row": "48", "isLinked": true },
+    "flex_direction_mobile": "column",
+    "padding": { "unit": "px", "top": "60", "right": "20", "bottom": "60", "left": "20", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "40", "right": "16", "bottom": "40", "left": "16", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 45 },
+        "width_mobile": { "unit": "%", "size": 100 },
+        "flex_direction": "column",
+        "flex_align_items": "flex-start",
+        "flex_gap": { "size": 24, "unit": "px", "column": "24", "row": "24", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "__CONTENT_HEADLINE_HTML__",
+            "header_size": "h1",
+            "size": "xxl",
+            "align": "left",
+            "__globals__": {
+              "title_color": "globals/colors?id=primary",
+              "typography_typography": "globals/typography?id=primary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "text-editor",
+          "settings": {
+            "editor": "<p>__CONTENT_BODY__</p>",
+            "__globals__": {
+              "text_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=secondary"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 55 },
+        "width_mobile": { "unit": "%", "size": 100 }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "form",
+          "settings": {
+            "form_name": "Contact",
+            "form_fields": [
+              { "_id": "first_name", "field_label": "First Name", "field_type": "text", "placeholder": "First Name", "required": "true", "width": "100" },
+              { "_id": "last_name",  "field_label": "Last Name",  "field_type": "text", "placeholder": "Last Name",  "required": "true", "width": "100" },
+              { "_id": "email",      "field_label": "Email",      "field_type": "email","placeholder": "Email",      "required": "true", "width": "100" },
+              { "_id": "company",    "field_label": "Your Company","field_type": "text","placeholder": "Your Company","required": "false","width": "100" },
+              { "_id": "role",       "field_label": "Cargo en su trabajo","field_type": "text","placeholder": "Cargo en su trabajo","required": "false","width": "100" },
+              { "_id": "source",     "field_label": "¿Dónde escuchaste de nosotros?","field_type": "text","placeholder": "¿Dónde escuchaste de nosotros?","required": "false","width": "100" },
+              { "_id": "message",    "field_label": "Mensaje",    "field_type": "textarea","placeholder": "Mensaje", "required": "true","width": "100","rows": 4 }
+            ],
+            "button_text": "Enviar",
+            "button_size": "md",
+            "button_align": "left",
+            "email_to": "__CONTENT_EMAIL_TO__",
+            "email_subject": "Nuevo contacto desde la web",
+            "success_message": "Gracias, recibimos tu mensaje.",
+            "error_message": "Algo falló, intenta de nuevo.",
+            "field_text_color": "",
+            "field_background_color": "#FFFFFF",
+            "field_border_color": "#E5E7EB",
+            "__globals__": {
+              "button_background_color": "globals/colors?id=primary"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    }
+  ],
+  "isInner": false
+}
