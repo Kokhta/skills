@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#0e0f13;font-family:'Vazirmatn',system-ui,sans-serif;direction:rtl}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(255,255,255,.07);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px;direction:ltr}
+  .dv-tid{font:700 10px 'Space Mono',monospace;padding:3px 7px;background:#1f9cd6;color:#04121b;border-radius:4px;text-decoration:none}
+  .dv-tname{font:600 13px/1.2 'Vazirmatn',sans-serif;color:#e9e7e2;direction:rtl}
+  .dv-sub{font:400 12px/1.5 'Vazirmatn',sans-serif;color:#8a8780;max-width:760px;margin:0 0 24px;direction:rtl}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start;direction:rtl}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:11px;scroll-margin-top:16px}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:400 11.5px/1.35 'Vazirmatn',sans-serif;color:#9b988f;direction:ltr}
+  .dv-oname{direction:rtl;font-weight:600;color:#cfccc4}
+  .dv-oid{font:700 10.5px 'Space Mono',monospace;padding:3px 7px;background:rgba(255,255,255,.09);color:#cfccc4;border-radius:5px;text-decoration:none}
+  .dv-opt:target .dv-oid{background:#1f9cd6;color:#04121b}
+  .dv-next{margin:26px 0 0;font:12px/1.7 'Vazirmatn',sans-serif;color:#7d7a72;direction:rtl}
+  .dv-next a{margin:0 2px}
+
+  /* wireframe primitives */
+  .wf{width:472px;max-width:100%;background:#15171d;border:1px solid rgba(255,255,255,.09);border-radius:14px;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.45)}
+  .wf-scene{position:relative;padding:0;background:
+    radial-gradient(120% 80% at 50% -10%, rgba(31,156,214,.10), transparent 60%),
+    #11131a;}
+  .frame{position:relative;border-bottom:1px dashed rgba(255,255,255,.13);padding:18px 20px}
+  .ftag{position:absolute;top:8px;left:8px;font:700 8.5px 'Space Mono',monospace;letter-spacing:.04em;color:#5a6b74;background:rgba(31,156,214,.10);border:1px solid rgba(31,156,214,.25);padding:2px 6px;border-radius:4px;direction:ltr}
+  .box{border:1.4px dashed rgba(255,255,255,.22);border-radius:8px;background:rgba(255,255,255,.02)}
+  .ph{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 7px,transparent 7px 14px);border:1.4px dashed rgba(255,255,255,.18);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6f6c64;font:700 8.5px 'Space Mono',monospace;text-align:center;direction:ltr}
+  .lbl{color:#d7d4cc;font-weight:600}
+  .mut{color:#807d75}
+  .line{height:7px;border-radius:4px;background:rgba(255,255,255,.13)}
+  .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1.3px dashed rgba(255,255,255,.28);border-radius:999px;font:600 9px 'Vazirmatn',sans-serif;color:#cbc8c0}
+  .btnw{display:flex;align-items:center;justify-content:center;border-radius:8px;background:#1f9cd6;color:#06141d;font:700 10px 'Vazirmatn',sans-serif;padding:9px}
+  .note{position:absolute;z-index:5;font:700 8px 'Space Mono',monospace;color:#7fd0f4;background:rgba(8,18,26,.92);border:1px solid rgba(31,156,214,.4);border-radius:6px;padding:4px 7px;line-height:1.4;direction:ltr;max-width:150px;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+  .note b{color:#bfe9fb}
+  .arrow3d{color:#1f9cd6}
+  .sys{display:flex;flex-direction:column;gap:5px;padding:13px 16px;background:linear-gradient(180deg,rgba(31,156,214,.12),rgba(31,156,214,.03));border-bottom:1px solid rgba(31,156,214,.22)}
+  .sys h5{margin:0;font:700 11px 'Vazirmatn',sans-serif;color:#9fdcf6;direction:rtl}
+  .sys p{margin:0;font:400 9.5px/1.55 'Vazirmatn',sans-serif;color:#9a978f;direction:rtl}
+  .sys .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px;direction:ltr}
+  .sys .chip{font:700 7.5px 'Space Mono',monospace;color:#6fb6d6;border:1px solid rgba(31,156,214,.3);padding:2px 6px;border-radius:4px}
+  .row{display:flex;gap:8px}
+  .col{display:flex;flex-direction:column;gap:6px}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">آواتک — وایرفریم سایت تک‌صفحه‌ای سه‌بعدی · سه جهت‌گیری خلاقانه</span></div>
+  <p class="dv-sub">سه پارادایم متفاوتِ «سه‌بعدی» برای یک لندینگِ راست‌چین. هر کارت ساختار کل صفحه را به‌صورت لوفای نشان می‌دهد؛ یادداشت‌های فیروزه‌ای رفتارِ حرکت/اسکرول و جایی که موتور سه‌بعدی می‌نشیند را توضیح می‌دهند. محتوا و چیدمان یکی‌ست — فقط «زبانِ سه‌بعدی» فرق می‌کند.</p>
+  <div class="dv-opts">
+
+    <!-- ============ 1a : COSMOS / FLOATING DEPTH ============ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a><span class="dv-oname">کهکشانِ آرم — عمقِ شناور و پارالاکس</span></div>
+      <div class="wf">
+        <div class="sys">
+          <h5>پیکانِ AVATIC در فضا می‌چرخد، صفحه در چند لایهٔ عمق شناور است</h5>
+          <p>آرمِ سه‌بعدی غول‌پیکر در میانِ ذرّاتِ نور؛ با حرکتِ ماوس کج می‌شود. هر بخش روی یک لایهٔ z متفاوت قرار دارد و با اسکرول پارالاکس می‌گیرد. تیره، سینمایی، فضایی.</p>
+          <div class="chips"><span class="chip">WebGL particles</span><span class="chip">mouse-tilt</span><span class="chip">parallax depth</span><span class="chip">dark space</span></div>
+        </div>
+        <div class="wf-scene">
+          <!-- header -->
+          <div class="frame" style="padding:12px 16px"><span class="ftag">HEADER · sticky</span>
+            <div class="row" style="align-items:center;justify-content:space-between;margin-top:10px">
+              <div class="box" style="width:26px;height:20px;display:flex;align-items:center;justify-content:center;color:#9a978f;font-size:11px">≡</div>
+              <div class="ph" style="width:84px;height:24px">LOGO 280×80</div>
+              <div class="row"><div class="pill">تورنادو</div><div class="pill">واتساپ</div></div>
+            </div>
+          </div>
+          <!-- hero -->
+          <div class="frame" style="min-height:230px;padding-top:22px"><span class="ftag">HERO · 3D centerpiece</span>
+            <div class="note" style="top:30px;right:14px">mouse-reactive<br><b>tilt + parallax</b></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:6px">
+              <div style="perspective:520px">
+                <div style="width:96px;height:96px;transform:rotateX(16deg) rotateZ(-8deg);background:radial-gradient(circle at 50% 30%,rgba(31,156,214,.35),transparent 70%);border-radius:14px;display:flex;align-items:center;justify-content:center">
+                  <div style="font-size:52px;font-weight:800;color:#1f9cd6;line-height:1;text-shadow:0 8px 26px rgba(31,156,214,.6)">▲</div>
+                </div>
+              </div>
+              <div class="pill">%۱۰۰ تست‌شده</div>
+              <div class="lbl" style="font-size:13px;text-align:center">جذب منظم و هفتگی مشتریان جدید</div>
+              <div class="col" style="width:100%;align-items:center">
+                <div class="line" style="width:78%"></div><div class="line" style="width:64%"></div>
+              </div>
+              <!-- form floats as 3D glass panel -->
+              <div class="box" style="width:86%;padding:10px;transform:perspective(700px) rotateX(7deg);background:rgba(31,156,214,.05)">
+                <div class="note" style="top:-8px;left:-8px">glass panel<br><b>floats above z</b></div>
+                <div class="col">
+                  <div class="box" style="height:22px"></div>
+                  <div class="box" style="height:22px"></div>
+                  <div class="box" style="height:22px"></div>
+                  <div class="btnw">ارسال اطلاعات و شروع همکاری ›</div>
+                </div>
+              </div>
+              <div class="btnw" style="width:86%;background:#1d6e3f;color:#dfffe9">پیام مستقیم در واتساپ</div>
+              <div class="ph" style="width:150px;height:22px;margin-top:2px">⭐ بیش از ۲۴۷ نظر مثبت</div>
+            </div>
+          </div>
+          <!-- strategy video -->
+          <div class="frame"><span class="ftag">STRATEGY</span>
+            <div class="lbl" style="font-size:11px;text-align:center;margin:6px 0">دیگه طراحی سایت و تبلیغات جواب نمیده</div>
+            <div class="ph" style="height:84px">آپارات · video embed<br>floating 3D screen</div>
+          </div>
+          <!-- logo carousels -->
+          <div class="frame"><span class="ftag">CLIENT LOGOS · 2 rows</span>
+            <div class="note" style="top:26px;left:10px">rows drift on<br><b>a curved depth ribbon</b></div>
+            <div class="col" style="margin-top:8px">
+              <div class="row" style="opacity:.9">
+                <div class="ph" style="height:30px;flex:1">logo</div><div class="ph" style="height:30px;flex:1">logo</div><div class="ph" style="height:30px;flex:1">logo</div><div class="ph" style="height:30px;flex:1">logo</div>
+              </div>
+              <div class="row" style="opacity:.65;transform:translateX(10px)">
+                <div class="ph" style="height:30px;flex:1">logo</div><div class="ph" style="height:30px;flex:1">logo</div><div class="ph" style="height:30px;flex:1">logo</div><div class="ph" style="height:30px;flex:1">logo</div>
+              </div>
+            </div>
+          </div>
+          <!-- services -->
+          <div class="frame"><span class="ftag">SERVICES · 2</span>
+            <div class="lbl" style="font-size:12px;text-align:center;margin-bottom:8px">خدمات ما چیست؟</div>
+            <div class="row">
+              <div class="box col" style="flex:1;padding:10px;transform:perspective(600px) rotateY(8deg)">
+                <div class="ph" style="width:26px;height:26px">i</div><div class="lbl" style="font-size:10px">۱. جذب مخاطب آنلاین</div><div class="line" style="width:90%"></div><div class="line" style="width:70%"></div>
+              </div>
+              <div class="box col" style="flex:1;padding:10px;transform:perspective(600px) rotateY(-8deg)">
+                <div class="ph" style="width:26px;height:26px">i</div><div class="lbl" style="font-size:10px">۲. طراحی سایت</div><div class="line" style="width:90%"></div><div class="line" style="width:70%"></div>
+              </div>
+            </div>
+            <div class="btnw" style="margin-top:9px;background:#1d6e3f;color:#dfffe9">ثبت سفارش در واتساپ</div>
+          </div>
+          <!-- counters -->
+          <div class="frame" style="background:linear-gradient(120deg,rgba(31,156,214,.16),rgba(31,156,214,.04))"><span class="ftag">COUNTERS · 3D numbers</span>
+            <div class="note" style="top:26px;right:10px">numerals as<br><b>extruded 3D glyphs</b></div>
+            <div class="row" style="margin-top:8px;text-align:center">
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 22px 'Space Mono';color:#1f9cd6">۷</div><div class="mut" style="font-size:8px">سال تجربه</div></div>
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 22px 'Space Mono';color:#1f9cd6">۹۵</div><div class="mut" style="font-size:8px">پروژه</div></div>
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 22px 'Space Mono';color:#1f9cd6">۲</div><div class="mut" style="font-size:8px">سرویس</div></div>
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 22px 'Space Mono';color:#1f9cd6">۱۳۹۸</div><div class="mut" style="font-size:8px">از سال</div></div>
+            </div>
+          </div>
+          <!-- portfolio -->
+          <div class="frame"><span class="ftag">PORTFOLIO</span>
+            <div class="lbl" style="font-size:11px;text-align:center">نمونه وب‌سایت‌های طراحی‌شده</div>
+            <div class="row" style="justify-content:center;gap:7px;margin:7px 0">
+              <span class="pill">سرعت بالا</span><span class="pill">سئو</span><span class="pill">رسپانسیو</span>
+            </div>
+            <div class="row" style="justify-content:center;gap:10px;perspective:700px">
+              <div class="ph" style="width:54px;height:96px;transform:rotateY(18deg)">site</div>
+              <div class="ph" style="width:60px;height:108px">site</div>
+              <div class="ph" style="width:54px;height:96px;transform:rotateY(-18deg)">site</div>
+            </div>
+            <div class="btnw" style="margin-top:9px">برای شروع همکاری کلیک کنید</div>
+          </div>
+          <!-- testimonials -->
+          <div class="frame"><span class="ftag">TESTIMONIALS</span>
+            <div class="row" style="align-items:center;gap:8px;margin-bottom:8px"><div class="ph" style="width:30px;height:30px;border-radius:50%">✋</div><div class="mut" style="font-size:9px">حرف‌های ما را باور نکنید…</div></div>
+            <div class="box" style="padding:10px">
+              <div class="note" style="top:-8px;left:-8px">card slider<br><b>cards on an arc</b></div>
+              <div class="row" style="align-items:center;gap:8px"><div class="ph" style="width:28px;height:28px;border-radius:50%">👤</div><div class="col"><div class="lbl" style="font-size:9px">محسن کاوشی</div><div class="mut" style="font-size:7px">مدیر مارکتینگ · ★★★★½</div></div></div>
+              <div class="line" style="width:96%;margin-top:7px"></div><div class="line" style="width:88%;margin-top:5px"></div>
+            </div>
+          </div>
+          <!-- differentiation -->
+          <div class="frame"><span class="ftag">DIFFERENTIATION</span>
+            <div class="note" style="top:26px;left:10px">LOGO.png scales<br><b>over mockup</b></div>
+            <div class="lbl" style="font-size:11px;text-align:center;margin-bottom:6px">متفاوت نبودن یعنی خودکشی!</div>
+            <div class="ph" style="height:90px">وب‌سایت آواتک · 3D mockup + arm overlay</div>
+            <div class="btnw" style="margin-top:9px">برای شروع همکاری کلیک کنید</div>
+          </div>
+          <!-- final CTA -->
+          <div class="frame" style="background:radial-gradient(90% 100% at 50% 0,rgba(31,156,214,.14),transparent)"><span class="ftag">FINAL CTA + FORM</span>
+            <div class="lbl" style="font-size:12px;text-align:center;margin-bottom:8px">ما برای شما فرصت‌ها را شکار می‌کنیم</div>
+            <div class="box col" style="padding:10px">
+              <div class="box" style="height:22px"></div><div class="box" style="height:22px"></div><div class="box" style="height:22px"></div>
+              <div class="btnw">ارسال اطلاعات و شروع همکاری</div>
+              <div class="btnw" style="background:#1d6e3f;color:#dfffe9">پیام مستقیم در واتساپ</div>
+            </div>
+          </div>
+          <!-- footer -->
+          <div class="frame" style="border-bottom:none;background:linear-gradient(180deg,rgba(31,156,214,.1),transparent)"><span class="ftag">FOOTER</span>
+            <div class="ph" style="width:80px;height:22px;margin:6px auto">LOGO</div>
+            <div class="row" style="justify-content:space-between;margin-top:6px">
+              <div class="col"><div class="line" style="width:46px"></div><div class="line" style="width:38px"></div></div>
+              <div class="col"><div class="line" style="width:46px"></div><div class="line" style="width:38px"></div></div>
+              <div class="col"><div class="line" style="width:46px"></div><div class="line" style="width:38px"></div></div>
+            </div>
+            <div class="row" style="justify-content:center;gap:8px;margin-top:9px"><div class="ph" style="width:22px;height:22px;border-radius:50%">in</div><div class="ph" style="width:22px;height:22px;border-radius:50%">tg</div><div class="ph" style="width:22px;height:22px;border-radius:50%">ig</div><div class="ph" style="width:22px;height:22px;border-radius:50%">yt</div></div>
+            <div class="mut" style="font-size:7px;text-align:center;margin-top:8px;direction:ltr">© 2026 powered by Avatice.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b : Z-AXIS JOURNEY / SCROLL TUNNEL ============ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a><span class="dv-oname">سفر در عمق — دوربین رو به جلو، بخش‌ها ایستگاه‌اند</span></div>
+      <div class="wf">
+        <div class="sys">
+          <h5>اسکرول = پروازِ دوربین در محورِ z؛ هر بخش یک ایستگاه است که به‌سمتش می‌رویم</h5>
+          <p>به‌جای اسکرولِ عمودیِ معمول، صفحه یک تونلِ سه‌بعدی است. کاربر در دلِ فضا به جلو پرواز می‌کند و بخش‌ها یکی‌یکی از دلِ مه ظاهر می‌شوند. لوگوهای مشتری یک حلقهٔ مداری، و شمارنده‌ها اعداد معلق در فضا.</p>
+          <div class="chips"><span class="chip">scroll-driven camera</span><span class="chip">depth-of-field fog</span><span class="chip">orbiting ring</span><span class="chip">section = waypoint</span></div>
+        </div>
+        <div class="wf-scene">
+          <!-- progress rail -->
+          <div class="frame" style="padding:10px 16px"><span class="ftag">HEADER + DEPTH RAIL</span>
+            <div class="row" style="align-items:center;justify-content:space-between;margin-top:8px">
+              <div class="box" style="width:24px;height:18px;display:flex;align-items:center;justify-content:center;color:#9a978f">≡</div>
+              <div class="ph" style="width:78px;height:22px">LOGO</div>
+              <div class="pill">واتساپ</div>
+            </div>
+            <div class="row" style="align-items:center;gap:4px;margin-top:10px">
+              <div class="mut" style="font:700 7px 'Space Mono'">z-depth ▸</div>
+              <div style="flex:1;height:3px;background:rgba(255,255,255,.12);border-radius:3px;position:relative"><div style="position:absolute;inset:0 60% 0 0;background:#1f9cd6;border-radius:3px"></div></div>
+              <div class="mut" style="font:700 7px 'Space Mono'">10 stops</div>
+            </div>
+          </div>
+          <!-- hero = stop 01 -->
+          <div class="frame" style="min-height:200px"><span class="ftag">STOP 01 · HERO — closest</span>
+            <div class="note" style="top:26px;left:10px">camera starts here<br><b>arrow flies past you</b></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px;margin-top:8px">
+              <div style="font-size:46px;color:#1f9cd6;text-shadow:0 0 30px rgba(31,156,214,.7);transform:scale(1.15)">▲</div>
+              <div class="pill">%۱۰۰ تست‌شده</div>
+              <div class="lbl" style="font-size:12px;text-align:center">جذب منظم و هفتگی مشتریان جدید</div>
+              <div class="line" style="width:70%"></div>
+              <div class="box col" style="width:86%;padding:9px">
+                <div class="box" style="height:20px"></div><div class="box" style="height:20px"></div><div class="box" style="height:20px"></div>
+                <div class="btnw">ارسال اطلاعات و شروع همکاری ›</div>
+              </div>
+              <div class="btnw" style="width:86%;background:#1d6e3f;color:#dfffe9">واتساپ — پاسخ سریع‌تر</div>
+            </div>
+          </div>
+          <!-- stop 02 strategy -->
+          <div class="frame" style="opacity:.96"><span class="ftag">STOP 02 · STRATEGY</span>
+            <div class="lbl" style="font-size:10px;text-align:center;margin:5px 0">دیگه تبلیغات معمولی جواب نمیده</div>
+            <div class="ph" style="height:74px;transform:perspective(600px) rotateX(10deg)">video screen tilts toward camera</div>
+          </div>
+          <!-- stop 03 orbiting logos -->
+          <div class="frame"><span class="ftag">STOP 03 · CLIENT RING</span>
+            <div class="note" style="top:24px;right:10px">logos orbit on a<br><b>3D ring you fly through</b></div>
+            <div style="position:relative;height:96px;display:flex;align-items:center;justify-content:center;margin-top:6px">
+              <div style="position:absolute;width:150px;height:64px;border:1.4px dashed rgba(31,156,214,.4);border-radius:50%;transform:perspective(420px) rotateX(58deg)"></div>
+              <div class="ph" style="width:34px;height:22px;position:absolute;left:30px;top:24px">logo</div>
+              <div class="ph" style="width:34px;height:22px;position:absolute;right:30px;top:24px">logo</div>
+              <div class="ph" style="width:34px;height:22px;position:absolute;top:6px">logo</div>
+              <div class="ph" style="width:34px;height:22px;position:absolute;bottom:8px">logo</div>
+            </div>
+          </div>
+          <!-- stop 04 services -->
+          <div class="frame"><span class="ftag">STOP 04 · SERVICES (2 gates)</span>
+            <div class="lbl" style="font-size:11px;text-align:center;margin-bottom:7px">خدمات ما چیست؟</div>
+            <div class="row" style="gap:10px">
+              <div class="box col" style="flex:1;padding:9px;transform:perspective(600px) rotateY(12deg)"><div class="ph" style="width:22px;height:22px">i</div><div class="lbl" style="font-size:9px">۱. جذب مخاطب</div><div class="line" style="width:80%"></div></div>
+              <div class="box col" style="flex:1;padding:9px;transform:perspective(600px) rotateY(-12deg)"><div class="ph" style="width:22px;height:22px">i</div><div class="lbl" style="font-size:9px">۲. طراحی سایت</div><div class="line" style="width:80%"></div></div>
+            </div>
+          </div>
+          <!-- stop 05 counters -->
+          <div class="frame"><span class="ftag">STOP 05 · STATS in space</span>
+            <div class="note" style="top:24px;left:10px">numbers hang at<br><b>different depths</b></div>
+            <div class="row" style="text-align:center;margin-top:8px">
+              <div class="col" style="flex:1;align-items:center;transform:translateY(-6px)"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۷</div><div class="mut" style="font-size:7px">سال</div></div>
+              <div class="col" style="flex:1;align-items:center;transform:translateY(6px)"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۹۵</div><div class="mut" style="font-size:7px">پروژه</div></div>
+              <div class="col" style="flex:1;align-items:center;transform:translateY(-4px)"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۲</div><div class="mut" style="font-size:7px">سرویس</div></div>
+              <div class="col" style="flex:1;align-items:center;transform:translateY(8px)"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۱۳۹۸</div><div class="mut" style="font-size:7px">از سال</div></div>
+            </div>
+          </div>
+          <!-- stop 06 portfolio -->
+          <div class="frame"><span class="ftag">STOP 06 · PORTFOLIO corridor</span>
+            <div class="row" style="justify-content:center;gap:10px;perspective:600px;margin:6px 0">
+              <div class="ph" style="width:48px;height:90px;transform:rotateY(28deg)">site</div>
+              <div class="ph" style="width:56px;height:100px">site</div>
+              <div class="ph" style="width:48px;height:90px;transform:rotateY(-28deg)">site</div>
+            </div>
+            <div class="btnw">برای شروع همکاری کلیک کنید</div>
+          </div>
+          <!-- stop 07 testimonials -->
+          <div class="frame"><span class="ftag">STOP 07 · TESTIMONIALS</span>
+            <div class="box" style="padding:9px">
+              <div class="row" style="align-items:center;gap:7px"><div class="ph" style="width:24px;height:24px;border-radius:50%">👤</div><div class="col"><div class="lbl" style="font-size:8px">سعید امینی · ★★★★</div></div></div>
+              <div class="line" style="width:92%;margin-top:6px"></div><div class="line" style="width:80%;margin-top:4px"></div>
+            </div>
+          </div>
+          <!-- stop 08 diff -->
+          <div class="frame"><span class="ftag">STOP 08 · DIFFERENTIATION</span>
+            <div class="lbl" style="font-size:10px;text-align:center;margin-bottom:5px">متفاوت نبودن یعنی خودکشی!</div>
+            <div class="ph" style="height:80px">mockup + scaling LOGO</div>
+          </div>
+          <!-- stop 09 final cta -->
+          <div class="frame" style="background:radial-gradient(90% 100% at 50% 100%,rgba(31,156,214,.16),transparent)"><span class="ftag">STOP 09 · FINAL CTA — arrival</span>
+            <div class="note" style="top:24px;right:10px">camera stops;<br><b>form pulls into focus</b></div>
+            <div class="lbl" style="font-size:11px;text-align:center;margin-bottom:7px">ما برای شما فرصت‌ها را شکار می‌کنیم</div>
+            <div class="box col" style="padding:9px"><div class="box" style="height:20px"></div><div class="box" style="height:20px"></div><div class="box" style="height:20px"></div><div class="btnw">ارسال اطلاعات و شروع همکاری</div><div class="btnw" style="background:#1d6e3f;color:#dfffe9">واتساپ</div></div>
+          </div>
+          <!-- footer -->
+          <div class="frame" style="border-bottom:none"><span class="ftag">STOP 10 · FOOTER</span>
+            <div class="ph" style="width:74px;height:20px;margin:6px auto">LOGO</div>
+            <div class="row" style="justify-content:center;gap:7px;margin-top:8px"><div class="ph" style="width:20px;height:20px;border-radius:50%">in</div><div class="ph" style="width:20px;height:20px;border-radius:50%">tg</div><div class="ph" style="width:20px;height:20px;border-radius:50%">ig</div><div class="ph" style="width:20px;height:20px;border-radius:50%">yt</div></div>
+            <div class="mut" style="font-size:7px;text-align:center;margin-top:7px;direction:ltr">© 2026 Avatice.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c : ISOMETRIC DIORAMA ============ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a><span class="dv-oname">دیورامای ایزومتریک — کل صفحه یک ماکتِ سه‌بعدی</span></div>
+      <div class="wf">
+        <div class="sys">
+          <h5>کل سایت یک ماکتِ ایزومتریکِ روشن است؛ بخش‌ها بلوک‌های حجمی روی یک سکّو</h5>
+          <p>برخلافِ دو جهتِ تیره، این یکی روشن و بازی‌گونه است. خدمات = مکعب‌های سه‌بعدی، نمونه‌کارها = موبایل‌های حجمی، شمارنده‌ها روی یک پلتفرمِ ایزومتریک. اسکرول باعثِ چرخشِ ملایمِ صحنه می‌شود.</p>
+          <div class="chips"><span class="chip">isometric scene</span><span class="chip">light theme</span><span class="chip">extruded blocks</span><span class="chip">playful</span></div>
+        </div>
+        <div class="wf-scene" style="background:radial-gradient(120% 80% at 50% -10%,rgba(31,156,214,.12),transparent 55%),#1b1e24">
+          <!-- header -->
+          <div class="frame" style="padding:11px 16px"><span class="ftag">HEADER</span>
+            <div class="row" style="align-items:center;justify-content:space-between;margin-top:8px">
+              <div class="box" style="width:24px;height:18px;display:flex;align-items:center;justify-content:center;color:#9a978f">≡</div>
+              <div class="ph" style="width:78px;height:22px">LOGO</div>
+              <div class="row"><div class="pill">تورنادو</div><div class="pill">واتساپ</div></div>
+            </div>
+          </div>
+          <!-- hero iso -->
+          <div class="frame" style="min-height:200px"><span class="ftag">HERO · iso platform</span>
+            <div class="note" style="top:26px;left:10px">arrow extruded on<br><b>a floating tile</b></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:9px;margin-top:8px">
+              <div style="position:relative;width:120px;height:78px">
+                <div style="position:absolute;inset:18px 10px 0;background:linear-gradient(135deg,rgba(31,156,214,.22),rgba(31,156,214,.06));border:1.4px dashed rgba(31,156,214,.45);transform:perspective(380px) rotateX(56deg) rotateZ(-45deg);border-radius:6px"></div>
+                <div style="position:absolute;left:50%;top:2px;transform:translateX(-50%);font-size:34px;color:#1f9cd6;text-shadow:0 10px 14px rgba(0,0,0,.4)">▲</div>
+              </div>
+              <div class="pill">%۱۰۰ تست‌شده</div>
+              <div class="lbl" style="font-size:12px;text-align:center">جذب منظم و هفتگی مشتریان</div>
+              <div class="box col" style="width:86%;padding:9px"><div class="box" style="height:20px"></div><div class="box" style="height:20px"></div><div class="box" style="height:20px"></div><div class="btnw">ارسال و شروع همکاری ›</div></div>
+              <div class="btnw" style="width:86%;background:#1d6e3f;color:#dfffe9">واتساپ</div>
+            </div>
+          </div>
+          <!-- strategy -->
+          <div class="frame"><span class="ftag">STRATEGY</span>
+            <div class="lbl" style="font-size:10px;text-align:center;margin:5px 0">استراتژی زیر را ببینید</div>
+            <div class="ph" style="height:72px;transform:perspective(500px) rotateY(-10deg)">iso video block</div>
+          </div>
+          <!-- logos -->
+          <div class="frame"><span class="ftag">CLIENT LOGOS · conveyor</span>
+            <div class="note" style="top:22px;right:10px">logos ride an<br><b>iso conveyor belt</b></div>
+            <div class="row" style="margin-top:8px;transform:perspective(500px) rotateX(18deg)">
+              <div class="ph" style="height:26px;flex:1">logo</div><div class="ph" style="height:26px;flex:1">logo</div><div class="ph" style="height:26px;flex:1">logo</div><div class="ph" style="height:26px;flex:1">logo</div>
+            </div>
+          </div>
+          <!-- services cubes -->
+          <div class="frame"><span class="ftag">SERVICES · 3D cubes</span>
+            <div class="lbl" style="font-size:11px;text-align:center;margin-bottom:8px">خدمات ما چیست؟</div>
+            <div class="row" style="gap:12px;justify-content:center">
+              <div style="position:relative;width:80px;height:78px">
+                <div class="box" style="position:absolute;inset:14px 0 0;padding:8px;background:rgba(255,255,255,.04);transform:perspective(400px) rotateY(18deg)"><div class="ph" style="width:18px;height:18px">i</div><div class="lbl" style="font-size:8px;margin-top:4px">۱. جذب مخاطب</div></div>
+              </div>
+              <div style="position:relative;width:80px;height:78px">
+                <div class="box" style="position:absolute;inset:14px 0 0;padding:8px;background:rgba(255,255,255,.04);transform:perspective(400px) rotateY(-18deg)"><div class="ph" style="width:18px;height:18px">i</div><div class="lbl" style="font-size:8px;margin-top:4px">۲. طراحی سایت</div></div>
+              </div>
+            </div>
+            <div class="btnw" style="margin-top:9px;background:#1d6e3f;color:#dfffe9">ثبت سفارش در واتساپ</div>
+          </div>
+          <!-- counters platform -->
+          <div class="frame"><span class="ftag">COUNTERS · on iso slab</span>
+            <div class="row" style="text-align:center;margin-top:6px;transform:perspective(600px) rotateX(14deg);background:linear-gradient(120deg,rgba(31,156,214,.14),transparent);border-radius:8px;padding:8px 0">
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۷</div><div class="mut" style="font-size:7px">سال</div></div>
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۹۵</div><div class="mut" style="font-size:7px">پروژه</div></div>
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۲</div><div class="mut" style="font-size:7px">سرویس</div></div>
+              <div class="col" style="flex:1;align-items:center"><div style="font:800 18px 'Space Mono';color:#1f9cd6">۱۳۹۸</div><div class="mut" style="font-size:7px">از سال</div></div>
+            </div>
+          </div>
+          <!-- portfolio iso phones -->
+          <div class="frame"><span class="ftag">PORTFOLIO · iso devices</span>
+            <div class="row" style="justify-content:center;gap:14px;margin:8px 0">
+              <div class="ph" style="width:46px;height:88px;transform:perspective(400px) rotateY(22deg) rotateZ(-3deg)">site</div>
+              <div class="ph" style="width:52px;height:96px;transform:perspective(400px) rotateY(0deg)">site</div>
+              <div class="ph" style="width:46px;height:88px;transform:perspective(400px) rotateY(-22deg) rotateZ(3deg)">site</div>
+            </div>
+            <div class="row" style="justify-content:center;gap:6px;margin-bottom:6px"><span class="pill">سرعت</span><span class="pill">سئو</span><span class="pill">رسپانسیو</span></div>
+            <div class="btnw">برای شروع همکاری کلیک کنید</div>
+          </div>
+          <!-- testimonials -->
+          <div class="frame"><span class="ftag">TESTIMONIALS · floating cards</span>
+            <div class="box" style="padding:9px;transform:perspective(500px) rotateY(8deg)">
+              <div class="row" style="align-items:center;gap:7px"><div class="ph" style="width:24px;height:24px;border-radius:50%">👤</div><div class="lbl" style="font-size:8px">سوروش برزگر · ★★★★★</div></div>
+              <div class="line" style="width:92%;margin-top:6px"></div><div class="line" style="width:78%;margin-top:4px"></div>
+            </div>
+          </div>
+          <!-- diff -->
+          <div class="frame"><span class="ftag">DIFFERENTIATION</span>
+            <div class="lbl" style="font-size:10px;text-align:center;margin-bottom:5px">متفاوت نبودن یعنی خودکشی!</div>
+            <div class="ph" style="height:78px;transform:perspective(500px) rotateY(-8deg)">iso mockup + scaling LOGO</div>
+          </div>
+          <!-- final cta -->
+          <div class="frame"><span class="ftag">FINAL CTA + FORM</span>
+            <div class="lbl" style="font-size:11px;text-align:center;margin-bottom:7px">ما فرصت‌ها را شکار می‌کنیم</div>
+            <div class="box col" style="padding:9px"><div class="box" style="height:20px"></div><div class="box" style="height:20px"></div><div class="box" style="height:20px"></div><div class="btnw">ارسال و شروع همکاری</div><div class="btnw" style="background:#1d6e3f;color:#dfffe9">واتساپ</div></div>
+          </div>
+          <!-- footer -->
+          <div class="frame" style="border-bottom:none"><span class="ftag">FOOTER · iso base</span>
+            <div class="ph" style="width:74px;height:20px;margin:6px auto">LOGO</div>
+            <div class="row" style="justify-content:center;gap:7px;margin-top:8px"><div class="ph" style="width:20px;height:20px;border-radius:50%">in</div><div class="ph" style="width:20px;height:20px;border-radius:50%">tg</div><div class="ph" style="width:20px;height:20px;border-radius:50%">ig</div><div class="ph" style="width:20px;height:20px;border-radius:50%">yt</div></div>
+            <div class="mut" style="font-size:7px;text-align:center;margin-top:7px;direction:ltr">© 2026 Avatice.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">برای ادامه بگویید: «<a class="dv-oid" href="#1a">1a</a> را با تم روشن» · «<a class="dv-oid" href="#1b">1b</a> را کامل‌تر، بخش‌به‌بخش» · «ترکیبِ <a class="dv-oid" href="#1b">1b</a> و <a class="dv-oid" href="#1c">1c</a>» · «یکی را انتخاب کن و به دموی واقعیِ سه‌بعدی تبدیلش کن»</p>
+</section>
+</x-dc>
+</body>
+</html>
