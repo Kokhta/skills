@@ -28,7 +28,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
 
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:#070a0f;font-family:'Vazirmatn',system-ui,sans-serif;direction:rtl;color:#eaf6fb;overflow-x:hidden}
+  :root{direction:rtl} body{margin:0;background:#070a0f;font-family:'Vazirmatn',system-ui,sans-serif;color:#eaf6fb;overflow-x:hidden}
   ::selection{background:rgba(43,184,236,.35)}
   ::-webkit-scrollbar{width:9px}
   ::-webkit-scrollbar-track{background:#070a0f}
@@ -465,6 +465,7 @@ class Component extends DCLogic {
 
     // ---- winding path of the tunnel: horizontal + vertical offset per depth ----
     // New Advanced Path System with "Rooms"
+    let pathScale = W() < 768 ? 0.6 : 1.0;
     const ROOMS = [
       { z: 30,  type: 'tunnel',  r: 15,  color: 0x14587f }, // Hero
       { z: -30, type: 'open',    r: 45,  color: 0x2bb8ec }, // Strategy
@@ -739,7 +740,7 @@ class Component extends DCLogic {
       // Adjust path intensity for mobile
       pathScale = isMobile ? 0.6 : 1.0;
     };
-    let pathScale = W() < 768 ? 0.6 : 1.0;
+
     this._onMouse=(e)=>{ tmx=(e.clientX/W()-0.5); tmy=(e.clientY/H()-0.5); };
     window.addEventListener('scroll', this._onScroll, {passive:true});
     window.addEventListener('resize', this._onResize);
