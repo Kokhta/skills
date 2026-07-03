@@ -1,1022 +1,384 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVATIC | آژانس دیجیتال مارکتینگ آواتک</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+  <style>
+    :root{direction:rtl} body{margin:0;background:#070a0f;font-family:'Vazirmatn',system-ui,sans-serif;color:#eaf6fb;overflow-x:hidden}
+    canvas{position:fixed;inset:0;z-index:0}
+    main{position:relative;z-index:2}
+    section{min-height:140vh;display:flex;align-items:center;justify-content:center;padding:100px 24px;position:relative}
+    .glass{background:rgba(8,14,20,.6);backdrop-filter:blur(12px);border:1px solid rgba(43,184,236,.2);border-radius:24px;padding:40px;max-width:600px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+    h1,h2{margin:0;font-weight:900;line-height:1.2;font-size:clamp(32px, 5vw, 48px)}
+    p{color:#a9c4d2;line-height:1.8;font-size:18px}
+    .btn{display:inline-block;margin-top:24px;padding:16px 32px;background:linear-gradient(135deg,#2bb8ec,#1273a8);color:#04121b;font-weight:800;text-decoration:none;border-radius:12px;box-shadow:0 10px 30px rgba(43,184,236,.4);transition:transform 0.2s}
+    .btn:hover{transform:scale(1.05)}
+
+    .rail-container{position:fixed;top:50%;left:22px;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:10px;direction:ltr;pointer-events:none}
+    .rail-bar{width:3px;height:170px;background:rgba(255,255,255,.1);border-radius:3px;position:relative;overflow:hidden}
+    .rail-fill{position:absolute;left:0;right:0;top:0;height:0%;background:linear-gradient(#2bb8ec,#1273a8);border-radius:3px;transition:height .1s linear}
+
+    #lead-modal{position:fixed;inset:0;z-index:100;background:rgba(7,10,15,.9);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .4s ease}
+    .modal-content{background:linear-gradient(135deg, #0e1621, #070a0f);border:1px solid rgba(43,184,236,.3);border-radius:32px;padding:40px;width:90%;max-width:450px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,0.7)}
+    input,select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:#fff;margin-bottom:16px;outline:none;font-family:inherit;box-sizing:border-box}
+  </style>
 </head>
 <body>
-<x-dc>
-<helmet data-dc-atomics="">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-<style>
 
-div[data-dc-tpl="204"], div[data-dc-tpl="54"] {
-  filter: blur(71px) !important;
-}
-div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
-  overflow: hidden;
-}
+<canvas id="three-canvas"></canvas>
 
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  :root{direction:rtl} body{margin:0;background:#070a0f;font-family:'Vazirmatn',system-ui,sans-serif;color:#eaf6fb;overflow-x:hidden}
-  ::selection{background:rgba(43,184,236,.35)}
-  ::-webkit-scrollbar{width:9px}
-  ::-webkit-scrollbar-track{background:#070a0f}
-  ::-webkit-scrollbar-thumb{background:linear-gradient(#2bb8ec,#1273a8);border-radius:9px}
-  @keyframes mqR{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @keyframes mqL{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-  @keyframes pulseB{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.14);opacity:1}}
-  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  @keyframes glowPulse{0%,100%{opacity:.5}50%{opacity:1}}
-  input::placeholder{color:rgba(234,246,251,.4)}
-</style>
-</helmet>
-
-<canvas ref="{{ canvasRef }}" style="position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; display: block; opacity: 1"></canvas>
-<div style="position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(7,10,15,.55) 100%)"></div>
-
-<!-- ===== DEPTH PROGRESS RAIL ===== -->
-<div style="position:fixed;top:50%;left:22px;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:10px;direction:ltr;pointer-events:none">
-  <div style="font:700 8px 'Space Mono',monospace;color:#5a8aa0;letter-spacing:.1em;writing-mode:vertical-rl">Z-DEPTH</div>
-  <div style="width:3px;height:170px;background:rgba(255,255,255,.1);border-radius:3px;position:relative;overflow:hidden">
-    <div ref="{{ railRef }}" style="position:absolute;left:0;right:0;top:0;height:8%;background:linear-gradient(#2bb8ec,#1273a8);border-radius:3px;transition:height .15s linear"></div>
-  </div>
-  <div ref="{{ stopRef }}" style="font:700 9px 'Space Mono',monospace;color:#8fd6f4">01<span style="color:#4a6675">/10</span></div>
+<div class="rail-container">
+  <div style="font:700 8px 'Space Mono';color:#5a8aa0;writing-mode:vertical-rl">Z-DEPTH</div>
+  <div class="rail-bar"><div class="rail-fill" id="rail-fill"></div></div>
+  <div id="depth-counter" style="font:700 9px 'Space Mono';color:#8fd6f4">01<span style="color:#4a6675">/10</span></div>
 </div>
 
-<!-- ===== HEADER ===== -->
-<header style="position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:16px 26px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(7,10,15,.75),rgba(7,10,15,0))">
-  <button onClick="{{ toggleMenu }}" aria-label="menu" style="width:46px;height:46px;border-radius:13px;border:1px solid rgba(43,184,236,.3);background:rgba(8,14,20,.6);color:#8fd6f4;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-    <span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span>
-    <span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span>
-    <span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span>
-  </button>
-  <a href="#hero" style="display:flex;align-items:center;gap:9px;text-decoration:none">
-    <img src="uploads/LOGO-2.png" alt="AVATIC" style="height:42px;width:auto;filter:drop-shadow(0 4px 16px rgba(43,184,236,.5))">
-    <div style="line-height:1">
-      <div style="font:800 19px 'Space Mono',monospace;letter-spacing:.18em;color:#eaf6fb">AVATIC</div>
-      <div style="font:600 11px Vazirmatn;color:#5a8aa0;margin-top:2px">آواتـک</div>
-    </div>
-  </a>
-  <div style="display:flex;gap:10px">
-    <a href="#cta" style="display:inline-flex;align-items:center;padding:11px 18px;border-radius:11px;background:linear-gradient(135deg,#2bb8ec,#1273a8);color:#04121b;font:700 13px Vazirmatn;text-decoration:none;box-shadow:0 8px 24px rgba(43,184,236,.35)">دوره تــورنــادو</a>
-    <a href="https://wa.me/989966330107" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:11px 18px;border-radius:11px;background:linear-gradient(135deg,#25d366,#0f7a3a);color:#03210f;font:700 13px Vazirmatn;text-decoration:none">ارتباط در واتساپ</a>
-  </div>
-</header>
-
-<!-- ===== OFF-CANVAS MENU ===== -->
-<div onClick="{{ closeMenu }}" style="position: fixed; inset: 0; z-index: 49; background: rgba(3,6,10,.7); backdrop-filter: blur(4px); transition: opacity .35s; opacity: {{ menuOpacity }}; pointer-events: {{ menuEvents }}"></div>
-<aside style="position:fixed;top:0;bottom:0;left:0;z-index:50;width:min(380px,86vw);padding:30px 26px;background:linear-gradient(160deg,#0b1219,#0a0f15);border-right:1px solid rgba(43,184,236,.25);box-shadow:30px 0 80px rgba(0,0,0,.6);transform:translateX({{ menuShift }});transition:transform .42s cubic-bezier(.5,.05,.2,1);display:flex;flex-direction:column;gap:18px;overflow-y:auto">
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <img src="uploads/LOGO-2.png" alt="AVATIC" style="height:38px">
-    <button onClick="{{ closeMenu }}" aria-label="close" style="width:40px;height:40px;border-radius:11px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);color:#8fd6f4;font-size:18px;cursor:pointer">✕</button>
-  </div>
-  <h3 style="margin:6px 0 2px;font:700 16px Vazirmatn;color:#eaf6fb">بر روی گزینه مناسب و مورد نظر خود کلیک کنید</h3>
-  <a href="#cta" onClick="{{ closeMenu }}" style="padding:15px 16px;border-radius:13px;border:1px solid rgba(43,184,236,.22);background:rgba(43,184,236,.07);color:#cfeefb;text-decoration:none;font:500 14px Vazirmatn">برای خرید دوره تــورنــادو <b style="color:#2bb8ec">اینجا کلیک کنید</b></a>
-  <a href="#cta" onClick="{{ closeMenu }}" style="padding:15px 16px;border-radius:13px;border:1px solid rgba(43,184,236,.22);background:rgba(43,184,236,.07);color:#cfeefb;text-decoration:none;font:500 14px Vazirmatn">برای رزرو جلسه مـشـاوره <b style="color:#2bb8ec">اینجا کلیک کنید</b></a>
-  <a href="https://wa.me/989966330107" target="_blank" rel="noopener" style="padding:15px 16px;border-radius:13px;border:1px solid rgba(37,211,102,.3);background:rgba(37,211,102,.08);color:#bff5d2;text-decoration:none;font:500 14px Vazirmatn">برای ارتباط در واتساپ <b style="color:#25d366">اینجا کلیک کنید</b></a>
-  <a href="#cta" onClick="{{ closeMenu }}" style="padding:15px 16px;border-radius:13px;border:1px solid rgba(43,184,236,.22);background:rgba(43,184,236,.07);color:#cfeefb;text-decoration:none;font:500 14px Vazirmatn">اگر صاحب کسب و کار هستید <b style="color:#2bb8ec">اینجا کلیک کنید</b></a>
-  <div style="margin-top:auto;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);font:400 12px/1.7 Vazirmatn;color:#5a8aa0">آژانس دیجیتال مارکتینگ آواتک . مجموعه سجاد شعیب</div>
-</aside>
-
-<!-- ===== SCROLLING CONTENT ===== -->
-<main style="position:relative;z-index:2">
-
-  <!-- 01 HERO -->
-  <section id="hero" data-screen-label="01 Hero" data-stop="1" style="min-height:150vh;display:flex;align-items:center;padding:120px 24px 70px">
-    <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%">
-      <div data-reveal="">
-        <div style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;border:1px solid rgba(43,184,236,.3);background:rgba(43,184,236,.08);font:600 12px 'Space Mono',monospace;color:#8fd6f4;margin-bottom:18px">٪۱۰۰ تــســت شـــده</div>
-        <h1 style="margin:0;font:800 clamp(30px,4vw,50px)/1.25 Vazirmatn;letter-spacing:-.01em">جذب منظم و هفتگی <span style="background:linear-gradient(120deg,#2bb8ec,#7fe0ff);-webkit-background-clip:text;background-clip:text;color:transparent">مشتریان جدید</span> برای کسب و کار شما</h1>
-        <p style="margin:18px 0 0;font:400 15px/1.95 Vazirmatn;color:#a9c4d2;max-width:540px">بازاریابی و پیدا کردن مشتریان جدید برای کسب‌وکارها سخت شده است، اما ما تکنیک این کار را بلدیم. برای جذب ۵ الی ۵۰ مشتری جدید به‌صورت هفتگی فرم زیر را پر کنید تا با شما تماس گرفته شود. (یا در واتساپ به ما پیام دهید)</p>
-        <div style="display:flex;align-items:center;gap:12px;margin-top:24px">
-          <img src="uploads/LOGO-2.png" alt="" style="height:34px;opacity:.55">
-          <div style="font:600 13px Vazirmatn;color:#cfeefb">بیش از ۲۴۷ نظر مثبت <span style="color:#ffc64a">★★★★★</span></div>
-        </div>
-      </div>
-      <div id="form-hero-3d" style="width:100%;height:450px;position:relative;display:flex;align-items:center;justify-content:center;font:700 20px Vazirmatn;color:#2bb8ec">3D INTERACTIVE INTERFACE</div>
-      </div>
+<main>
+  <section id="hero">
+    <div class="glass">
+      <h1>آژانس دیجیتال مارکتینگ <span style="color:#2bb8ec">آواتک</span></h1>
+      <p>ما با استراتژی‌های هوشمند و طراحی‌های مدرن، کسب‌وکار شما را به اوج می‌رسانیم.</p>
+      <a href="#cta" class="btn">شروع ماجراجویی</a>
     </div>
   </section>
 
-  <!-- 02 STRATEGY -->
-  <section data-screen-label="02 Strategy" data-stop="2" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
-    <div style="max-width:880px;margin:0 auto;text-align:center;width:100%">
-      <h2 data-reveal="" style="margin:0;font:800 clamp(24px,3vw,38px)/1.4 Vazirmatn">دیگه طراحی سایت و اجرای تبلیغات <span style="color:#ff6b6b">جواب نمیده</span></h2>
-      <p data-reveal="" style="margin:14px 0 30px;font:500 17px Vazirmatn;color:#a9c4d2">در عوض از استراتژی زیر استفاده کنید — ویدئوی پایین را تماشا کنید</p>
-      <div data-reveal="" style="position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;border:1px solid rgba(43,184,236,.25);background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 12px,transparent 12px 24px);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 80px rgba(0,0,0,.5)">
-        <div style="width:74px;height:74px;border-radius:50%;background:rgba(43,184,236,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(43,184,236,.6)"><div style="width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-right:22px solid #04121b;margin-right:-4px"></div></div>
-        <div style="position:absolute;bottom:14px;font:700 11px 'Space Mono',monospace;color:#6f93a6">APARAT EMBED · yta05fa</div>
-      </div>
+  <section id="strategy">
+    <div class="glass">
+      <h2>استراتژی اختصاصی</h2>
+      <p>هر کسب‌وکاری داستان خودش را دارد. ما نقشه‌ی راه شما را ترسیم می‌کنیم.</p>
     </div>
   </section>
 
-  <!-- 03 CLIENT LOGOS -->
-  <section data-screen-label="03 Clients" data-stop="3" style="padding:60px 0;overflow:hidden">
-    <p data-reveal="" style="text-align: center; font: 600 13px 'Space Mono',monospace; color: #5a8aa0; letter-spacing: 1px; margin: 0 0 28px; font-family: Vazirmatn; font-size: 25px; font-weight: 700; line-height: 1">معتمد بیشتر از 100 کسب و کار بزرگ</p>
-    <div style="display:flex;width:max-content;gap:22px;animation:mqR 32s linear infinite;margin-bottom:18px">
-      <div style="display:flex;gap:22px">
-        <div class="cl" style="border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./52-qitxmi974oqijrzrua433yv5xtg8n0ensspiw-mr1i0542.png&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; height: 64px; width: 150px; opacity: 0.5"></div>
-        <div class="cl" style="border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./36-qjenc52zycdvzj7n6yccc2du8cqjzgpp2cl0r-mr1hz6mf.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; width: 150px; height: 64px; opacity: 0.5"></div>
-        <div class="cl" style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./49-qjend4sv61qs8prreds5ytdcszui3ynhv9dh0-mr1hypcx.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div class="cl" style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./88-qjenxlqc05rl301bv8bo9neqj2y9qnx20ku59-mr1hy768.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div class="cl" style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./121212-qjenl0o4i0jdmybfcshhvtqk7czcojyfm-mr1hwyxw.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-      </div>
-      <div style="display:flex;gap:22px" aria-hidden="true">
-        <div style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./78-qjenbn82chpfuxxl38mfiow2y16kx7qsnw6sn-mr1huohd.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585"></div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585"></div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585">48.webp</div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585">63.webp</div>
-      </div>
-    </div>
-    <div style="display:flex;width:max-content;gap:22px;animation:mqL 34s linear infinite">
-      <div style="display:flex;gap:22px">
-        <div style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./78-qjenbn82chpfuxxl38mfiow2y16kx7qsnw6sn-mr1i45p8.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./u5555itled-1-qitxxagjj9hxqqbvvfx07qwj9ya-mr1i3iv7.png&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./63-qjencm03dd11sij2g5nmky44xaf5u0kv4obre-mr1i2wpv.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./48-qjendmnsrwf8db1ti3i2s6v43beh67me9prp4-mr1i2ht4.webp&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./u5555itled-1-qitxxagjj9hxqqbvvfx07qwj9ya-mr1i22z9.png&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-      </div>
-      <div style="display:flex;gap:22px" aria-hidden="true">
-        <div style="width: 150px; height: 64px; border-radius: 14px; border: 1px dashed rgba(255,255,255,.16); background: url(&quot;./221-qitxut5vi03p3rxlcvbg4vfquciymrdaxw5x-mr1i1k3y.png&quot;) center / auto no-repeat; display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #5a7585; opacity: 0.5"></div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585"></div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585"></div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585"></div>
-        <div style="width:150px;height:64px;border-radius:14px;border:1px dashed rgba(255,255,255,.16);background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono';color:#5a7585"></div>
-      </div>
+  <section id="automation">
+    <div class="glass">
+      <h2>اتوماسیون و هوش مصنوعی</h2>
+      <p>فرآیندهای تکراری را حذف کنید و روی رشد تمرکز کنید.</p>
     </div>
   </section>
 
-  <!-- 04 SERVICES -->
-  <section data-screen-label="04 Services" data-stop="4" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
-    <div style="max-width:1000px;margin:0 auto;width:100%">
-      <div data-reveal="" style="text-align:center;margin-bottom:40px">
-        <h2 style="margin:0;font:800 clamp(26px,3.4vw,42px) Vazirmatn">خـــدمـــات مـــا چــیســـت؟</h2>
-        <p style="margin:14px 0 0;font:500 16px/1.9 Vazirmatn;color:#a9c4d2">ما فقط ۲ سرویس داریم — و خدماتی را که از آن مطمئن نباشیم ارائه نمی‌دهیم</p>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-        <div id="form-cta-3d-top" style="width:100%;height:450px;position:relative;display:flex;align-items:center;justify-content:center;font:700 20px Vazirmatn;color:#2bb8ec">درگاه تعاملی ثبت درخواست</div>
-      </div>
+  <section id="services">
+    <div class="glass">
+      <h2>خدمات ما</h2>
+      <p>طراحی وب‌سایت ۳ بعدی، سئو، و کمپین‌های تبلیغاتی هوشمند.</p>
     </div>
   </section>
 
-  <!-- 06 PORTFOLIO -->
-  <section data-screen-label="06 Portfolio" data-stop="6" style="min-height:145vh;display:flex;align-items:center;padding:80px 24px">
-    <div style="max-width:1000px;margin:0 auto;width:100%;text-align:center">
-      <h2 data-reveal="" style="margin:0;font:800 clamp(24px,3.2vw,40px)/1.4 Vazirmatn">تعدادی از وب‌سایت‌های طراحی‌شده توسط تیم ما</h2>
-      <div data-reveal="" style="display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin:22px 0 36px">
-        <span style="display:inline-flex;align-items:center;gap:7px;font:600 14px Vazirmatn;color:#cfeefb"><span style="color:#2bb8ec">✓</span> سرعت بالا</span>
-        <span style="display:inline-flex;align-items:center;gap:7px;font:600 14px Vazirmatn;color:#cfeefb"><span style="color:#2bb8ec">✓</span> رعایت سئو اولیه</span>
-        <span style="display:inline-flex;align-items:center;gap:7px;font:600 14px Vazirmatn;color:#cfeefb"><span style="color:#2bb8ec">✓</span> طراحی رسپانسیو</span>
-      </div>
-      <div data-reveal="" style="display:flex;justify-content:center;align-items:flex-end;gap:24px;perspective:1200px;flex-wrap:wrap">
-        <div style="width: 190px; height: 340px; border-radius: 18px; border: 1px dashed rgba(255,255,255,.2); transform: rotateY(20deg); display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #6f93a6; box-shadow: 0 30px 60px rgba(0,0,0,.5),0 0 30px rgba(43,184,236,.15); background-image: repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 10px,transparent 10px 20px),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)); background-size: auto,14px 2px,2px 14px,14px 2px,2px 14px,14px 2px,2px 14px,14px 2px,2px 14px; background-position: 0 0,top 10px left 10px,top 10px left 10px,top 10px right 10px,top 10px right 10px,bottom 10px left 10px,bottom 10px left 10px,bottom 10px right 10px,bottom 10px right 10px; background-repeat: repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat; background: url(&quot;./1113-1-mr1imt53.jpg&quot;) center / cover no-repeat"></div>
-        <div style="width: 200px; height: 360px; border-radius: 18px; border: 1px dashed rgba(43,184,236,.35); display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #8fd6f4; box-shadow: 0 36px 70px rgba(0,0,0,.55),0 0 40px rgba(43,184,236,.25); background-image: repeating-linear-gradient(135deg,rgba(43,184,236,.06) 0 10px,transparent 10px 20px),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)),linear-gradient(rgba(127,224,255,.6),rgba(127,224,255,.6)); background-size: auto,16px 2px,2px 16px,16px 2px,2px 16px,16px 2px,2px 16px,16px 2px,2px 16px; background-position: 0 0,top 12px left 12px,top 12px left 12px,top 12px right 12px,top 12px right 12px,bottom 12px left 12px,bottom 12px left 12px,bottom 12px right 12px,bottom 12px right 12px; background-repeat: repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat; background: url(&quot;./portfolio-5-1-mr1ilze1.jpg&quot;) center / cover no-repeat"></div>
-        <div style="width: 190px; height: 340px; border-radius: 18px; border: 1px dashed rgba(255,255,255,.2); transform: rotateY(-20deg); display: flex; align-items: center; justify-content: center; font: 700 10px 'Space Mono'; color: #6f93a6; box-shadow: 0 30px 60px rgba(0,0,0,.5),0 0 30px rgba(43,184,236,.15); background-image: repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 10px,transparent 10px 20px),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)),linear-gradient(rgba(127,224,255,.5),rgba(127,224,255,.5)); background-size: auto,14px 2px,2px 14px,14px 2px,2px 14px,14px 2px,2px 14px,14px 2px,2px 14px; background-position: 0 0,top 10px left 10px,top 10px left 10px,top 10px right 10px,top 10px right 10px,bottom 10px left 10px,bottom 10px left 10px,bottom 10px right 10px,bottom 10px right 10px; background-repeat: repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat; background: url(&quot;./portfolio-2-1-mr1il4cz.jpg&quot;) center / cover no-repeat">portfolio-2-1</div>
-      </div>
-      <a href="#cta" data-reveal="" style="display:inline-flex;margin-top:38px;align-items:center;gap:8px;padding:15px 28px;border-radius:12px;background:linear-gradient(135deg,#2bb8ec,#1273a8);color:#04121b;font:700 15px Vazirmatn;text-decoration:none;box-shadow:0 10px 30px rgba(43,184,236,.4)">برای شروع همکاری کلیک کنید</a>
+  <section id="stats">
+    <div class="glass">
+      <h2>اعداد دروغ نمی‌گویند</h2>
+      <p>رشد ۱۰۰٪ درصدی مشتریان ما در سال گذشته.</p>
     </div>
   </section>
 
-  <!-- 07 + 08 TESTIMONIALS -->
-  <section data-screen-label="07 Testimonials" data-stop="7" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
-    <div style="max-width:760px;margin:0 auto;width:100%;text-align:center">
-      <div data-reveal="" style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:34px">
-        <div style="width:74px;height:74px;border-radius:50%;border:1px dashed rgba(43,184,236,.4);display:flex;align-items:center;justify-content:center;font-size:34px;animation:pulseB 2.4s ease-in-out infinite">🙅‍♂️</div>
-        <p style="margin:0;font:700 19px/1.6 Vazirmatn;max-width:520px">حرف‌های ما را باور نکنید! حرف کسانی که با ما کار کرده‌اند را نگاه کنید.</p>
-      </div>
-      <div data-reveal="" style="position:relative;border-radius:32px">
-        <div style="position: absolute; inset: -7px; border-radius: 36px; background: conic-gradient(from 0deg,transparent 0deg,#2bb8ec 20deg,transparent 55deg,transparent 170deg,#7fe0ff 200deg,transparent 235deg,transparent 360deg); opacity: .6; filter: blur(2px); animation: spin 16s linear infinite; pointer-events: none; display: none"></div>
-        <div style="position:absolute;inset:-2px;border-radius:28px;border:1px solid rgba(127,224,255,.28);box-shadow:0 0 50px rgba(43,184,236,.22),inset 0 0 40px rgba(0,0,0,.35);pointer-events:none"></div>
-        <div style="position:relative;padding:34px 30px 30px;background:rgba(8,14,20,.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(43,184,236,.22);border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.5);min-height:250px;background-image:linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55));background-size:18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px;background-position:top 14px left 14px,top 14px left 14px,top 14px right 14px,top 14px right 14px,bottom 14px left 14px,bottom 14px left 14px,bottom 14px right 14px,bottom 14px right 14px;background-repeat:no-repeat">
-        <div style="font:800 60px 'Space Mono';color:rgba(43,184,236,.18);position:absolute;top:8px;right:22px;line-height:1">”</div>
-        <p style="margin:0 0 22px;font:400 16px/2 Vazirmatn;color:#dcecf3;min-height:120px">{{ current.text }}</p>
-        <div style="display:flex;align-items:center;gap:14px;justify-content:center">
-          <div style="width:56px;height:56px;border-radius:50%;border:1px dashed rgba(255,255,255,.25);background:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 6px,transparent 6px 12px);display:flex;align-items:center;justify-content:center;font-size:22px">👤</div>
-          <div style="text-align:right">
-            <div style="font:700 16px Vazirmatn;color:#eaf6fb">{{ current.name }}</div>
-            <div style="font:500 12px Vazirmatn;color:#88a6b6;margin:3px 0">{{ current.title }}</div>
-            <div style="font-size:14px;color:#ffc64a">{{ current.stars }}</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px">
-          <button onClick="{{ prevT }}" aria-label="prev" style="width:42px;height:42px;border-radius:50%;border:1px solid rgba(43,184,236,.3);background:rgba(43,184,236,.07);color:#8fd6f4;font-size:18px;cursor:pointer">›</button>
-          <div style="display:flex;gap:8px">
-            <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="4">
-              <button onClick="{{ dot.click }}" aria-label="slide" style="width:9px;height:9px;border-radius:50%;border:none;cursor:pointer;background: {{ dot.bg }}"></button>
-            </sc-for>
-          </div>
-          <button onClick="{{ nextT }}" aria-label="next" style="width:42px;height:42px;border-radius:50%;border:1px solid rgba(43,184,236,.3);background:rgba(43,184,236,.07);color:#8fd6f4;font-size:18px;cursor:pointer">‹</button>
-        </div>
-      </div>
-      </div>
+  <section id="portfolio">
+    <div class="glass">
+      <h2>نمونه کارها</h2>
+      <p>پروژه‌هایی که مرزهای خلاقیت را جابجا کرده‌اند.</p>
     </div>
   </section>
 
-  <!-- 08 DIFFERENTIATION -->
-  <section data-screen-label="08 Differentiation" data-stop="8" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
-    <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%">
-      <div data-reveal="">
-        <h2 style="margin:0;font:800 clamp(26px,3.4vw,42px)/1.35 Vazirmatn">متفاوت نبودن در دنیای کسب‌وکار یعنی <span style="color:#ff6b6b">خودکشی!</span></h2>
-        <p style="margin:18px 0 26px;font:400 15px/1.95 Vazirmatn;color:#a9c4d2">کسب‌وکار شما در میان انبوه تبلیغات و شلوغی‌ها دیده نمی‌شود، مگر آنکه متفاوت باشید. ما کسب‌وکار شما را میان تمام رقبا متفاوت خواهیم کرد.</p>
-        <a href="#cta" style="display:inline-flex;align-items:center;gap:8px;padding:15px 26px;border-radius:12px;background:linear-gradient(135deg,#2bb8ec,#1273a8);color:#04121b;font:700 15px Vazirmatn;text-decoration:none;box-shadow:0 10px 30px rgba(43,184,236,.4)">برای شروع همکاری کلیک کنید</a>
-      </div>
-      <div data-reveal="" style="position:relative;border-radius:32px">
-        <div style="position: absolute; inset: -7px; border-radius: 36px; background: conic-gradient(from 0deg,transparent 0deg,#2bb8ec 20deg,transparent 55deg,transparent 170deg,#7fe0ff 200deg,transparent 235deg,transparent 360deg); opacity: .6; filter: blur(2px); animation: spin 16s linear infinite; pointer-events: none; display: none"></div>
-        <div style="position:absolute;inset:-2px;border-radius:28px;border:1px solid rgba(127,224,255,.28);box-shadow:0 0 50px rgba(43,184,236,.22),inset 0 0 40px rgba(0,0,0,.35);pointer-events:none"></div>
-        <div style="position:relative;aspect-ratio:1;border-radius:24px;border:1px dashed rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 12px,transparent 12px 24px),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55));background-size:auto,18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px;background-position:0 0,top 14px left 14px,top 14px left 14px,top 14px right 14px,top 14px right 14px,bottom 14px left 14px,bottom 14px left 14px,bottom 14px right 14px,bottom 14px right 14px;background-repeat:repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat">
-        <div class="glb-placeholder" data-src="./apex-logo-3d-mr1iuvdd.glb" style="width:55%;height:200px;background:rgba(43,184,236,0.1);border-radius:20px;display:flex;align-items:center;justify-content:center;color:#2bb8ec;font-weight:bold">3D LOGO VIEW</div>
-        <div style="position:absolute;bottom:14px;font:700 10px 'Space Mono';color:#6f93a6">وب‌سایت آواتک · 800×800</div>
-      </div>
-      </div>
+  <section id="trust">
+    <div class="glass">
+      <h2>اعتماد مشتریان</h2>
+      <p>بیش از ۲۰۰ برند مطرح به ما اعتماد کرده‌اند.</p>
     </div>
   </section>
 
-  <!-- 09 FINAL CTA -->
-  <section id="cta" data-screen-label="09 Final CTA" data-stop="9" style="min-height:150vh;display:flex;align-items:center;padding:90px 24px">
-    <div style="max-width:680px;margin:0 auto;width:100%;text-align:center">
-      <h2 data-reveal="" style="margin:0;font:800 clamp(28px,3.6vw,46px)/1.3 Vazirmatn">ما بــرای شما فرصت‌ها را <span style="background:linear-gradient(120deg,#2bb8ec,#7fe0ff);-webkit-background-clip:text;background-clip:text;color:transparent">شــکــار</span> می‌کنیم</h2>
-      <p data-reveal="" style="margin:16px 0 32px;font:500 16px/1.9 Vazirmatn;color:#a9c4d2">بزرگ‌ترین و بیشترین ســهــم از بازارتان برای شماست، اگر <b style="color:#eaf6fb">اصولی</b> و <b style="color:#eaf6fb">خلاقانه</b> بازاریابی کنید</p>
-      <div id="form-cta-3d-bottom" style="width:100%;height:450px;position:relative;display:flex;align-items:center;justify-content:center;font:700 20px Vazirmatn;color:#2bb8ec">فرم هوشمند تماس آواتک</div>
-      </div>
+  <section id="cta">
+    <div class="glass">
+      <h2>آماده‌اید؟</h2>
+      <p>همین حالا اولین قدم را برای تغییر بزرگ بردارید.</p>
+      <button class="btn" onclick="openModal()">ارسال درخواست</button>
     </div>
   </section>
-
-  <!-- 10 FOOTER -->
-  <footer data-screen-label="10 Footer" data-stop="10" style="position:relative;padding:60px 24px 30px;background:linear-gradient(180deg,rgba(8,14,20,.4),rgba(7,10,15,.95));border-top:1px solid rgba(43,184,236,.15)">
-    <div style="max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1.1fr;gap:36px">
-      <div>
-        <img src="uploads/LOGO-2.png" alt="AVATIC" style="height:46px;margin-bottom:14px">
-        <p style="margin:0;font:400 13px/1.95 Vazirmatn;color:#88a6b6;max-width:300px">آژانس دیجیتال مارکتینگ آواتک افتخار فعالیت از سال ۱۳۹۸ با همکاری با بیش از صد مشتری و رشد کسب‌وکارهای آنلاین را دارد.</p>
-        <div style="display:flex;gap:10px;margin-top:18px">
-          <a href="https://t.me/+989966330107" target="_blank" rel="noopener" style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(43,184,236,.3);display:flex;align-items:center;justify-content:center;color:#8fd6f4;text-decoration:none;font:700 11px 'Space Mono';transition:transform .2s">TG</a>
-        <a href="#" style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(43,184,236,.3);display:flex;align-items:center;justify-content:center;color:#8fd6f4;text-decoration:none;font:700 11px 'Space Mono'">in</a>
-        <a href="#" style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(43,184,236,.3);display:flex;align-items:center;justify-content:center;color:#8fd6f4;text-decoration:none;font:700 11px 'Space Mono'">IG</a>
-        <a href="#" style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(43,184,236,.3);display:flex;align-items:center;justify-content:center;color:#8fd6f4;text-decoration:none;font:700 11px 'Space Mono'">YT</a>
-        </div>
-      </div>
-      <div>
-        <h4 style="margin:0 0 14px;font:700 14px Vazirmatn;color:#eaf6fb">صفحات</h4>
-        <div style="display:flex;flex-direction:column;gap:10px;font:400 13px Vazirmatn">
-          <a href="#cta" style="color:#a9c4d2;text-decoration:none">دوره تــورنــادو</a>
-          <a href="#hero" style="color:#a9c4d2;text-decoration:none">خانه</a>
-          <a href="#" style="color:#a9c4d2;text-decoration:none">نمونه کارها</a>
-        </div>
-      </div>
-      <div>
-        <h4 style="margin:0 0 14px;font:700 14px Vazirmatn;color:#eaf6fb">خدمات</h4>
-        <div style="display:flex;flex-direction:column;gap:10px;font:400 13px Vazirmatn">
-          <a href="#" style="color:#a9c4d2;text-decoration:none">طراحی وب‌سایت</a>
-          <a href="#" style="color:#a9c4d2;text-decoration:none">بازاریابی آنلاین و افزایش فروش</a>
-        </div>
-      </div>
-      <div>
-        <h4 style="margin:0 0 14px;font:700 14px Vazirmatn;color:#eaf6fb">ارتباط با ما</h4>
-        <div style="display:flex;flex-direction:column;gap:10px;font:400 13px 'Space Mono',monospace;color:#a9c4d2;direction:ltr;text-align:right">
-          <a href="https://t.me/+989966330107" target="_blank" rel="noopener" style="color:#a9c4d2;text-decoration:none">Telegram</a>
-          <span>021-33073906</span>
-          <span>0996 633 0107</span>
-        </div>
-        <div style="margin-top:14px;width:84px;height:84px;border-radius:12px;border:1px dashed rgba(255,255,255,.2);background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 7px,transparent 7px 14px);display:flex;align-items:center;justify-content:center;font:700 9px 'Space Mono';color:#6f93a6;text-align:center">E-NAMAD</div>
-      </div>
-    </div>
-    <div style="max-width:1040px;margin:30px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);text-align:center;font:400 12px 'Space Mono',monospace;color:#5a7585;direction:ltr">© Copyright 2026 powered by <span style="color:#8fd6f4">Avatice.com</span></div>
-  </footer>
-
 </main>
-</x-dc>
-<script type="text/x-dc" data-dc-script>
-class Component extends DCLogic {
-  constructor(props){
-    super(props);
-    this.canvasRef = React.createRef();
-    this.railRef = React.createRef();
-    this.stopRef = React.createRef();
-    this.state = { menuOpen:false, tIndex:0 };
-    this._t = [
-      { name:'محسن کاوشی', title:'مدیر مارکتینگ لینگامو', stars:'★★★★½',
-        text:'اگر نخوام تبلیغاتی حرف بزنم، واقعاً همکاری با سجاد شعیب و تیمش خیلی هیجان‌انگیزه. تو هفتهٔ دوم از همکاری‌مون وقتی تبلیغات‌مون رو اجرا کردن به‌قدری تعداد مشتری‌هامون زیاد شد که مجبور شدیم تبلیغات رو متوقف کنیم تا همین مشتری‌های جدید رو هندل کنیم.' },
-      { name:'سعید امینی', title:'مدیرعامل کالانه', stars:'★★★★☆',
-        text:'اگه بخوام خیلی سریع تجربهٔ کار با تیم کوچیک ولی متخصص آواتک رو بگم، فقط میشه گفت تکنیک‌ها و برنامه‌های این تیم «واقعاً کار میکنه!!». عجیبه که روش کارشون رو نمیگن ولی خب نتیجه‌اش مهمه که عالیه. ما همچنان باهاشون همکاری می‌کنیم.' },
-      { name:'سوروش برزگر', title:'کارشناس مارکتینگ آی‌سی‌کده', stars:'★★★★★',
-        text:'تفاوت بزرگ سجاد شعیب و تیمش با بقیهٔ آژانس‌ها اینه که خیلی اهل تشریفات و کارهای غیرضروری و وقت‌تلف‌کن نیستن (مثل ۹۰٪ آژانس‌های دیگه). خیلی سریع میرن سراغ کار و نتیجهٔ کار رو میذارن جلوت 😃' },
-      { name:'علی شاه‌آبادی', title:'صاحب برند لوتوس', stars:'★★★★☆',
-        text:'نمیدونم چرا اینقدر دیر این تیم رو پیدا کردم! چون بدون تعارف تمام نیازهای ما رو تو بخش مارکتینگ و بازاریابی و اومدن مشتری رو حل کردن و واقعاً یه باری رو از رو دوش ما برداشتن.' }
-    ];
-  }
 
-  toFa(n){ return String(n).replace(/\d/g, d=>'۰۱۲۳۴۵۶۷۸۹'[d]); }
-
-  renderVals(){
-    const i = this.state.tIndex, t = this._t;
-    return {
-      canvasRef:this.canvasRef, railRef:this.railRef, stopRef:this.stopRef,
-      toggleMenu:()=>this.setState(s=>({menuOpen:!s.menuOpen})),
-      closeMenu:()=>this.setState({menuOpen:false}),
-      menuShift:this.state.menuOpen?'0':'-100%',
-      menuOpacity:this.state.menuOpen?'1':'0',
-      menuEvents:this.state.menuOpen?'auto':'none',
-      current:t[i],
-      nextT:()=>this.setState(s=>({tIndex:(s.tIndex+1)%t.length})),
-      prevT:()=>this.setState(s=>({tIndex:(s.tIndex-1+t.length)%t.length})),
-      dots:t.map((_,k)=>({ click:()=>this.setState({tIndex:k}), bg: k===i ? '#2bb8ec' : 'rgba(255,255,255,.25)' }))
-    };
-  }
-
-  componentDidMount(){
-    this._autoT = setInterval(()=>this.setState(s=>({tIndex:(s.tIndex+1)%this._t.length})), 6000);
-    this._initReveals();
-    this._waitThree(0);
-    this._sweeps = 0;
-    this._sweep = setInterval(()=>{ this._checkScene(); if(++this._sweeps>30) clearInterval(this._sweep); }, 120);
-    this._onSceneScroll = ()=>this._checkScene();
-    window.addEventListener('scroll', this._onSceneScroll, {passive:true});
-    this._checkScene();
-  }
-  componentWillUnmount(){
-    clearInterval(this._autoT);
-    clearInterval(this._sweep);
-    if(this._raf) cancelAnimationFrame(this._raf);
-    window.removeEventListener('scroll', this._onSceneScroll);
-    window.removeEventListener('scroll', this._onScroll);
-    window.removeEventListener('resize', this._onResize);
-    window.removeEventListener('mousemove', this._onMouse);
-  }
-
-  _initReveals(){
-    document.querySelectorAll('[data-reveal]').forEach(el=>{
-      // parent panel: flies in from tunnel depth
-      el.style.opacity='0';
-      el.style.transform='perspective(1000px) translateZ(-240px) scale(0.82)';
-      el.style.filter='blur(4px)';
-      el.style.transition='opacity 1s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.16,1,.3,1), filter .8s ease';
-      // find content root (skip porthole ring divs if wrapped)
-      let cr = el;
-      const real = [...el.children].filter(k => k.style.pointerEvents !== 'none');
-      if(real.length === 1 && el.children.length > 1) cr = real[0];
-      // stagger each direct child block
-      let idx = 0;
-      [...cr.children].forEach(k=>{
-        if(k.style.position === 'absolute') return; // skip watermarks / decorative
-        k.style.opacity='0';
-        k.style.transform='translateY(28px) scale(0.94)';
-        const d = (0.2 + idx*0.1).toFixed(2);
-        k.style.transition='opacity .7s cubic-bezier(.2,.7,.2,1) '+d+'s, transform .7s cubic-bezier(.16,1,.3,1) '+d+'s';
-        idx++;
-      });
-    });
-  }
-
-  _checkScene(){
-    const vh = window.innerHeight, self=this;
-    document.querySelectorAll('[data-reveal]').forEach(el=>{
-      if(el.dataset.shown) return;
-      const r = el.getBoundingClientRect();
-      if(r.top < vh*0.9 && r.bottom > 0){
-        el.dataset.shown='1';
-        // panel arrives from tunnel depth
-        el.style.opacity='1';
-        el.style.transform='none';
-        el.style.filter='none';
-        // cascade children in with stagger (delays set during init)
-        let cr = el;
-        const real = [...el.children].filter(k => k.style.pointerEvents !== 'none');
-        if(real.length === 1 && el.children.length > 1) cr = real[0];
-        [...cr.children].forEach(k=>{
-          if(k.style.position === 'absolute') return;
-          k.style.opacity='1';
-          k.style.transform='none';
-        });
-      }
-    });
-    document.querySelectorAll('[data-count]').forEach(el=>{
-      if(el.dataset.counted) return;
-      const r = el.getBoundingClientRect();
-      if(r.top < vh*0.85 && r.bottom > 0){
-        el.dataset.counted='1';
-        const target=+el.getAttribute('data-count'), dur=1500, t0=performance.now();
-        const step=(now)=>{ const p=Math.min((now-t0)/dur,1); const ease=1-Math.pow(1-p,3); el.textContent=self.toFa(Math.round(target*ease)); if(p<1) requestAnimationFrame(step); };
-        requestAnimationFrame(step);
-      }
-    });
-  }
-
-  _waitThree(tries){
-    if(window.THREE){ this._initThree(); return; }
-    if(tries>60) return;
-    setTimeout(()=>this._waitThree(tries+1), 80);
-  }
-
-  _initThree(){
-    const THREE = window.THREE;
-    const canvas = this.canvasRef.current; if(!canvas) return;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-    const W=()=>window.innerWidth, H=()=>window.innerHeight;
-    renderer.setSize(W(),H());
-
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x070a0f, 28, 230);
-    const cam = new THREE.PerspectiveCamera(62, W()/H(), 0.1, 600);
-    cam.position.set(0,0,30);
-
-    scene.add(new THREE.AmbientLight(0x0a1a2a, 0.5));
-    const p1 = new THREE.PointLight(0x2bb8ec, 3.0, 150); p1.position.set(8,10,20); scene.add(p1);
-    const p2 = new THREE.PointLight(0x7fe0ff, 2.0, 150); p2.position.set(-12,-6,12); scene.add(p2);
-    const p3 = new THREE.PointLight(0xffffff, 1.5, 100); scene.add(p3); // Follow light
-    const dir = new THREE.DirectionalLight(0xffffff,0.8); dir.position.set(0,5,10); scene.add(dir);
-
-    // ---- AVATIC arrow geometry (extruded chevron, inner cutout + bottom notch) ----
-
-        // ---- AVATIC Logo (GLB) ----
-    const arrow = new THREE.Group();
-    scene.add(arrow);
-    const gltfLoader = new THREE.GLTFLoader();
-    const arrowMat = new THREE.MeshPhysicalMaterial({ color:0x2bb8ec, emissive:0x2bb8ec, emissiveIntensity:0.6, metalness:0.9, roughness:0.1, clearcoat:1 });
-    gltfLoader.load('./apex-logo-3d-mr1iuvdd.glb', (gltf) => {
-      const model = gltf.scene;
-      model.traverse(n => {
-        if(n.isMesh) {
-          n.material = arrowMat;
-        }
-      });
-      model.scale.set(0.6, 0.6, 0.6);
-      model.rotation.set(0, Math.PI, 0); // Face the camera
-      arrow.add(model);
-    });
-
-    // ---- z range used to recycle (wrap) tunnel content ----
-    const Z_FAR = -550, Z_NEAR = 24, SPAN = Z_NEAR - Z_FAR;
-    const wrap = (obj, camZ)=>{ if(obj.position.z > camZ + 16){ obj.position.z -= SPAN; } };
-
-    // ---- winding path of the tunnel: horizontal + vertical offset per depth ----
-    // New Advanced Path System with "Rooms"
-    let pathScale = W() < 768 ? 0.6 : 1.0;
-    const ROOMS = [
-      { z: 30,  type: 'tunnel',  r: 15,  color: 0x14587f }, // Hero
-      { z: -30, type: 'open',    r: 45,  color: 0x2bb8ec }, // Strategy
-      { z: -90, type: 'square',  r: 25,  color: 0x0e3f5c }, // Logos
-      { z: -150,type: 'tunnel',  r: 12,  color: 0x7fe0ff }, // Services
-      { z: -210,type: 'open',    r: 50,  color: 0x3f86ad }, // Stats
-      { z: -270,type: 'tunnel',  r: 18,  color: 0x14587f }, // Portfolio
-      { z: -330,type: 'square',  r: 30,  color: 0x2bb8ec }, // Testimonials
-      { z: -390,type: 'open',    r: 40,  color: 0x0e3f5c }, // Differentiation
-      { z: -450,type: 'tunnel',  r: 15,  color: 0x7fe0ff }, // CTA
-      { z: -510,type: 'square',  r: 35,  color: 0x3f86ad }  // Footer
-    ];
-
-    const bendX = z => {
-      let x = (Math.sin(z * 0.011) * 17 + Math.cos(z * 0.033) * 4.5) * pathScale;
-      ROOMS.forEach(room => {
-        const dist = Math.abs(z - room.z);
-        if (dist < 40) {
-          const influence = 1 - (dist / 40);
-          x += Math.sin(z * 0.1) * 10 * influence;
-        }
-      });
-      return x;
-    };
-    const bendY = z => {
-      let y = (Math.cos(z * 0.015) * 10 + Math.sin(z * 0.027) * 3) * pathScale;
-      ROOMS.forEach(room => {
-        const dist = Math.abs(z - room.z);
-        if (dist < 40) {
-          const influence = 1 - (dist / 40);
-          y += Math.cos(z * 0.1) * 10 * influence;
-        }
-      });
-      return y;
-    };
-    const bend = z => ({ x: bendX(z), y: bendY(z) });
-
-    // Post-processing setup
-    const composer = new THREE.EffectComposer(renderer);
-    const renderPass = new THREE.RenderPass(scene, cam);
-    composer.addPass(renderPass);
-
-    const bloomPass = new THREE.UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      0.6, // strength
-      0.4, // radius
-      0.85 // threshold
-    );
-    composer.addPass(bloomPass);
-
-    // ---- creative marketing-themed 3D icons flying through the tunnel ----
-    // shared low-poly geometries
-    const G = {
-      box: new THREE.BoxGeometry(1,1,1),
-      cyl: new THREE.CylinderGeometry(1,1,1,18),
-      cone: new THREE.ConeGeometry(1,1,18),
-      coneOpen: new THREE.ConeGeometry(1,1,20,1,true),
-      sph: new THREE.SphereGeometry(1,16,12),
-      torus: (r,t,seg)=> new THREE.TorusGeometry(r,t||0.08,8,seg||32)
-    };
-    // 5-point review star (extruded)
-    const starShape = new THREE.Shape();
-    for(let i=0;i<10;i++){ const r=i%2?0.46:1.05, a=i/10*Math.PI*2 - Math.PI/2, x=Math.cos(a)*r, y=Math.sin(a)*r; i?starShape.lineTo(x,y):starShape.moveTo(x,y); }
-    starShape.closePath();
-    const starGeo = new THREE.ExtrudeGeometry(starShape,{ depth:0.32, bevelEnabled:true, bevelThickness:0.06, bevelSize:0.06, bevelSegments:1 }); starGeo.center();
-
-    const palette = [0x2bb8ec, 0x7fe0ff, 0x1f9cd6, 0x158bcb, 0x49c6f0];
-    const mkMat = (col,wire)=> wire
-      ? new THREE.MeshPhysicalMaterial({
-          color:col, wireframe:true, transparent:true, opacity:0.5,
-          emissive: col, emissiveIntensity: 0.2
-        })
-      : new THREE.MeshPhysicalMaterial({
-          color:col, metalness:0.9, roughness:0.1,
-          emissive:0x0a3f63, emissiveIntensity:0.45,
-          clearcoat: 1.0, clearcoatRoughness: 0.1,
-          reflectivity: 1.0
-        });
-
-    const makeIcon = (type, mat)=>{
-      const g = new THREE.Group();
-      const add = (geo, fn)=>{ const me = new THREE.Mesh(geo, mat); fn && fn(me); g.add(me); return me; };
-      if(type==='chart'){                         // growth bar chart
-        [0.7,1.1,1.6,2.2].forEach((h,i)=> add(G.box, me=>{ me.scale.set(0.42,h,0.42); me.position.set(-1.1+i*0.72, h/2-1.1, 0); }));
-      } else if(type==='target'){                 // bullseye / targeting
-        [1.3,0.85,0.42].forEach(r=> add(G.torus(r,0.09,40)));
-        add(G.sph, me=> me.scale.setScalar(0.2));
-      } else if(type==='rocket'){                 // launch / growth
-        add(G.cyl, me=> me.scale.set(0.42,1.3,0.42));
-        add(G.cone, me=>{ me.scale.set(0.42,0.7,0.42); me.position.y=1.0; });
-        for(let k=0;k<3;k++){ const a=k/3*Math.PI*2; add(G.box, me=>{ me.scale.set(0.12,0.5,0.42); me.position.set(Math.cos(a)*0.42,-0.55,Math.sin(a)*0.42); me.rotation.y=-a; }); }
-        add(G.sph, me=>{ me.scale.setScalar(0.15); me.position.set(0,0.25,0.42); });
-      } else if(type==='star'){                   // 5-star reviews
-        add(starGeo);
-      } else if(type==='coin'){                   // revenue / ROI
-        add(G.cyl, me=>{ me.scale.set(1.0,0.16,1.0); });
-        add(G.torus(1.0,0.09,32), me=>{ me.rotation.x=Math.PI/2; });
-      } else if(type==='bubble'){                 // chat / WhatsApp
-        add(G.sph, me=> me.scale.set(1.1,0.85,0.55));
-        add(G.cone, me=>{ me.scale.set(0.34,0.5,0.34); me.position.set(-0.5,-0.7,0); me.rotation.z=0.5; });
-        [-0.4,0,0.4].forEach(x=> add(G.sph, me=>{ me.scale.setScalar(0.12); me.position.set(x,0,0.4); }));
-      } else if(type==='gear'){                    // automation / optimization
-        add(G.torus(0.85,0.22,24));
-        for(let k=0;k<10;k++){ const a=k/10*Math.PI*2; add(G.box, me=>{ me.scale.set(0.22,0.22,0.42); me.position.set(Math.cos(a)*1.0,Math.sin(a)*1.0,0); me.rotation.z=a; }); }
-        add(G.torus(0.32,0.1,18));
-      } else if(type==='megaphone'){               // advertising
-        add(G.coneOpen, me=>{ me.scale.set(0.78,1.3,0.78); me.rotation.z=-Math.PI/2; me.position.x=0.2; });
-        add(G.torus(0.78,0.07,28), me=>{ me.rotation.y=Math.PI/2; me.position.x=0.85; });
-        add(G.cyl, me=>{ me.scale.set(0.12,0.55,0.12); me.position.set(-0.55,-0.45,0); me.rotation.z=0.45; });
-      } else if(type==='funnel'){                  // sales / lead funnel
-        add(G.coneOpen, me=>{ me.scale.set(1.1,1.1,1.1); me.rotation.x=Math.PI; me.position.y=0.25; });
-        add(G.cyl, me=>{ me.scale.set(0.2,0.5,0.2); me.position.y=-0.65; });
-        add(G.sph, me=>{ me.scale.setScalar(0.14); me.position.y=-1.25; });
-      } else {                                     // network / reach
-        add(G.sph, me=> me.scale.setScalar(0.42));
-        add(G.torus(1.0,0.05,40), me=>{ me.rotation.x=-0.5; });
-        add(G.torus(1.0,0.05,40), me=>{ me.rotation.x=1.1; me.rotation.y=0.6; });
-        for(let k=0;k<4;k++){ const a=k/4*Math.PI*2; add(G.sph, me=>{ me.scale.setScalar(0.16); me.position.set(Math.cos(a)*1.0,Math.sin(a)*1.0,0); }); }
-      }
-      return g;
-    };
-
-    const ICON_TYPES = ['chart','target','rocket','star','coin','bubble','gear','megaphone','funnel','network'];
-    const icons = [];
-    for(let i=0;i<60;i++){
-      const type = ICON_TYPES[(Math.random()*ICON_TYPES.length)|0];
-      const mat = mkMat(palette[i%palette.length], Math.random()<0.7);
-      const o = makeIcon(type, mat);
-      const ang = Math.random()*Math.PI*2, rad = 4.5 + Math.random()*9.5;
-      const hx=Math.cos(ang)*rad, hy=Math.sin(ang)*rad, z0=Z_NEAR - 8 - Math.random()*SPAN;
-      o.position.set(hx+bendX(z0), hy+bendY(z0), z0);
-      o.scale.setScalar(0.55 + Math.random()*1.05);
-      o.rotation.set(Math.random()*6, Math.random()*6, Math.random()*6);
-      o.userData = { hx, hy, rx:(Math.random()-0.5)*0.012, ry:(Math.random()-0.5)*0.026, rz:(Math.random()-0.5)*0.012, drift:0.4+Math.random()*0.9, bob:Math.random()*6, bAmp:0.3+Math.random()*0.6 };
-      scene.add(o); icons.push(o);
-    }
-
-    // ---- structural tunnel: wireframe tubes bent along the winding path ----
-    const pathPts = [];
-    for(let z=Z_NEAR+50; z>=Z_FAR-50; z-=8){ pathPts.push(new THREE.Vector3(bendX(z), bendY(z), z)); }
-    const tunnelCurve = new THREE.CatmullRomCurve3(pathPts);
-    const tunnels = [];
-    [[15.5,0x14587f,0.16],[12,0x0e3f5c,0.13]].forEach(([r,col,op])=>{
-      const tg = new THREE.TubeGeometry(tunnelCurve, 220, r, 26, false);
-      const tm = new THREE.MeshBasicMaterial({ color:col, wireframe:true, transparent:true, opacity:op });
-      scene.add(new THREE.Mesh(tg, tm)); tunnels.push(tm);
-    });
-
-    // ---- streaming wall rings (rush past for speed/depth) ----
-    const wallRings = [];
-    const WR = 46;
-    for(let i=0;i<WR;i++){
-      const r = 13 + Math.random()*3;
-      const g = new THREE.TorusGeometry(r, 0.06, 6, 80);
-      const m = new THREE.MeshBasicMaterial({ color: Math.random()<0.3?0x7fe0ff:0x2bb8ec, transparent:true, opacity:0.32, blending:THREE.AdditiveBlending });
-      const mesh = new THREE.Mesh(g, m);
-      const hx=(Math.random()-0.5)*2, hy=(Math.random()-0.5)*2, z0=Z_NEAR - i*(SPAN/WR);
-      mesh.position.set(hx+bendX(z0), hy+bendY(z0), z0);
-      mesh.rotation.z = Math.random()*Math.PI;
-      mesh.userData = { hx, hy, spin:(Math.random()-0.5)*0.003 };
-      scene.add(mesh); wallRings.push(mesh);
-    }
-
-    // ---- inner depth rings (layered, varied) ----
-    const rings = [];
-    for(let i=0;i<22;i++){
-      const r = 5 + Math.random()*5;
-      const g = new THREE.TorusGeometry(r, 0.05, 6, 64);
-      const m = new THREE.MeshBasicMaterial({ color:0x2bb8ec, transparent:true, opacity:0.22 });
-      const mesh = new THREE.Mesh(g, m);
-      const hx=(Math.random()-0.5)*4, hy=(Math.random()-0.5)*4, z0=Z_NEAR - 8 - i*(SPAN/22);
-      mesh.position.set(hx+bendX(z0), hy+bendY(z0), z0);
-      mesh.rotation.z = Math.random()*Math.PI;
-      mesh.userData = { hx, hy, spin:(Math.random()-0.5)*0.004 };
-      scene.add(mesh); rings.push(mesh);
-    }
-
-    // ---- drifting debris (wireframe shards for detail) ----
-    const debris = [];
-    const dGeos = [ new THREE.OctahedronGeometry(0.7), new THREE.IcosahedronGeometry(0.6), new THREE.TetrahedronGeometry(0.8) ];
-    for(let i=0;i<30;i++){
-      const g = dGeos[i%dGeos.length];
-      const m = new THREE.MeshBasicMaterial({ color:0x3f86ad, wireframe:true, transparent:true, opacity:0.4 });
-      const mesh = new THREE.Mesh(g, m);
-      const ang = Math.random()*Math.PI*2, rad = 5 + Math.random()*9;
-      const hx=Math.cos(ang)*rad, hy=Math.sin(ang)*rad, z0=Z_NEAR - Math.random()*SPAN;
-      mesh.position.set(hx+bendX(z0), hy+bendY(z0), z0);
-      const sc = 0.4 + Math.random()*1.1; mesh.scale.set(sc,sc,sc);
-      mesh.userData = { hx, hy, rx:(Math.random()-0.5)*0.02, ry:(Math.random()-0.5)*0.02 };
-      scene.add(mesh); debris.push(mesh);
-    }
-
-
-    // ---- 3D Interactive UI (The "Form") ----
-    const uiElements = [];
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-
-    const makeButton3D = (text, x, y, z, col) => {
-      const g = new THREE.BoxGeometry(4, 1.2, 0.2);
-      const m = new THREE.MeshStandardMaterial({ color: col, metalness: 0.8, roughness: 0.2, emissive: col, emissiveIntensity: 0.5 });
-      const b = new THREE.Mesh(g, m);
-      b.position.set(x, y, z);
-      b.userData = { type: 'button', text: text, originalScale: 1, originalIntensity: 0.5 };
-      scene.add(b);
-      uiElements.push(b);
-
-      // Floating label (Simplified for now, would use TextGeometry in a full build)
-      const labelG = new THREE.PlaneGeometry(3, 0.8);
-      const labelM = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide });
-      const label = new THREE.Mesh(labelG, labelM);
-      label.position.set(0, 0, 0.15);
-      b.add(label);
-      return b;
-    };
-
-    // Place UI in "Rooms"
-    const heroBtn = makeButton3D('START', 10, 0, 10, 0x2bb8ec);
-    const ctaBtn = makeButton3D('SUBMIT', 10, 0, -470, 0x2bb8ec);
-
-    window.addEventListener('mousedown', (e) => {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(mouse, cam);
-      const intersects = raycaster.intersectObjects(uiElements);
-      if (intersects.length > 0) {
-        const obj = intersects[0].object;
-        if (obj.userData.type === 'button') {
-          obj.scale.setScalar(0.9);
-          obj.material.emissiveIntensity = 2.0;
-          setTimeout(() => {
-            obj.scale.setScalar(1);
-            obj.material.emissiveIntensity = obj.userData.originalIntensity;
-            const modal = document.getElementById('lead-modal');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.style.opacity = '1', 10);
-          }, 150);
-        }
-      }
-    });
-
-    // ---- Room-Specific Hero Objects ----
-    const heroObjects = [];
-    const makeHeroObject = (roomIdx, type) => {
-      const room = ROOMS[roomIdx];
-      const g = new THREE.Group();
-      const mat = mkMat(room.color, false);
-
-      if(type === 'chart') {
-        for(let i=0; i<3; i++) {
-          const bar = new THREE.Mesh(G.box, mat);
-          bar.scale.set(0.8, 1.5 + i*1.2, 0.8);
-          bar.position.set(-2 + i*2, bar.scale.y/2 - 2, 0);
-          g.add(bar);
-        }
-      } else if(type === 'globe') {
-        const sph = new THREE.Mesh(G.sph, mat);
-        sph.scale.setScalar(3);
-        const ring = new THREE.Mesh(G.torus(4, 0.1), mat);
-        ring.rotation.x = Math.PI/2;
-        g.add(sph, ring);
-      } else if(type === 'automation') {
-        for(let i=0; i<3; i++) {
-          const gear = new THREE.Mesh(G.torus(2, 0.5, 8), mat);
-          gear.position.set(Math.sin(i*2)*3, Math.cos(i*2)*3, 0);
-          gear.userData = { spin: (i%2?1:-1) * 0.02 };
-          g.add(gear);
-        }
-      }
-
-      g.position.set(bendX(room.z), bendY(room.z), room.z);
-      scene.add(g);
-      heroObjects.push({ group: g, room: room, type: type });
-    };
-
-    makeHeroObject(1, 'chart');      // Strategy
-    makeHeroObject(4, 'globe');      // Stats
-    makeHeroObject(7, 'automation'); // Differentiation
-
-    // ---- Holographic 3D Labels ----
-    const holograms = [];
-    const makeHologram = (text, z, col) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 512; canvas.height = 128;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = 'transparent';
-      ctx.fillRect(0,0,512,128);
-      ctx.font = 'bold 60px Vazirmatn';
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#' + new THREE.Color(col).getHexString();
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = ctx.fillStyle;
-      ctx.fillText(text, 256, 80);
-
-      const tex = new THREE.CanvasTexture(canvas);
-      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
-      const plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 2), mat);
-      plane.position.set(bendX(z), bendY(z) + 4, z);
-      scene.add(plane);
-      holograms.push({ mesh: plane, z: z });
-    };
-
-    ROOMS.forEach(r => {
-       if(r.type === 'open' || r.type === 'square') {
-         makeHologram(r.type.toUpperCase(), r.z, r.color);
-       }
-    });
-
-    // ---- Particle Trails ----
-    const trailCount = 20;
-    const trailPts = [];
-    const trailMat = new THREE.PointsMaterial({ color: 0x7fe0ff, size: 0.15, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
-    const trailGeo = new THREE.BufferGeometry();
-    const trailPos = new Float32Array(trailCount * 3);
-    trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
-    const trailSystem = new THREE.Points(trailGeo, trailMat);
-    scene.add(trailSystem);
-
-    // ---- Audio Infrastructure ----
-    const listener = new THREE.AudioListener();
-    cam.add(listener);
-    const sound = new THREE.Audio(listener);
-    const audioLoader = new THREE.AudioLoader();
-
-    // We will use a silent placeholder/oscillator for the prototype to avoid 404s
-    // but the infrastructure is ready for real assets.
-    let audioStarted = false;
-    window.addEventListener('click', () => {
-       if(audioStarted) return;
-       audioStarted = true;
-       // Real implementations would load a file here:
-       // audioLoader.load('path/to/ambient.mp3', (buffer) => { ... });
-       console.log("Audio Engine Ready");
-    });
-    // ---- starfield (two layers: near fast + far slow dust) ----
-    const mkStars=(count,size,col,opacity,spread)=>{
-      const p=new Float32Array(count*3), home=new Float32Array(count*2);
-      for(let i=0;i<count;i++){ const hx=(Math.random()-0.5)*spread, hy=(Math.random()-0.5)*spread, z=Z_NEAR-Math.random()*SPAN; home[i*2]=hx; home[i*2+1]=hy; p[i*3]=hx+bendX(z); p[i*3+1]=hy+bendY(z); p[i*3+2]=z; }
-      const g=new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p,3));
-      const m=new THREE.PointsMaterial({ color:col, size, transparent:true, opacity, sizeAttenuation:true, blending:THREE.AdditiveBlending });
-      const pts=new THREE.Points(g,m); scene.add(pts); return { g, pts, count, home, spread };
-    };
-    const starsNear = mkStars(1500, 0.5, 0x9fe6ff, 0.9, 120);
-    const starsFar  = mkStars(900, 0.28, 0x4f9fd0, 0.6, 150);
-    const N=starsNear.count, pg=starsNear.g, pm=starsNear.pts;
-
-    // ---- state ----
-    let progress=0, targetProgress=0, camZ=30, mx=0, my=0, tmx=0, tmy=0;
-    const stops = document.querySelectorAll('[data-stop]').length || 10;
-    const sectionEls = [...document.querySelectorAll('main > section, main > footer')];
-    sectionEls.forEach(el=>{ el.style.willChange='transform'; });
-
-    this._onScroll=()=>{
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      targetProgress = max>0 ? window.scrollY/max : 0;
-      if(this.railRef.current) this.railRef.current.style.height = (8 + progress*92)+'%';
-      if(this.stopRef.current){ const n=Math.min(stops, Math.floor(progress*stops)+1); this.stopRef.current.innerHTML = String(n).padStart(2,'0')+'<span style="color:#4a6675">/'+stops+'</span>'; }
-    };
-    this._onResize=()=>{
-      const width = W(), height = H();
-      const isMobile = width < 768;
-      cam.aspect = width / height;
-      cam.fov = isMobile ? 75 : 62; // Wider FOV for mobile portrait
-      cam.updateProjectionMatrix();
-      renderer.setSize(width, height);
-      composer.setSize(width, height);
-
-      // Adjust path intensity for mobile
-      pathScale = isMobile ? 0.6 : 1.0;
-    };
-
-    this._onMouse=(e)=>{ tmx=(e.clientX/W()-0.5); tmy=(e.clientY/H()-0.5); };
-    window.addEventListener('scroll', this._onScroll, {passive:true});
-    window.addEventListener('resize', this._onResize);
-    window.addEventListener('mousemove', this._onMouse);
-    this._onScroll();
-    this._onResize(); // Initial call
-
-    // Performance optimization for mobile
-    if(W() < 768) {
-      bloomPass.strength = 0.3;
-      renderer.setPixelRatio(1);
-    }
-
-
-    const clock = new THREE.Clock();
-    const streamStars=(layer, speed, camZ)=>{
-      const a=layer.g.attributes.position.array, hm=layer.home;
-      for(let i=0;i<layer.count;i++){
-        let z=a[i*3+2]+speed;
-        if(z>camZ+12){ z=camZ-(SPAN-20); hm[i*2]=(Math.random()-0.5)*layer.spread; hm[i*2+1]=(Math.random()-0.5)*layer.spread; }
-        a[i*3]=hm[i*2]+bendX(z); a[i*3+1]=hm[i*2+1]+bendY(z); a[i*3+2]=z;
-      }
-      layer.g.attributes.position.needsUpdate=true;
-    };
-    const loop=()=>{
-      progress += (targetProgress - progress) * 0.04;
-      this._raf=requestAnimationFrame(loop);
-      const dt=Math.min(clock.getDelta(),0.05), et=clock.elapsedTime;
-
-      // Determine current room and interpolate environment
-      let activeRoom = ROOMS[0];
-      for(const r of ROOMS) {
-        if(camZ <= r.z + 30 && camZ >= r.z - 30) {
-          activeRoom = r;
-          break;
-        }
-      }
-
-      const targetColor = new THREE.Color(activeRoom.color);
-      scene.fog.color.lerp(targetColor, 0.05);
-      renderer.setClearColor(scene.fog.color);
-      p1.color.lerp(targetColor, 0.05);
-      // camera flies forward through z based on scroll
-      const targetZ = 30 - progress*540;
-      const scrollVel = Math.abs(targetZ - camZ);
-      camZ += (targetZ-camZ)*0.03;
-      mx += (tmx-mx)*0.05; my += (tmy-my)*0.05;
-
-      // Dynamic FOV based on scroll speed
-      cam.fov = 62 + scrollVel * 1.5;
-      cam.updateProjectionMatrix();
-
-      // Camera rides the winding path with dynamic tilt
-      const cb=bend(camZ), lb=bend(camZ-25);
-      const lookAtTarget = new THREE.Vector3(lb.x + mx*4, lb.y - my*3, camZ-25);
-
-      cam.position.set(cb.x + mx*8, cb.y - my*6, camZ);
-      cam.lookAt(lookAtTarget);
-
-      // Roll/Tilt based on horizontal curve intensity
-      const nextBend = bend(camZ - 10);
-      const curveIntensity = (nextBend.x - cb.x) * 0.15;
-      cam.rotation.z = curveIntensity + mx * 0.1;
-      // hero arrow (kept on-axis in front of camera along the curve)
-      arrow.position.set(cb.x*0.15 + Math.sin(et*0.3)*0.4, cb.y*0.15, arrow.position.z);
-      // tilt each content section toward the mouse, echoing camera parallax — sells the
-      // glass panels as objects floating inside the tunnel rather than a flat overlay
-      if(sectionEls.length){
-        const vh2 = window.innerHeight;
-        for(const sec of sectionEls){
-          const r = sec.getBoundingClientRect();
-          const centerOff = (r.top + r.height/2 - vh2/2) / vh2;
-          const near = Math.max(0, 1 - Math.min(Math.abs(centerOff), 1));
-          const k = 0.35 + 0.65*near;
-          sec.style.transform = 'perspective(1700px) rotateY(' + (mx*6*k).toFixed(2) + 'deg) rotateX(' + (-my*5*k).toFixed(2) + 'deg) scale(' + (1-0.015*(1-near)).toFixed(3) + ')';
-        }
-      }
-      arrow.rotation.y += dt*0.5;
-      arrow.rotation.z = Math.sin(et*0.5)*0.08;
-      arrowMat.emissiveIntensity = 0.45 + Math.sin(et*1.6)*0.18;
-      // marketing icons: spin, bob, drift forward + wrap, riding the curve
-      for(const a of icons){
-        const u=a.userData;
-        a.rotation.x += u.rx; a.rotation.y += u.ry; a.rotation.z += u.rz;
-        let z=a.position.z + dt*u.drift*6;
-        if(z > camZ + 16) z -= SPAN;
-
-        const bx = bendX(z), by = bendY(z);
-        const targetX = u.hx + bx;
-        const targetY = u.hy + by + Math.sin(et*0.8+u.bob)*0.5*u.bAmp;
-
-        // Mouse scattering
-        const distToMouse = Math.sqrt(Math.pow(a.position.x - (bx + mx*15), 2) + Math.pow(a.position.y - (by - my*15), 2));
-        let scatterX = 0, scatterY = 0;
-        if(distToMouse < 8) {
-          const force = (8 - distToMouse) * 0.5;
-          scatterX = (a.position.x - (bx + mx*15)) * force;
-          scatterY = (a.position.y - (by - my*15)) * force;
-        }
-
-        a.position.x += (targetX + scatterX - a.position.x) * 0.1;
-        a.position.y += (targetY + scatterY - a.position.y) * 0.1;
-        a.position.z = z;
-      }
-      // streaming wall rings + inner rings on the curve
-      const rideRing=(r,speed)=>{ r.rotation.z += r.userData.spin; let z=r.position.z+dt*speed; if(z>camZ+16) z-=SPAN; r.position.set(r.userData.hx+bendX(z), r.userData.hy+bendY(z), z); };
-      for(const r of wallRings) rideRing(r,9);
-      for(const r of rings) rideRing(r,7);
-      // debris drift on the curve
-      for(const d of debris){ d.rotation.x += d.userData.rx; d.rotation.y += d.userData.ry; let z=d.position.z+dt*5; if(z>camZ+16) z-=SPAN; d.position.set(d.userData.hx+bendX(z), d.userData.hy+bendY(z), z); }
-      // star layers
-      streamStars(starsNear, dt*16, camZ);
-      streamStars(starsFar, dt*7, camZ);
-      // moving key light
-      p1.position.set(Math.sin(et*0.6)*10, Math.cos(et*0.5)*8, camZ+18);
-      p2.position.set(-Math.sin(et*0.4)*12, -6, camZ+10);
-      p3.position.set(mx*20, my*20, camZ+5);
-
-      // Animate Hero Objects
-      for(const h of heroObjects) {
-        h.group.rotation.y += 0.01;
-        if(h.type === 'automation') {
-          for(const child of h.group.children) child.rotation.z += child.userData.spin;
-        }
-        // Keep on path
-        const b = bend(h.room.z);
-        h.group.position.set(b.x, b.y, h.room.z);
-      }
-
-      for(const h of holograms) {
-        const b = bend(h.z);
-        h.mesh.position.set(b.x, b.y + 5 + Math.sin(et*2)*0.2, h.z);
-        h.mesh.lookAt(cam.position);
-        h.mesh.material.opacity = 0.5 + Math.sin(et*5)*0.2; // Glitch pulse
-      }
-
-      // Update Logo Trail
-      for(let i=trailCount-1; i>0; i--) {
-        trailPos[i*3] = trailPos[(i-1)*3];
-        trailPos[i*3+1] = trailPos[(i-1)*3+1];
-        trailPos[i*3+2] = trailPos[(i-1)*3+2];
-      }
-      trailPos[0] = arrow.position.x;
-      trailPos[1] = arrow.position.y;
-      trailPos[2] = arrow.position.z;
-      trailGeo.attributes.position.needsUpdate = true;
-      trailMat.opacity = Math.min(0.8, scrollVel * 0.2);
-composer.render();
-    };
-    loop();
-  }
-}
-</script>
-
-<!-- ===== LEAD GENERATION MODAL ===== -->
-<div id="lead-modal" style="position:fixed;inset:0;z-index:100;background:rgba(7,10,15,.85);backdrop-filter:blur(15px);display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity 0.4s ease">
-  <div style="background:#0e1621;border:1px solid rgba(43,184,236,.3);border-radius:28px;max-width:440px;width:100%;padding:40px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.6)">
-    <button onclick="document.getElementById('lead-modal').style.display='none'" style="position:absolute;top:24px;left:24px;background:none;border:none;color:#5a8aa0;font:700 18px 'Space Mono';cursor:pointer">✕</button>
-    <h3 style="margin:0 0 12px;font:800 24px Vazirmatn;color:#eaf6fb;text-align:center">ثبت درخواست همکاری</h3>
-    <p style="margin:0 0 32px;font:400 14px/1.7 Vazirmatn;color:#88a6b6;text-align:center">اطلاعات خود را وارد کنید تا کارشناسان آواتک در کمتر از ۲۴ ساعت با شما تماس بگیرند.</p>
-
-    <form onsubmit="event.preventDefault(); alert('درخواست شما با موفقیت ثبت شد. به زودی با شما تماس می‌گیریم.'); document.getElementById('lead-modal').style.display='none';" style="display:flex;flex-direction:column;gap:18px">
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <label style="font:700 12px Vazirmatn;color:#5a8aa0">نام و نام خانوادگی</label>
-        <input type="text" required placeholder="مثلا: علی محمدی" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:#fff;font:500 14px Vazirmatn;outline:none">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <label style="font:700 12px Vazirmatn;color:#5a8aa0">شماره تماس</label>
-        <input type="tel" required placeholder="۰۹۱۲۰۰۰۰۰۰۰" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:#fff;font:500 14px Vazirmatn;outline:none;text-align:left">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <label style="font:700 12px Vazirmatn;color:#5a8aa0">سرویس مورد نظر</label>
-        <select style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:#fff;font:500 14px Vazirmatn;outline:none;appearance:none">
-          <option>طراحی وب‌سایت ۳ بعدی</option>
-          <option>کمپین‌های دیجیتال مارکتینگ</option>
-          <option>مشاوره استراتژیک</option>
-        </select>
-      </div>
-      <button type="submit" style="margin-top:12px;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,#2bb8ec,#1273a8);color:#04121b;font:800 16px Vazirmatn;cursor:pointer;box-shadow:0 15px 35px rgba(43,184,236,.3)">ارسال درخواست</button>
+<div id="lead-modal">
+  <div class="modal-content">
+    <button onclick="closeModal()" style="position:absolute;top:20px;left:20px;background:none;border:none;color:#5a8aa0;cursor:pointer;font-size:24px">✕</button>
+    <h3 style="margin:0 0 20px;text-align:center;font-size:24px">ثبت درخواست همکاری</h3>
+    <form onsubmit="event.preventDefault(); alert('درخواست شما ثبت شد!'); closeModal();">
+      <input type="text" placeholder="نام و نام خانوادگی" required>
+      <input type="tel" placeholder="شماره تماس" required>
+      <select>
+        <option>طراحی ۳ بعدی</option>
+        <option>دیجیتال مارکتینگ</option>
+        <option>مشاوره استراتژیک</option>
+      </select>
+      <button type="submit" class="btn" style="width:100%;margin-top:0;border:none;cursor:pointer">تایید و ارسال</button>
     </form>
   </div>
 </div>
+
+<script>
+function openModal() {
+  const m = document.getElementById('lead-modal');
+  m.style.display = 'flex';
+  setTimeout(() => m.style.opacity = '1', 10);
+}
+function closeModal() {
+  const m = document.getElementById('lead-modal');
+  m.style.opacity = '0';
+  setTimeout(() => m.style.display = 'none', 400);
+}
+
+window.addEventListener('load', () => {
+  new AVATIC3D();
+});
+
+class AVATIC3D {
+  constructor(){
+    this.init();
+  }
+
+  init(){
+    const canvas = document.getElementById('three-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x070a0f, 20, 250);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
+    camera.position.z = 30;
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambient);
+    const p1 = new THREE.PointLight(0x2bb8ec, 3, 200); scene.add(p1);
+    const p2 = new THREE.PointLight(0x7fe0ff, 2, 200); scene.add(p2);
+
+    const renderScene = new THREE.RenderPass(scene, camera);
+    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+    bloomPass.threshold = 0.2;
+    bloomPass.strength = 1.4;
+    bloomPass.radius = 0.6;
+
+    const composer = new THREE.EffectComposer(renderer);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
+
+    const bend = (z) => {
+      const x = Math.sin(z * 0.012) * 15;
+      const y = Math.cos(z * 0.009) * 10;
+      return { x, y };
+    };
+
+    const ROOMS = [
+      { z: 0,    color: 0x14587f, label: 'AVATIC' },
+      { z: -100, color: 0x2bb8ec, label: 'STRATEGY' },
+      { z: -200, color: 0x0e3f5c, label: 'AUTOMATION' },
+      { z: -300, color: 0x7fe0ff, label: 'SERVICES' },
+      { z: -400, color: 0x3f86ad, label: 'STATS' },
+      { z: -500, color: 0x14587f, label: 'PORTFOLIO' },
+      { z: -600, color: 0x2bb8ec, label: 'TRUST' },
+      { z: -700, color: 0x0e3f5c, label: 'FINISH' }
+    ];
+
+    // GLB Logo
+    let logoGroup = new THREE.Group();
+    scene.add(logoGroup);
+    const loader = new THREE.GLTFLoader();
+    const logoMat = new THREE.MeshPhysicalMaterial({ color:0x2bb8ec, emissive:0x2bb8ec, emissiveIntensity:1.2, metalness:0.9, roughness:0.1 });
+    loader.load('./apex-logo-3d-mr1iuvdd.glb', (gltf) => {
+      const model = gltf.scene;
+      model.traverse(n => { if(n.isMesh) n.material = logoMat; });
+      const box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3());
+      model.scale.setScalar(3.5 / Math.max(size.x, size.y, size.z));
+      model.position.sub(box.getCenter(new THREE.Vector3()));
+      model.rotation.y = Math.PI;
+      logoGroup.add(model);
+    });
+
+    // Interaction
+    const raycaster = new THREE.Raycaster();
+    const mouse2D = new THREE.Vector2();
+    const uiElements = [];
+    const mkBtn = (text, z) => {
+      const canvasB = document.createElement('canvas');
+      const ctxB = canvasB.getContext('2d');
+      canvasB.width = 256; canvasB.height = 80;
+      ctxB.fillStyle = 'rgba(43,184,236,0.3)'; ctxB.fillRect(0,0,256,80);
+      ctxB.font = 'bold 40px Vazirmatn'; ctxB.fillStyle = '#ffffff'; ctxB.textAlign = 'center';
+      ctxB.fillText(text, 128, 55);
+      const tex = new THREE.CanvasTexture(canvasB);
+      const btn = new THREE.Mesh(new THREE.BoxGeometry(6, 2, 0.5), new THREE.MeshPhysicalMaterial({ color: 0x2bb8ec, emissive: 0x2bb8ec, emissiveIntensity: 0.5 }));
+      const lbl = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 1.8), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
+      lbl.position.z = 0.26; btn.add(lbl);
+      btn.position.z = z; scene.add(btn); uiElements.push(btn); return btn;
+    };
+    const startBtn = mkBtn('شروع همکاری', 15);
+    const endBtn = mkBtn('ارسال درخواست', -680);
+
+    // Hero Objects
+    const heroObjs = [];
+    ROOMS.forEach((r, i) => {
+      const g = new THREE.Group();
+      const mat = new THREE.MeshPhysicalMaterial({ color: r.color, emissive: r.color, emissiveIntensity: 0.4, metalness: 0.9, roughness: 0.1, transmission: 0.3, thickness: 2 });
+      if(i === 1) { // Strategy: Bars
+        for(let j=0; j<5; j++){
+          const b = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), mat);
+          b.scale.y = 2 + j*2.5; b.position.set(-6 + j*3, b.scale.y/2 - 4, 0); g.add(b);
+        }
+      } else if(i === 2) { // Automation: Rings
+        for(let j=0; j<3; j++) {
+            const t = new THREE.Mesh(new THREE.TorusGeometry(4 + j*2, 0.2, 16, 100), mat);
+            t.userData.spin = (j+1)*0.03; g.add(t);
+        }
+      } else if(i === 4) { // Stats: Globe
+        const s = new THREE.Mesh(new THREE.SphereGeometry(6, 32, 32), mat);
+        const r2 = new THREE.Mesh(new THREE.TorusGeometry(8, 0.05, 16, 100), mat);
+        r2.rotation.x = Math.PI/2; g.add(s, r2);
+      } else {
+        const ring = new THREE.Mesh(new THREE.TorusGeometry(7, 0.5, 16, 100), mat); g.add(ring);
+      }
+      g.position.z = r.z; scene.add(g); heroObjs.push(g);
+    });
+
+    // Holographic Text
+    const holograms = [];
+    ROOMS.forEach(r => {
+      const canv = document.createElement('canvas');
+      const ctx = canv.getContext('2d');
+      canv.width = 512; canv.height = 128;
+      ctx.clearRect(0,0,512,128);
+      ctx.font = '900 75px Vazirmatn'; ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center';
+      ctx.shadowColor = '#2bb8ec'; ctx.shadowBlur = 15;
+      ctx.fillText(r.label, 256, 90);
+      for(let j=0; j<128; j+=4) { ctx.fillStyle = 'rgba(43,184,236,0.15)'; ctx.fillRect(0,j,512,2); }
+      const tex = new THREE.CanvasTexture(canv);
+      const plane = new THREE.Mesh(new THREE.PlaneGeometry(24, 6), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.8, side: THREE.DoubleSide, blending: THREE.AdditiveBlending }));
+      scene.add(plane); holograms.push({ mesh: plane, z: r.z });
+    });
+
+    // Trails
+    const trailCount = 40;
+    const trailPos = new Float32Array(trailCount * 3);
+    const trailGeo = new THREE.BufferGeometry();
+    trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
+    const trailMat = new THREE.PointsMaterial({ color: 0x7fe0ff, size: 0.25, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+    const trailSystem = new THREE.Points(trailGeo, trailMat); scene.add(trailSystem);
+
+        // Debris
+    const debrisCount = 150;
+    const debrisGroup = new THREE.Group();
+    scene.add(debrisGroup);
+    const dGeo = new THREE.IcosahedronGeometry(0.5, 0);
+    for(let i=0; i<debrisCount; i++) {
+      const dMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, flatShading: true, metalness: 0.8, roughness: 0.2 });
+      const mesh = new THREE.Mesh(dGeo, dMat);
+      mesh.position.set((Math.random()-0.5)*100, (Math.random()-0.5)*100, (Math.random()-0.5)*800 - 400);
+      mesh.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, 0);
+      mesh.userData = { speed: Math.random()*0.02 + 0.01, rot: (Math.random()-0.5)*0.05 };
+      debrisGroup.add(mesh);
+    }
+    // Starfield
+    const starGeo = new THREE.BufferGeometry();
+    const starCount = 3000;
+    const starP = new Float32Array(starCount * 3);
+    for(let i=0; i<starCount; i++) { starP[i*3]=(Math.random()-0.5)*300; starP[i*3+1]=(Math.random()-0.5)*300; starP[i*3+2]=(Math.random()-0.5)*1200 - 400; }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starP, 3));
+    scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.12 })));
+
+    let scrollPos = 0, targetScroll = 0, mx = 0, my = 0;
+    window.addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      targetScroll = window.scrollY / max;
+    });
+    window.addEventListener('mousemove', (e) => {
+      mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      my = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+    window.addEventListener('mousedown', (e) => {
+      mouse2D.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse2D.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse2D, camera);
+      if(raycaster.intersectObjects(uiElements).length > 0) openModal();
+    });
+
+    const clock = new THREE.Clock();
+    const animate = () => {
+      requestAnimationFrame(animate);
+      const dt = clock.getDelta(), et = clock.getElapsedTime();
+      scrollPos += (targetScroll - scrollPos) * 0.04;
+      const camZ = 30 - scrollPos * 750;
+      const speed = Math.abs(targetScroll - scrollPos);
+
+      const pos = bend(camZ), lookAtPos = bend(camZ - 20);
+      camera.position.set(pos.x + mx * 6, pos.y - my * 6, camZ);
+      camera.lookAt(lookAtPos.x, lookAtPos.y, camZ - 20);
+      camera.rotation.z = Math.sin(camZ * 0.01) * 0.15;
+
+      logoGroup.position.set(pos.x * 0.25, pos.y * 0.25, camZ - 10);
+      logoGroup.rotation.y += dt * 1.2; logoGroup.rotation.z = Math.sin(et) * 0.15;
+      logoMat.emissiveIntensity = 0.8 + Math.sin(et * 3) * 0.4;
+
+      for(let i=trailCount-1; i>0; i--) { trailPos[i*3]=trailPos[(i-1)*3]; trailPos[i*3+1]=trailPos[(i-1)*3+1]; trailPos[i*3+2]=trailPos[(i-1)*3+2]+4.5; }
+      trailPos[0]=pos.x + (Math.random()-0.5)*15; trailPos[1]=pos.y + (Math.random()-0.5)*15; trailPos[2]=camZ - 25;
+      trailGeo.attributes.position.needsUpdate = true;
+      trailMat.opacity = 0.2 + speed * 6; trailMat.size = 0.2 + speed * 2;
+
+      heroObjs.forEach((obj, i) => {
+        const b = bend(ROOMS[i].z); obj.position.set(b.x, b.y, ROOMS[i].z);
+        obj.rotation.y += dt * 0.6; obj.position.y += Math.sin(et + i)*0.02;
+        if(i === 2) obj.children.forEach(c => c.rotation.z += c.userData.spin || 0);
+        if(i === 4) obj.children[1].rotation.z += dt * 2;
+      });
+
+      holograms.forEach(h => {
+        const b = bend(h.z); h.mesh.position.set(b.x, b.y + 12 + Math.sin(et*2)*0.3, h.z);
+        h.mesh.quaternion.copy(camera.quaternion);
+        if(Math.random() > 0.96) { h.mesh.position.x += (Math.random()-0.5)*2; h.mesh.material.opacity = 0.2; }
+        else { h.mesh.material.opacity = 0.85; }
+      });
+
+      uiElements.forEach((btn, idx) => {
+        const bz = (idx === 0) ? 18 : -680;
+        const bP = bend(bz); btn.position.set(bP.x, bP.y - 6, bz);
+        btn.quaternion.copy(camera.quaternion);
+      });
+
+      let activeRoom = ROOMS[0];
+      ROOMS.forEach(r => { if(camZ < r.z + 50) activeRoom = r; });
+      scene.fog.color.lerp(new THREE.Color(activeRoom.color), 0.05);
+      renderer.setClearColor(scene.fog.color);
+      p1.position.set(pos.x + 15, pos.y + 10, camZ + 10);
+      p2.position.set(pos.x - 15, pos.y - 10, camZ + 10);
+
+      document.getElementById('rail-fill').style.height = (scrollPos * 100) + '%';
+      const stopIdx = Math.min(10, Math.floor(scrollPos * 10) + 1);
+      document.getElementById('depth-counter').innerHTML = String(stopIdx).padStart(2,'0') + '<span style="color:#4a6675">/10</span>';
+
+            debrisGroup.children.forEach(d => {
+        d.rotation.x += d.userData.rot; d.rotation.y += d.userData.rot;
+        const b = bend(d.position.z);
+        // Distribute density based on active room
+        const dist = Math.abs(d.position.z - camZ);
+        d.visible = dist < 200;
+      });
+      composer.render();
+    };
+
+    animate();
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      if(composer) composer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+}
+</script>
 </body>
 </html>
