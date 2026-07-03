@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
@@ -94,7 +95,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
 <main style="position:relative;z-index:2">
 
   <!-- 01 HERO -->
-  <section id="hero" data-screen-label="01 Hero" data-stop="1" style="min-height:100vh;display:flex;align-items:center;padding:120px 24px 70px">
+  <section id="hero" data-screen-label="01 Hero" data-stop="1" style="min-height:150vh;display:flex;align-items:center;padding:120px 24px 70px">
     <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%">
       <div data-reveal="">
         <div style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;border:1px solid rgba(43,184,236,.3);background:rgba(43,184,236,.08);font:600 12px 'Space Mono',monospace;color:#8fd6f4;margin-bottom:18px">٪۱۰۰ تــســت شـــده</div>
@@ -111,7 +112,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
   </section>
 
   <!-- 02 STRATEGY -->
-  <section data-screen-label="02 Strategy" data-stop="2" style="min-height:90vh;display:flex;align-items:center;padding:80px 24px">
+  <section data-screen-label="02 Strategy" data-stop="2" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
     <div style="max-width:880px;margin:0 auto;text-align:center;width:100%">
       <h2 data-reveal="" style="margin:0;font:800 clamp(24px,3vw,38px)/1.4 Vazirmatn">دیگه طراحی سایت و اجرای تبلیغات <span style="color:#ff6b6b">جواب نمیده</span></h2>
       <p data-reveal="" style="margin:14px 0 30px;font:500 17px Vazirmatn;color:#a9c4d2">در عوض از استراتژی زیر استفاده کنید — ویدئوی پایین را تماشا کنید</p>
@@ -160,20 +161,20 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
   </section>
 
   <!-- 04 SERVICES -->
-  <section data-screen-label="04 Services" data-stop="4" style="min-height:90vh;display:flex;align-items:center;padding:80px 24px">
+  <section data-screen-label="04 Services" data-stop="4" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
     <div style="max-width:1000px;margin:0 auto;width:100%">
       <div data-reveal="" style="text-align:center;margin-bottom:40px">
         <h2 style="margin:0;font:800 clamp(26px,3.4vw,42px) Vazirmatn">خـــدمـــات مـــا چــیســـت؟</h2>
         <p style="margin:14px 0 0;font:500 16px/1.9 Vazirmatn;color:#a9c4d2">ما فقط ۲ سرویس داریم — و خدماتی را که از آن مطمئن نباشیم ارائه نمی‌دهیم</p>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-        <div id="form-cta-3d" style="width:100%;height:450px;position:relative;display:flex;align-items:center;justify-content:center;font:700 20px Vazirmatn;color:#2bb8ec">3D INTERACTIVE INTERFACE</div>
+        <div id="form-cta-3d-top" style="width:100%;height:450px;position:relative;display:flex;align-items:center;justify-content:center;font:700 20px Vazirmatn;color:#2bb8ec">درگاه تعاملی ثبت درخواست</div>
       </div>
     </div>
   </section>
 
   <!-- 06 PORTFOLIO -->
-  <section data-screen-label="06 Portfolio" data-stop="6" style="min-height:95vh;display:flex;align-items:center;padding:80px 24px">
+  <section data-screen-label="06 Portfolio" data-stop="6" style="min-height:145vh;display:flex;align-items:center;padding:80px 24px">
     <div style="max-width:1000px;margin:0 auto;width:100%;text-align:center">
       <h2 data-reveal="" style="margin:0;font:800 clamp(24px,3.2vw,40px)/1.4 Vazirmatn">تعدادی از وب‌سایت‌های طراحی‌شده توسط تیم ما</h2>
       <div data-reveal="" style="display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin:22px 0 36px">
@@ -191,7 +192,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
   </section>
 
   <!-- 07 + 08 TESTIMONIALS -->
-  <section data-screen-label="07 Testimonials" data-stop="7" style="min-height:90vh;display:flex;align-items:center;padding:80px 24px">
+  <section data-screen-label="07 Testimonials" data-stop="7" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
     <div style="max-width:760px;margin:0 auto;width:100%;text-align:center">
       <div data-reveal="" style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:34px">
         <div style="width:74px;height:74px;border-radius:50%;border:1px dashed rgba(43,184,236,.4);display:flex;align-items:center;justify-content:center;font-size:34px;animation:pulseB 2.4s ease-in-out infinite">🙅‍♂️</div>
@@ -226,7 +227,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
   </section>
 
   <!-- 08 DIFFERENTIATION -->
-  <section data-screen-label="08 Differentiation" data-stop="8" style="min-height:90vh;display:flex;align-items:center;padding:80px 24px">
+  <section data-screen-label="08 Differentiation" data-stop="8" style="min-height:140vh;display:flex;align-items:center;padding:80px 24px">
     <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%">
       <div data-reveal="">
         <h2 style="margin:0;font:800 clamp(26px,3.4vw,42px)/1.35 Vazirmatn">متفاوت نبودن در دنیای کسب‌وکار یعنی <span style="color:#ff6b6b">خودکشی!</span></h2>
@@ -237,7 +238,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
         <div style="position: absolute; inset: -7px; border-radius: 36px; background: conic-gradient(from 0deg,transparent 0deg,#2bb8ec 20deg,transparent 55deg,transparent 170deg,#7fe0ff 200deg,transparent 235deg,transparent 360deg); opacity: .6; filter: blur(2px); animation: spin 16s linear infinite; pointer-events: none; display: none"></div>
         <div style="position:absolute;inset:-2px;border-radius:28px;border:1px solid rgba(127,224,255,.28);box-shadow:0 0 50px rgba(43,184,236,.22),inset 0 0 40px rgba(0,0,0,.35);pointer-events:none"></div>
         <div style="position:relative;aspect-ratio:1;border-radius:24px;border:1px dashed rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 12px,transparent 12px 24px),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55)),linear-gradient(rgba(127,224,255,.55),rgba(127,224,255,.55));background-size:auto,18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px;background-position:0 0,top 14px left 14px,top 14px left 14px,top 14px right 14px,top 14px right 14px,bottom 14px left 14px,bottom 14px left 14px,bottom 14px right 14px,bottom 14px right 14px;background-repeat:repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat">
-        <img src="./apex-logo-3d-mr1iuvdd.glb" alt="" style="width:55%;animation:floatY 4s ease-in-out infinite;filter:drop-shadow(0 18px 50px rgba(43,184,236,.6))">
+        <div class="glb-placeholder" data-src="./apex-logo-3d-mr1iuvdd.glb" style="width:55%;height:200px;background:rgba(43,184,236,0.1);border-radius:20px;display:flex;align-items:center;justify-content:center;color:#2bb8ec;font-weight:bold">3D LOGO VIEW</div>
         <div style="position:absolute;bottom:14px;font:700 10px 'Space Mono';color:#6f93a6">وب‌سایت آواتک · 800×800</div>
       </div>
       </div>
@@ -245,11 +246,11 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
   </section>
 
   <!-- 09 FINAL CTA -->
-  <section id="cta" data-screen-label="09 Final CTA" data-stop="9" style="min-height:100vh;display:flex;align-items:center;padding:90px 24px">
+  <section id="cta" data-screen-label="09 Final CTA" data-stop="9" style="min-height:150vh;display:flex;align-items:center;padding:90px 24px">
     <div style="max-width:680px;margin:0 auto;width:100%;text-align:center">
       <h2 data-reveal="" style="margin:0;font:800 clamp(28px,3.6vw,46px)/1.3 Vazirmatn">ما بــرای شما فرصت‌ها را <span style="background:linear-gradient(120deg,#2bb8ec,#7fe0ff);-webkit-background-clip:text;background-clip:text;color:transparent">شــکــار</span> می‌کنیم</h2>
       <p data-reveal="" style="margin:16px 0 32px;font:500 16px/1.9 Vazirmatn;color:#a9c4d2">بزرگ‌ترین و بیشترین ســهــم از بازارتان برای شماست، اگر <b style="color:#eaf6fb">اصولی</b> و <b style="color:#eaf6fb">خلاقانه</b> بازاریابی کنید</p>
-      <div id="form-cta-3d" style="width:100%;height:450px;position:relative;display:flex;align-items:center;justify-content:center;font:700 20px Vazirmatn;color:#2bb8ec">3D INTERACTIVE INTERFACE</div>
+      <div id="form-cta-3d-bottom" style="width:100%;height:450px;position:relative;display:flex;align-items:center;justify-content:center;font:700 20px Vazirmatn;color:#2bb8ec">فرم هوشمند تماس آواتک</div>
       </div>
     </div>
   </section>
@@ -439,25 +440,23 @@ class Component extends DCLogic {
     const dir = new THREE.DirectionalLight(0xffffff,0.8); dir.position.set(0,5,10); scene.add(dir);
 
     // ---- AVATIC arrow geometry (extruded chevron, inner cutout + bottom notch) ----
-    const makeArrowGeo = ()=>{
-      const s = new THREE.Shape();
-      s.moveTo(0,3.1); s.lineTo(2.35,-2.5); s.lineTo(0.6,-2.5); s.lineTo(0,-0.7);
-      s.lineTo(-0.6,-2.5); s.lineTo(-2.35,-2.5); s.lineTo(0,3.1);
-      const hole = new THREE.Path();
-      hole.moveTo(0,1.75); hole.lineTo(1.05,-1.55); hole.lineTo(-1.05,-1.55); hole.lineTo(0,1.75);
-      s.holes.push(hole);
-      const g = new THREE.ExtrudeGeometry(s, { depth:0.9, bevelEnabled:true, bevelThickness:0.18, bevelSize:0.16, bevelSegments:3 });
-      g.center(); return g;
-    };
-    const arrowGeo = makeArrowGeo();
-    const edgeGeo = new THREE.EdgesGeometry(arrowGeo, 25);
 
-    // hero arrow (signature, centred)
-    const mat = new THREE.MeshStandardMaterial({ color:0x2bb8ec, metalness:0.7, roughness:0.2, emissive:0x0a4a70, emissiveIntensity:0.55 });
-    const arrow = new THREE.Mesh(arrowGeo, mat);
-    arrow.scale.set(1.5,1.5,1.5);
-    arrow.add(new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color:0xbfeeff, transparent:true, opacity:0.5 })));
+        // ---- AVATIC Logo (GLB) ----
+    const arrow = new THREE.Group();
     scene.add(arrow);
+    const gltfLoader = new THREE.GLTFLoader();
+    const arrowMat = new THREE.MeshPhysicalMaterial({ color:0x2bb8ec, emissive:0x2bb8ec, emissiveIntensity:0.6, metalness:0.9, roughness:0.1, clearcoat:1 });
+    gltfLoader.load('./apex-logo-3d-mr1iuvdd.glb', (gltf) => {
+      const model = gltf.scene;
+      model.traverse(n => {
+        if(n.isMesh) {
+          n.material = arrowMat;
+        }
+      });
+      model.scale.set(0.6, 0.6, 0.6);
+      model.rotation.set(0, Math.PI, 0); // Face the camera
+      arrow.add(model);
+    });
 
     // ---- z range used to recycle (wrap) tunnel content ----
     const Z_FAR = -550, Z_NEAR = 24, SPAN = Z_NEAR - Z_FAR;
@@ -699,10 +698,106 @@ class Component extends DCLogic {
           setTimeout(() => {
             obj.scale.setScalar(1);
             obj.material.emissiveIntensity = obj.userData.originalIntensity;
-            alert("3D Interface Action: " + obj.userData.text);
+            const modal = document.getElementById('lead-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.style.opacity = '1', 10);
           }, 150);
         }
       }
+    });
+
+    // ---- Room-Specific Hero Objects ----
+    const heroObjects = [];
+    const makeHeroObject = (roomIdx, type) => {
+      const room = ROOMS[roomIdx];
+      const g = new THREE.Group();
+      const mat = mkMat(room.color, false);
+
+      if(type === 'chart') {
+        for(let i=0; i<3; i++) {
+          const bar = new THREE.Mesh(G.box, mat);
+          bar.scale.set(0.8, 1.5 + i*1.2, 0.8);
+          bar.position.set(-2 + i*2, bar.scale.y/2 - 2, 0);
+          g.add(bar);
+        }
+      } else if(type === 'globe') {
+        const sph = new THREE.Mesh(G.sph, mat);
+        sph.scale.setScalar(3);
+        const ring = new THREE.Mesh(G.torus(4, 0.1), mat);
+        ring.rotation.x = Math.PI/2;
+        g.add(sph, ring);
+      } else if(type === 'automation') {
+        for(let i=0; i<3; i++) {
+          const gear = new THREE.Mesh(G.torus(2, 0.5, 8), mat);
+          gear.position.set(Math.sin(i*2)*3, Math.cos(i*2)*3, 0);
+          gear.userData = { spin: (i%2?1:-1) * 0.02 };
+          g.add(gear);
+        }
+      }
+
+      g.position.set(bendX(room.z), bendY(room.z), room.z);
+      scene.add(g);
+      heroObjects.push({ group: g, room: room, type: type });
+    };
+
+    makeHeroObject(1, 'chart');      // Strategy
+    makeHeroObject(4, 'globe');      // Stats
+    makeHeroObject(7, 'automation'); // Differentiation
+
+    // ---- Holographic 3D Labels ----
+    const holograms = [];
+    const makeHologram = (text, z, col) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512; canvas.height = 128;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'transparent';
+      ctx.fillRect(0,0,512,128);
+      ctx.font = 'bold 60px Vazirmatn';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#' + new THREE.Color(col).getHexString();
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = ctx.fillStyle;
+      ctx.fillText(text, 256, 80);
+
+      const tex = new THREE.CanvasTexture(canvas);
+      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
+      const plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 2), mat);
+      plane.position.set(bendX(z), bendY(z) + 4, z);
+      scene.add(plane);
+      holograms.push({ mesh: plane, z: z });
+    };
+
+    ROOMS.forEach(r => {
+       if(r.type === 'open' || r.type === 'square') {
+         makeHologram(r.type.toUpperCase(), r.z, r.color);
+       }
+    });
+
+    // ---- Particle Trails ----
+    const trailCount = 20;
+    const trailPts = [];
+    const trailMat = new THREE.PointsMaterial({ color: 0x7fe0ff, size: 0.15, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+    const trailGeo = new THREE.BufferGeometry();
+    const trailPos = new Float32Array(trailCount * 3);
+    trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
+    const trailSystem = new THREE.Points(trailGeo, trailMat);
+    scene.add(trailSystem);
+
+    // ---- Audio Infrastructure ----
+    const listener = new THREE.AudioListener();
+    cam.add(listener);
+    const sound = new THREE.Audio(listener);
+    const audioLoader = new THREE.AudioLoader();
+
+    // We will use a silent placeholder/oscillator for the prototype to avoid 404s
+    // but the infrastructure is ready for real assets.
+    let audioStarted = false;
+    window.addEventListener('click', () => {
+       if(audioStarted) return;
+       audioStarted = true;
+       // Real implementations would load a file here:
+       // audioLoader.load('path/to/ambient.mp3', (buffer) => { ... });
+       console.log("Audio Engine Ready");
     });
     // ---- starfield (two layers: near fast + far slow dust) ----
     const mkStars=(count,size,col,opacity,spread)=>{
@@ -717,14 +812,14 @@ class Component extends DCLogic {
     const N=starsNear.count, pg=starsNear.g, pm=starsNear.pts;
 
     // ---- state ----
-    let progress=0, camZ=30, mx=0, my=0, tmx=0, tmy=0;
+    let progress=0, targetProgress=0, camZ=30, mx=0, my=0, tmx=0, tmy=0;
     const stops = document.querySelectorAll('[data-stop]').length || 10;
     const sectionEls = [...document.querySelectorAll('main > section, main > footer')];
     sectionEls.forEach(el=>{ el.style.willChange='transform'; });
 
     this._onScroll=()=>{
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      progress = max>0 ? window.scrollY/max : 0;
+      targetProgress = max>0 ? window.scrollY/max : 0;
       if(this.railRef.current) this.railRef.current.style.height = (8 + progress*92)+'%';
       if(this.stopRef.current){ const n=Math.min(stops, Math.floor(progress*stops)+1); this.stopRef.current.innerHTML = String(n).padStart(2,'0')+'<span style="color:#4a6675">/'+stops+'</span>'; }
     };
@@ -766,12 +861,27 @@ class Component extends DCLogic {
       layer.g.attributes.position.needsUpdate=true;
     };
     const loop=()=>{
+      progress += (targetProgress - progress) * 0.04;
       this._raf=requestAnimationFrame(loop);
       const dt=Math.min(clock.getDelta(),0.05), et=clock.elapsedTime;
+
+      // Determine current room and interpolate environment
+      let activeRoom = ROOMS[0];
+      for(const r of ROOMS) {
+        if(camZ <= r.z + 30 && camZ >= r.z - 30) {
+          activeRoom = r;
+          break;
+        }
+      }
+
+      const targetColor = new THREE.Color(activeRoom.color);
+      scene.fog.color.lerp(targetColor, 0.05);
+      renderer.setClearColor(scene.fog.color);
+      p1.color.lerp(targetColor, 0.05);
       // camera flies forward through z based on scroll
       const targetZ = 30 - progress*540;
       const scrollVel = Math.abs(targetZ - camZ);
-      camZ += (targetZ-camZ)*0.06;
+      camZ += (targetZ-camZ)*0.03;
       mx += (tmx-mx)*0.05; my += (tmy-my)*0.05;
 
       // Dynamic FOV based on scroll speed
@@ -805,7 +915,7 @@ class Component extends DCLogic {
       }
       arrow.rotation.y += dt*0.5;
       arrow.rotation.z = Math.sin(et*0.5)*0.08;
-      mat.emissiveIntensity = 0.45 + Math.sin(et*1.6)*0.18;
+      arrowMat.emissiveIntensity = 0.45 + Math.sin(et*1.6)*0.18;
       // marketing icons: spin, bob, drift forward + wrap, riding the curve
       for(const a of icons){
         const u=a.userData;
@@ -843,11 +953,70 @@ class Component extends DCLogic {
       p1.position.set(Math.sin(et*0.6)*10, Math.cos(et*0.5)*8, camZ+18);
       p2.position.set(-Math.sin(et*0.4)*12, -6, camZ+10);
       p3.position.set(mx*20, my*20, camZ+5);
-      composer.render();
+
+      // Animate Hero Objects
+      for(const h of heroObjects) {
+        h.group.rotation.y += 0.01;
+        if(h.type === 'automation') {
+          for(const child of h.group.children) child.rotation.z += child.userData.spin;
+        }
+        // Keep on path
+        const b = bend(h.room.z);
+        h.group.position.set(b.x, b.y, h.room.z);
+      }
+
+      for(const h of holograms) {
+        const b = bend(h.z);
+        h.mesh.position.set(b.x, b.y + 5 + Math.sin(et*2)*0.2, h.z);
+        h.mesh.lookAt(cam.position);
+        h.mesh.material.opacity = 0.5 + Math.sin(et*5)*0.2; // Glitch pulse
+      }
+
+      // Update Logo Trail
+      for(let i=trailCount-1; i>0; i--) {
+        trailPos[i*3] = trailPos[(i-1)*3];
+        trailPos[i*3+1] = trailPos[(i-1)*3+1];
+        trailPos[i*3+2] = trailPos[(i-1)*3+2];
+      }
+      trailPos[0] = arrow.position.x;
+      trailPos[1] = arrow.position.y;
+      trailPos[2] = arrow.position.z;
+      trailGeo.attributes.position.needsUpdate = true;
+      trailMat.opacity = Math.min(0.8, scrollVel * 0.2);
+composer.render();
     };
     loop();
   }
 }
 </script>
+
+<!-- ===== LEAD GENERATION MODAL ===== -->
+<div id="lead-modal" style="position:fixed;inset:0;z-index:100;background:rgba(7,10,15,.85);backdrop-filter:blur(15px);display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity 0.4s ease">
+  <div style="background:#0e1621;border:1px solid rgba(43,184,236,.3);border-radius:28px;max-width:440px;width:100%;padding:40px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.6)">
+    <button onclick="document.getElementById('lead-modal').style.display='none'" style="position:absolute;top:24px;left:24px;background:none;border:none;color:#5a8aa0;font:700 18px 'Space Mono';cursor:pointer">✕</button>
+    <h3 style="margin:0 0 12px;font:800 24px Vazirmatn;color:#eaf6fb;text-align:center">ثبت درخواست همکاری</h3>
+    <p style="margin:0 0 32px;font:400 14px/1.7 Vazirmatn;color:#88a6b6;text-align:center">اطلاعات خود را وارد کنید تا کارشناسان آواتک در کمتر از ۲۴ ساعت با شما تماس بگیرند.</p>
+
+    <form onsubmit="event.preventDefault(); alert('درخواست شما با موفقیت ثبت شد. به زودی با شما تماس می‌گیریم.'); document.getElementById('lead-modal').style.display='none';" style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font:700 12px Vazirmatn;color:#5a8aa0">نام و نام خانوادگی</label>
+        <input type="text" required placeholder="مثلا: علی محمدی" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:#fff;font:500 14px Vazirmatn;outline:none">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font:700 12px Vazirmatn;color:#5a8aa0">شماره تماس</label>
+        <input type="tel" required placeholder="۰۹۱۲۰۰۰۰۰۰۰" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:#fff;font:500 14px Vazirmatn;outline:none;text-align:left">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font:700 12px Vazirmatn;color:#5a8aa0">سرویس مورد نظر</label>
+        <select style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:#fff;font:500 14px Vazirmatn;outline:none;appearance:none">
+          <option>طراحی وب‌سایت ۳ بعدی</option>
+          <option>کمپین‌های دیجیتال مارکتینگ</option>
+          <option>مشاوره استراتژیک</option>
+        </select>
+      </div>
+      <button type="submit" style="margin-top:12px;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,#2bb8ec,#1273a8);color:#04121b;font:800 16px Vazirmatn;cursor:pointer;box-shadow:0 15px 35px rgba(43,184,236,.3)">ارسال درخواست</button>
+    </form>
+  </div>
+</div>
 </body>
 </html>
