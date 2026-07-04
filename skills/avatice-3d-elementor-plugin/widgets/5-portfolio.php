@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Avatice_Portfolio_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'avatice_portfolio'; }
-	public function get_title() { return 'Avatice Portfolio Section'; }
+	public function get_title() { return '5-Portfolio'; }
 	public function get_icon() { return 'eicon-image-box'; }
 	public function get_categories() { return [ 'general' ]; }
 

@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Avatice_Testimonials_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'avatice_testimonials'; }
-	public function get_title() { return 'Avatice Testimonials Section'; }
+	public function get_title() { return '6-Testimonials'; }
 	public function get_icon() { return 'eicon-testimonial'; }
 	public function get_categories() { return [ 'general' ]; }
 

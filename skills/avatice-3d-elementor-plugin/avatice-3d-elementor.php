@@ -33,7 +33,6 @@ final class Avatice_3D_Elementor {
 	}
 
 	public function init() {
-		// Check if Elementor installed and activated
 		if ( ! did_action( 'elementor/loaded' ) ) {
 			return;
 		}
@@ -64,17 +63,18 @@ final class Avatice_3D_Elementor {
     }
 
 	public function register_widgets( $widgets_manager ) {
-		require_once( __DIR__ . '/widgets/avatice-canvas-widget.php' );
-		require_once( __DIR__ . '/widgets/avatice-hero-widget.php' );
-        require_once( __DIR__ . '/widgets/avatice-strategy-widget.php' );
-        require_once( __DIR__ . '/widgets/avatice-clients-widget.php' );
-        require_once( __DIR__ . '/widgets/avatice-services-widget.php' );
-        require_once( __DIR__ . '/widgets/avatice-portfolio-widget.php' );
-        require_once( __DIR__ . '/widgets/avatice-testimonials-widget.php' );
-        require_once( __DIR__ . '/widgets/avatice-differentiation-widget.php' );
-        require_once( __DIR__ . '/widgets/avatice-cta-widget.php' );
+		require_once( __DIR__ . '/widgets/0-canvas-core.php' );
+		require_once( __DIR__ . '/widgets/1-hero.php' );
+        require_once( __DIR__ . '/widgets/2-strategy.php' );
+        require_once( __DIR__ . '/widgets/3-clients.php' );
+        require_once( __DIR__ . '/widgets/4-services.php' );
+        require_once( __DIR__ . '/widgets/5-portfolio.php' );
+        require_once( __DIR__ . '/widgets/6-testimonials.php' );
+        require_once( __DIR__ . '/widgets/7-differentiation.php' );
+        require_once( __DIR__ . '/widgets/8-cta.php' );
+        require_once( __DIR__ . '/widgets/9-footer.php' );
 
-		$widgets_manager->register( new \Avatice_Canvas_Widget() );
+		$widgets_manager->register( new \Avatice_Canvas_Core_Widget() );
 		$widgets_manager->register( new \Avatice_Hero_Widget() );
         $widgets_manager->register( new \Avatice_Strategy_Widget() );
         $widgets_manager->register( new \Avatice_Clients_Widget() );
@@ -83,6 +83,7 @@ final class Avatice_3D_Elementor {
         $widgets_manager->register( new \Avatice_Testimonials_Widget() );
         $widgets_manager->register( new \Avatice_Differentiation_Widget() );
         $widgets_manager->register( new \Avatice_CTA_Widget() );
+        $widgets_manager->register( new \Avatice_Footer_Widget() );
 	}
 }
 

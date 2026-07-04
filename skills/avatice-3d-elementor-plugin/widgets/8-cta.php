@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Avatice_CTA_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'avatice_cta'; }
-	public function get_title() { return 'Avatice Final CTA Section'; }
+	public function get_title() { return '8-CTA'; }
 	public function get_icon() { return 'eicon-call-to-action'; }
 	public function get_categories() { return [ 'general' ]; }
 

@@ -3,14 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Avatice_Canvas_Widget extends \Elementor\Widget_Base {
+class Avatice_Canvas_Core_Widget extends \Elementor\Widget_Base {
 
 	public function get_name() {
-		return 'avatice_canvas';
+		return 'avatice_canvas_core';
 	}
 
 	public function get_title() {
-		return esc_html__( 'Avatice 3D Canvas', 'avatice-3d' );
+		return esc_html__( '0-Canvas Core', 'avatice-3d' );
 	}
 
 	public function get_icon() {

@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Avatice_Hero_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'avatice_hero'; }
-	public function get_title() { return 'Avatice Hero Section'; }
+	public function get_title() { return '1-Hero'; }
 	public function get_icon() { return 'eicon-header'; }
 	public function get_categories() { return [ 'general' ]; }
 

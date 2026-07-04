@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Avatice_Clients_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'avatice_clients'; }
-	public function get_title() { return 'Avatice Clients Section'; }
+	public function get_title() { return '3-Clients'; }
 	public function get_icon() { return 'eicon-gallery-grid'; }
 	public function get_categories() { return [ 'general' ]; }
 

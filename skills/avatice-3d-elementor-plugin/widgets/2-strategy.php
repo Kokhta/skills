@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Avatice_Strategy_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'avatice_strategy'; }
-	public function get_title() { return 'Avatice Strategy Section'; }
+	public function get_title() { return '2-Strategy'; }
 	public function get_icon() { return 'eicon-info-box'; }
 	public function get_categories() { return [ 'general' ]; }
 

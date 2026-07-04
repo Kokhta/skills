@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Avatice_Differentiation_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'avatice_differentiation'; }
-	public function get_title() { return 'Avatice Differentiation Section'; }
+	public function get_title() { return '7-Differentiation'; }
 	public function get_icon() { return 'eicon-skill-bar'; }
 	public function get_categories() { return [ 'general' ]; }
 
