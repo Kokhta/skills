@@ -3,14 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class Olympus_Oracle_Widget extends \Elementor\Widget_Base {
+class Olympus_10_Oracle_Widget extends \Elementor\Widget_Base {
 
 	public function get_name() {
-		return 'olympus-oracle';
+		return '10-oracle';
 	}
 
 	public function get_title() {
-		return esc_html__( 'Olympus Oracle', 'olympus-elementor-addon' );
+		return esc_html__( '10. Olympus Oracle', 'olympus-elementor-addon' );
 	}
 
 	public function get_icon() {

@@ -3,14 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class Olympus_Hero_Widget extends \Elementor\Widget_Base {
+class Olympus_02_Hero_Widget extends \Elementor\Widget_Base {
 
 	public function get_name() {
-		return 'olympus-hero';
+		return '02-hero';
 	}
 
 	public function get_title() {
-		return esc_html__( 'Olympus Hero', 'olympus-elementor-addon' );
+		return esc_html__( '02. Olympus Hero', 'olympus-elementor-addon' );
 	}
 
 	public function get_icon() {

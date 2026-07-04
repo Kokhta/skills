@@ -23,16 +23,16 @@ class Olympus_Widgets_Manager {
 	 * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgets manager.
 	 */
 	private function register_widgets( $widgets_manager ) {
-		// List of widget IDs
+		// List of widget IDs with ordering
 		$widgets = [
-			'wrapper',
-			'hero',
-			'intro',
-			'pantheon',
-			'myths',
-			'oracle',
-			'chronicles',
-			'footer',
+			'01-wrapper',
+			'02-hero',
+			'04-intro',
+			'06-pantheon',
+			'08-myths',
+			'10-oracle',
+			'12-chronicles',
+			'15-footer',
 		];
 
 		foreach ( $widgets as $widget ) {
@@ -40,9 +40,10 @@ class Olympus_Widgets_Manager {
 			if ( file_exists( $file_path ) ) {
 				require_once( $file_path );
 
-				// Construct class name: Olympus_Hero_Widget, etc.
-				// Note: some might need manual mapping if names are complex
-				$class_name = 'Olympus_' . str_replace( ' ', '_', ucwords( str_replace( '-', ' ', $widget ) ) ) . '_Widget';
+				// Construct class name: Olympus_02_Hero_Widget, etc.
+				// str_replace '-' with '_' and capitalize each part
+				$class_parts = explode( '-', $widget );
+				$class_name = 'Olympus_' . implode( '_', array_map( 'ucfirst', $class_parts ) ) . '_Widget';
 
 				if ( class_exists( $class_name ) ) {
 					$widgets_manager->register( new $class_name() );

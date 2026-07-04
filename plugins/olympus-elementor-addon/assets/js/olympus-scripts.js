@@ -126,7 +126,7 @@
 
     $(window).on('elementor/frontend/init', function() {
         // Register widget-specific handlers
-        elementorFrontend.hooks.addAction('frontend/element_ready/olympus-hero.default', function($scope) {
+        elementorFrontend.hooks.addAction('frontend/element_ready/02-hero.default', function($scope) {
             initHeroVideoScrub($scope);
         });
 
