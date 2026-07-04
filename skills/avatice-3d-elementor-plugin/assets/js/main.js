@@ -4,14 +4,10 @@
 (function($) {
     class Avatice3DScene {
         constructor() {
-            this.container = $('.avatice-3d-layout-wrapper').last(); // Get latest if multiple exist in editor
+            this.container = $('.avatice-3d-layout-wrapper').last();
             if (!this.container.length) return;
 
-            this.canvas = document.getElementById('avatice-3d-canvas');
-            if (!this.canvas) {
-                // Try finding within container if ID not unique in editor context
-                this.canvas = this.container.find('canvas')[0];
-            }
+            this.canvas = document.getElementById('avatice-3d-canvas') || this.container.find('canvas')[0];
             if (!this.canvas) return;
 
             this.railProgress = document.getElementById('avatice-rail-progress');
@@ -30,7 +26,6 @@
         }
 
         updateConfig() {
-            // Re-fetch container to get fresh data attributes from Elementor
             this.container = $('.avatice-3d-layout-wrapper').last();
 
             this.config = {
@@ -98,7 +93,6 @@
             this.cam.position.set(0, 0, 30);
 
             this.scene.add(new THREE.AmbientLight(0x0a1a2a, 0.5));
-
             this.p1 = new THREE.PointLight(new THREE.Color(this.config.light1), 3.0, 150);
             this.p1.position.set(8, 10, 20);
             this.scene.add(this.p1);
@@ -152,7 +146,7 @@
                     const dist = Math.abs(z - room.z);
                     if (dist < 40) {
                         const influence = 1 - (dist / 40);
-                        y += Math.cos(z * 0.1) * 10 * influence;
+                        y += Math.sin(z * 0.1) * 10 * influence;
                     }
                 });
             }
@@ -185,8 +179,6 @@
             this.G = {
                 box: new THREE.BoxGeometry(1, 1, 1),
                 cyl: new THREE.CylinderGeometry(1, 1, 1, 18),
-                cone: new THREE.ConeGeometry(1, 1, 18),
-                coneOpen: new THREE.ConeGeometry(1, 1, 20, 1, true),
                 sph: new THREE.SphereGeometry(1, 16, 12),
                 torus: (r, t, seg) => new THREE.TorusGeometry(r, t || 0.08, 8, seg || 32)
             };
@@ -240,7 +232,6 @@
                 const add = (geo, fn) => { const me = new THREE.Mesh(geo, mat); fn && fn(me); g.add(me); return me; };
                 if(type==='chart'){ [0.7,1.1,1.6,2.2].forEach((h,i)=> add(this.G.box, me=>{ me.scale.set(0.42,h,0.42); me.position.set(-1.1+i*0.72, h/2-1.1, 0); })); }
                 else if(type==='target'){ [1.3,0.85,0.42].forEach(r=> add(this.G.torus(r,0.09,40))); add(this.G.sph, me=> me.scale.setScalar(0.2)); }
-                else if(type==='rocket'){ add(this.G.cyl, me=> me.scale.set(0.42,1.3,0.42)); add(this.G.cone, me=>{ me.scale.set(0.42,0.7,0.42); me.position.y=1.0; }); }
                 else { add(this.G.sph, me=> me.scale.setScalar(0.42)); }
                 return g;
             };
@@ -297,10 +288,19 @@
             this.state.targetProgress = max > 0 ? window.scrollY / max : 0;
 
             if (this.railProgress) this.railProgress.style.height = (8 + this.state.progress * 92) + '%';
+
+            // Find current stop
+            let currentStop = 1;
+            $('.avatice-section, [data-stop]').each((i, el) => {
+                const r = el.getBoundingClientRect();
+                if (r.top < window.innerHeight * 0.5) {
+                    currentStop = $(el).data('stop') || currentStop;
+                }
+            });
+
             if (this.railStop) {
-                const stops = 10;
-                const n = Math.min(stops, Math.floor(this.state.progress * stops) + 1);
-                this.railStop.innerHTML = String(n).padStart(2, '0') + '<span style="color:#4a6675">/' + stops + '</span>';
+                const maxStops = $(this.railStop).closest('.avatice-3d-rail').find('span').text().split('/')[1] || 10;
+                this.railStop.innerHTML = String(currentStop).padStart(2, '0') + '<span style="color:#4a6675">/' + maxStops + '</span>';
             }
         }
 
@@ -316,7 +316,7 @@
                 });
             }, { threshold: 0.1 });
 
-            $('.avatice-reveal').each((i, el) => this.observer.observe(el));
+            $('.avatice-reveal, [data-reveal]').each((i, el) => this.observer.observe(el));
         }
 
         streamStars(layer, speed, camZ) {
@@ -355,11 +355,11 @@
             this.cam.position.set(cb.x + this.state.mx * 8, cb.y - this.state.my * 6, this.state.camZ);
             this.cam.lookAt(new THREE.Vector3(lb.x + this.state.mx * 4, lb.y - this.state.my * 3, this.state.camZ - 25));
 
-            $('.avatice-section').each((i, sec) => {
+            $('.avatice-reveal, .avatice-section, [data-parallax]').each((i, sec) => {
                 const r = sec.getBoundingClientRect();
                 const centerOff = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
                 const near = Math.max(0, 1 - Math.min(Math.abs(centerOff), 1));
-                const k = 0.35 + 0.65 * near;
+                const k = (0.35 + 0.65 * near) * ($(sec).data('parallax') || 1.0);
                 sec.style.transform = `perspective(1700px) rotateY(${(this.state.mx * 6 * k).toFixed(2)}deg) rotateX(${(-this.state.my * 5 * k).toFixed(2)}deg) scale(${(1 - 0.015 * (1 - near)).toFixed(3)})`;
             });
 
@@ -399,25 +399,6 @@
             if (this.renderer) {
                 this.renderer.dispose();
                 this.renderer.forceContextLoss();
-                this.renderer.domElement.addEventListener('webglcontextlost', function(e) {
-                    e.preventDefault();
-                }, false);
-            }
-
-            // Clear geometries and materials
-            if (this.scene) {
-                this.scene.traverse(node => {
-                    if (node.isMesh) {
-                        if (node.geometry) node.geometry.dispose();
-                        if (node.material) {
-                            if (Array.isArray(node.material)) {
-                                node.material.forEach(m => m.dispose());
-                            } else {
-                                node.material.dispose();
-                            }
-                        }
-                    }
-                });
             }
         }
     }

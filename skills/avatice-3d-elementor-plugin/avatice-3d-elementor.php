@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Avatice 3D Scroll Experience for Elementor
- * Description: Adds advanced 3D scroll-driven widgets to Elementor using Three.js.
- * Version: 1.0.0
+ * Description: Adds advanced 3D scroll-driven effects to Elementor using Three.js.
+ * Version: 1.2.0
  * Author: Avatice
  * Text Domain: avatice-3d
  */
@@ -15,9 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class Avatice_3D_Elementor {
 
-	const VERSION = '1.0.0';
-	const MINIMUM_ELEMENTOR_VERSION = '3.0.0';
-	const MINIMUM_PHP_VERSION = '7.0';
+	const VERSION = '1.2.0';
 
 	private static $_instance = null;
 
@@ -40,6 +38,17 @@ final class Avatice_3D_Elementor {
 		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
 		add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'frontend_scripts' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_scripts' ] );
+
+		// Extend Elementor Controls
+		add_action( 'elementor/element/common/_section_style/after_section_end', [ $this, 'register_3d_controls' ], 10, 2 );
+		add_action( 'elementor/element/section/_section_responsive/after_section_end', [ $this, 'register_3d_controls' ], 10, 2 );
+		add_action( 'elementor/element/column/_section_responsive/after_section_end', [ $this, 'register_3d_controls' ], 10, 2 );
+
+		// Inject attributes into elements
+		add_action( 'elementor/element/before_add_render_attributes', [ $this, 'inject_3d_attributes' ], 10, 1 );
+
+		// Page creation on activation
+		register_activation_hook( __FILE__, [ $this, 'create_avatice_page' ] );
 	}
 
 	public function frontend_scripts() {
@@ -64,26 +73,183 @@ final class Avatice_3D_Elementor {
 
 	public function register_widgets( $widgets_manager ) {
 		require_once( __DIR__ . '/widgets/0-canvas-core.php' );
-		require_once( __DIR__ . '/widgets/1-hero.php' );
-        require_once( __DIR__ . '/widgets/2-strategy.php' );
-        require_once( __DIR__ . '/widgets/3-clients.php' );
-        require_once( __DIR__ . '/widgets/4-services.php' );
-        require_once( __DIR__ . '/widgets/5-portfolio.php' );
-        require_once( __DIR__ . '/widgets/6-testimonials.php' );
-        require_once( __DIR__ . '/widgets/7-differentiation.php' );
-        require_once( __DIR__ . '/widgets/8-cta.php' );
-        require_once( __DIR__ . '/widgets/9-footer.php' );
+		require_once( __DIR__ . '/widgets/z-depth-rail.php' );
+		require_once( __DIR__ . '/widgets/3d-interaction-area.php' );
 
 		$widgets_manager->register( new \Avatice_Canvas_Core_Widget() );
-		$widgets_manager->register( new \Avatice_Hero_Widget() );
-        $widgets_manager->register( new \Avatice_Strategy_Widget() );
-        $widgets_manager->register( new \Avatice_Clients_Widget() );
-        $widgets_manager->register( new \Avatice_Services_Widget() );
-        $widgets_manager->register( new \Avatice_Portfolio_Widget() );
-        $widgets_manager->register( new \Avatice_Testimonials_Widget() );
-        $widgets_manager->register( new \Avatice_Differentiation_Widget() );
-        $widgets_manager->register( new \Avatice_CTA_Widget() );
-        $widgets_manager->register( new \Avatice_Footer_Widget() );
+		$widgets_manager->register( new \Avatice_Z_Depth_Rail_Widget() );
+		$widgets_manager->register( new \Avatice_3D_Interaction_Widget() );
+	}
+
+	public function register_3d_controls( $element, $args ) {
+		$element->start_controls_section(
+			'avatice_3d_scroll_section',
+			[
+				'label' => esc_html__( 'Avatice 3D Scroll Effects', 'avatice-3d' ),
+				'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
+			]
+		);
+
+		$element->add_control(
+			'avatice_enable_reveal',
+			[
+				'label' => esc_html__( 'Enable Reveal Animation', 'avatice-3d' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'avatice-3d' ),
+				'label_off' => esc_html__( 'No', 'avatice-3d' ),
+				'return_value' => 'yes',
+				'default' => '',
+			]
+		);
+
+		$element->add_control(
+			'avatice_z_stop',
+			[
+				'label' => esc_html__( 'Z-Depth Stop Number', 'avatice-3d' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'min' => 1,
+				'max' => 10,
+				'step' => 1,
+			]
+		);
+
+		$element->add_control(
+			'avatice_parallax_factor',
+			[
+				'label' => esc_html__( '3D Parallax Factor', 'avatice-3d' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 2,
+						'step' => 0.1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+				],
+			]
+		);
+
+		$element->end_controls_section();
+	}
+
+	public function inject_3d_attributes( $element ) {
+		$settings = $element->get_settings_for_display();
+
+		if ( ! empty( $settings['avatice_enable_reveal'] ) && 'yes' === $settings['avatice_enable_reveal'] ) {
+			$element->add_render_attribute( '_wrapper', 'data-reveal', '' );
+			$element->add_render_attribute( '_wrapper', 'class', 'avatice-reveal' );
+		}
+
+		if ( ! empty( $settings['avatice_z_stop'] ) ) {
+			$element->add_render_attribute( '_wrapper', 'data-stop', $settings['avatice_z_stop'] );
+			$element->add_render_attribute( '_wrapper', 'class', 'avatice-section' );
+		}
+
+		if ( ! empty( $settings['avatice_parallax_factor']['size'] ) ) {
+			$element->add_render_attribute( '_wrapper', 'data-parallax', $settings['avatice_parallax_factor']['size'] );
+		}
+	}
+
+	public function create_avatice_page() {
+		$page_title = 'Avatic';
+		$page_check = get_page_by_title($page_title);
+		$page_id = 0;
+
+		if(!isset($page_check->ID)){
+			$new_page = array(
+				'post_type' => 'page',
+				'post_title' => $page_title,
+				'post_content' => '',
+				'post_status' => 'publish',
+				'post_author' => 1,
+			);
+			$page_id = wp_insert_post($new_page);
+		} else {
+			$page_id = $page_check->ID;
+		}
+
+		if ($page_id) {
+			update_post_meta($page_id, '_wp_page_template', 'elementor_canvas');
+            update_post_meta($page_id, '_elementor_edit_mode', 'builder');
+
+            $elementor_data = [
+                [
+                    'id' => 'avatice-core-section',
+                    'elType' => 'section',
+                    'elements' => [
+                        [
+                            'id' => 'avatice-core-column',
+                            'elType' => 'column',
+                            'elements' => [
+                                [
+                                    'id' => 'avatice-canvas-widget',
+                                    'elType' => 'widget',
+                                    'widgetType' => 'avatice_canvas_core'
+                                ],
+                                [
+                                    'id' => 'avatice-rail-widget',
+                                    'elType' => 'widget',
+                                    'widgetType' => 'avatice_z_depth_rail'
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'hero-section',
+                    'elType' => 'section',
+                    'settings' => [ 'avatice_z_stop' => 1 ],
+                    'elements' => [
+                        [
+                            'id' => 'hero-column',
+                            'elType' => 'column',
+                            'elements' => [
+                                [
+                                    'id' => 'hero-heading',
+                                    'elType' => 'widget',
+                                    'widgetType' => 'heading',
+                                    'settings' => [
+                                        'title' => 'جذب منظم و هفتگی مشتریان جدید برای کسب و کار شما',
+                                        'avatice_enable_reveal' => 'yes'
+                                    ]
+                                ],
+                                [
+                                    'id' => 'hero-3d',
+                                    'elType' => 'widget',
+                                    'widgetType' => 'avatice_3d_interaction',
+                                    'settings' => [ 'interaction_id' => 'form-hero-3d' ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'strategy-section',
+                    'elType' => 'section',
+                    'settings' => [ 'avatice_z_stop' => 2 ],
+                    'elements' => [
+                        [
+                            'id' => 'strategy-column',
+                            'elType' => 'column',
+                            'elements' => [
+                                [
+                                    'id' => 'strategy-heading',
+                                    'elType' => 'widget',
+                                    'widgetType' => 'heading',
+                                    'settings' => [
+                                        'title' => 'دیگه طراحی سایت و اجرای تبلیغات جواب نمیده',
+                                        'avatice_enable_reveal' => 'yes'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+            update_post_meta($page_id, '_elementor_data', json_encode($elementor_data));
+		}
 	}
 }
 
