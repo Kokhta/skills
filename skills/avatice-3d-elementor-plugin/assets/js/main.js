@@ -4,10 +4,14 @@
 (function($) {
     class Avatice3DScene {
         constructor() {
-            this.container = $('.avatice-3d-layout-wrapper');
+            this.container = $('.avatice-3d-layout-wrapper').last(); // Get latest if multiple exist in editor
             if (!this.container.length) return;
 
             this.canvas = document.getElementById('avatice-3d-canvas');
+            if (!this.canvas) {
+                // Try finding within container if ID not unique in editor context
+                this.canvas = this.container.find('canvas')[0];
+            }
             if (!this.canvas) return;
 
             this.railProgress = document.getElementById('avatice-rail-progress');
@@ -26,7 +30,9 @@
         }
 
         updateConfig() {
-            this.container = $('.avatice-3d-layout-wrapper');
+            // Re-fetch container to get fresh data attributes from Elementor
+            this.container = $('.avatice-3d-layout-wrapper').last();
+
             this.config = {
                 fogColor: this.container.data('fog-color') || '#070a0f',
                 light1: this.container.data('light1') || '#2bb8ec',
@@ -78,8 +84,6 @@
             if (this.composer) this.composer.setSize(W, H);
             if (this.cam) {
                 this.cam.aspect = W / H;
-                // Editor FOV override vs dynamic mobile FOV
-                this.cam.fov = W < 768 ? 75 : this.config.fov;
                 this.cam.updateProjectionMatrix();
             }
             this.pathScale = W < 768 ? 0.6 : 1.0;
@@ -129,25 +133,29 @@
 
         bendX(z) {
             let x = (Math.sin(z * 0.011) * 17 + Math.cos(z * 0.033) * 4.5) * this.pathScale;
-            this.ROOMS.forEach(room => {
-                const dist = Math.abs(z - room.z);
-                if (dist < 40) {
-                    const influence = 1 - (dist / 40);
-                    x += Math.sin(z * 0.1) * 10 * influence;
-                }
-            });
+            if (this.ROOMS) {
+                this.ROOMS.forEach(room => {
+                    const dist = Math.abs(z - room.z);
+                    if (dist < 40) {
+                        const influence = 1 - (dist / 40);
+                        x += Math.sin(z * 0.1) * 10 * influence;
+                    }
+                });
+            }
             return x;
         }
 
         bendY(z) {
             let y = (Math.cos(z * 0.015) * 10 + Math.sin(z * 0.027) * 3) * this.pathScale;
-            this.ROOMS.forEach(room => {
-                const dist = Math.abs(z - room.z);
-                if (dist < 40) {
-                    const influence = 1 - (dist / 40);
-                    y += Math.cos(z * 0.1) * 10 * influence;
-                }
-            });
+            if (this.ROOMS) {
+                this.ROOMS.forEach(room => {
+                    const dist = Math.abs(z - room.z);
+                    if (dist < 40) {
+                        const influence = 1 - (dist / 40);
+                        y += Math.cos(z * 0.1) * 10 * influence;
+                    }
+                });
+            }
             return y;
         }
 
@@ -174,7 +182,6 @@
             this.Z_NEAR = 24;
             this.SPAN = this.Z_NEAR - this.Z_FAR;
 
-            // Geometry Cache
             this.G = {
                 box: new THREE.BoxGeometry(1, 1, 1),
                 cyl: new THREE.CylinderGeometry(1, 1, 1, 18),
@@ -272,12 +279,16 @@
         }
 
         setupEventListeners() {
-            window.addEventListener('scroll', () => this.onScroll(), { passive: true });
-            window.addEventListener('resize', () => this.updateSize());
-            window.addEventListener('mousemove', (e) => {
+            this._onScroll = () => this.onScroll();
+            this._onResize = () => this.updateSize();
+            this._onMouseMove = (e) => {
                 this.state.tmx = (e.clientX / window.innerWidth - 0.5);
                 this.state.tmy = (e.clientY / window.innerHeight - 0.5);
-            });
+            };
+
+            window.addEventListener('scroll', this._onScroll, { passive: true });
+            window.addEventListener('resize', this._onResize);
+            window.addEventListener('mousemove', this._onMouseMove);
             this.onScroll();
         }
 
@@ -294,7 +305,7 @@
         }
 
         setupRevealAnimations() {
-            const observer = new IntersectionObserver((entries) => {
+            this.observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('shown');
@@ -305,10 +316,11 @@
                 });
             }, { threshold: 0.1 });
 
-            $('.avatice-reveal').each((i, el) => observer.observe(el));
+            $('.avatice-reveal').each((i, el) => this.observer.observe(el));
         }
 
         streamStars(layer, speed, camZ) {
+            if (!layer || !layer.g) return;
             const a = layer.g.attributes.position.array, hm = layer.home;
             for (let i = 0; i < layer.count; i++) {
                 let z = a[i * 3 + 2] + speed;
@@ -326,7 +338,7 @@
 
         animate() {
             if (this.disposed) return;
-            requestAnimationFrame(() => this.animate());
+            this._raf = requestAnimationFrame(() => this.animate());
             const THREE = window.THREE;
             const dt = 0.016;
             const et = performance.now() * 0.001;
@@ -377,7 +389,36 @@
 
         dispose() {
             this.disposed = true;
-            if (this.renderer) this.renderer.dispose();
+            if (this._raf) cancelAnimationFrame(this._raf);
+            if (this.observer) this.observer.disconnect();
+
+            window.removeEventListener('scroll', this._onScroll);
+            window.removeEventListener('resize', this._onResize);
+            window.removeEventListener('mousemove', this._onMouseMove);
+
+            if (this.renderer) {
+                this.renderer.dispose();
+                this.renderer.forceContextLoss();
+                this.renderer.domElement.addEventListener('webglcontextlost', function(e) {
+                    e.preventDefault();
+                }, false);
+            }
+
+            // Clear geometries and materials
+            if (this.scene) {
+                this.scene.traverse(node => {
+                    if (node.isMesh) {
+                        if (node.geometry) node.geometry.dispose();
+                        if (node.material) {
+                            if (Array.isArray(node.material)) {
+                                node.material.forEach(m => m.dispose());
+                            } else {
+                                node.material.dispose();
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -385,6 +426,7 @@
 
     $(window).on('elementor/frontend/init', function() {
         if ($('.avatice-3d-layout-wrapper').length) {
+            if (window.Avatice3DSceneInstance) window.Avatice3DSceneInstance.dispose();
             window.Avatice3DSceneInstance = new Avatice3DScene();
         }
     });

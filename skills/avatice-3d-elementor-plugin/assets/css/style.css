@@ -9,7 +9,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
 
 .avatice-3d-wrapper * { box-sizing: border-box; }
 
-/* Global variables that will be overridden by Elementor controls */
+/* Global variables */
 :root {
   --avatice-bg: #070a0f;
   --avatice-text: #eaf6fb;
@@ -24,9 +24,9 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
     inset: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
+    z-index: -1; /* Moved to background */
     display: block;
-    pointer-events: none; /* Allow clicks to pass to content unless specifically captured */
+    pointer-events: none;
 }
 
 .avatice-3d-canvas-container canvas {
@@ -38,7 +38,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
 .avatice-3d-overlay {
     position: fixed;
     inset: 0;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
     background: radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(7,10,15,.55) 100%);
 }
@@ -89,6 +89,7 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
     align-items: center;
     padding: 80px 24px;
     will-change: transform;
+    color: #eaf6fb;
 }
 
 .avatice-reveal {
@@ -112,4 +113,25 @@ div[data-dc-tpl="203"],div[data-dc-tpl="53"] {
 .avatice-reveal.shown > * {
     opacity: 1;
     transform: none;
+}
+
+/* Elementor Editor Adjustments */
+.elementor-editor-active .avatice-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+}
+.elementor-editor-active .avatice-reveal > * {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* Ensure the canvas doesn't swallow clicks in editor but stays visible */
+.elementor-editor-active .avatice-3d-canvas-container {
+    opacity: 0.8;
+}
+
+/* Fix for fixed header in editor */
+.elementor-editor-active .avatice-3d-header {
+    top: 0; /* Might need adjustment if Elementor top bar interferes */
 }
