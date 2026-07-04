@@ -36,20 +36,6 @@ class Olympus_01_Wrapper_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'theme_mode',
-			[
-				'label' => esc_html__( 'Default Theme', 'olympus-elementor-addon' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'light',
-				'options' => [
-					'light'  => esc_html__( 'Light', 'olympus-elementor-addon' ),
-					'dark' => esc_html__( 'Dark', 'olympus-elementor-addon' ),
-				],
-				'prefix_class' => 'olympus-theme-',
-			]
-		);
-
-		$this->add_control(
 			'load_google_fonts',
 			[
 				'label' => esc_html__( 'Load Google Fonts', 'olympus-elementor-addon' ),
@@ -73,7 +59,7 @@ class Olympus_01_Wrapper_Widget extends \Elementor\Widget_Base {
 				  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">';
 		}
 
-		echo '<div class="olympus-global-wrapper" data-theme="' . esc_attr( $settings['theme_mode'] ) . '">';
+		echo '<div class="olympus-global-wrapper" data-theme="dark">';
 	}
 
 	protected function content_template() {
@@ -85,7 +71,7 @@ class Olympus_01_Wrapper_Widget extends \Elementor\Widget_Base {
 			<#
 		}
 		#>
-		<div class="olympus-global-wrapper" data-theme="{{ settings.theme_mode }}">
+		<div class="olympus-global-wrapper" data-theme="dark">
 		<?php
 	}
 }

@@ -1,20 +1,5 @@
-/* ── Tokens ─────────────────────────────────────────── */
+/* ── Tokens (Forced Dark Theme) ────────────────────── */
 :root {
-  --ol-bg:          #F5EDD6;
-  --ol-bg-alt:      #EDE5C8;
-  --ol-bg-card:     rgba(255, 253, 245, 0.88);
-  --ol-text:        #1A0E05;
-  --ol-text-muted:  #7A6244;
-  --ol-text-faint:  #B0946A;
-  --ol-gold:        #C9A227;
-  --ol-gold-lt:     #E8C84A;
-  --ol-gold-dk:     #9A7510;
-  --ol-gold-dim:    rgba(201,162,39,0.30);
-  --ol-gold-glow:   rgba(201,162,39,0.12);
-  --ol-border:      rgba(201,162,39,0.22);
-  --ol-tt: 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-[data-theme="dark"] {
   --ol-bg:          #05050C;
   --ol-bg-alt:      #0A0A18;
   --ol-bg-card:     rgba(12, 12, 24, 0.92);
@@ -27,6 +12,7 @@
   --ol-gold-dim:    rgba(212,175,55,0.28);
   --ol-gold-glow:   rgba(212,175,55,0.09);
   --ol-border:      rgba(212,175,55,0.18);
+  --ol-tt: 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .olympus-global-wrapper {
@@ -54,6 +40,7 @@
 }
 .ol-hero-overlay {
   position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(3,3,10,.55) 0%, rgba(3,3,10,.15) 35%, rgba(3,3,10,.25) 65%, rgba(3,3,10,.75) 100%);
 }
 .ol-hero-grain {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
@@ -189,13 +176,12 @@
 .ol-g-rule-sym { color: var(--ol-gold); font-size: 1rem; transition: color var(--ol-tt); }
 .ol-meander {
   width: 100%; overflow: hidden;
-  height: 22px; opacity: .45;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='22'%3E%3Cpath d='M0 11h6V5h6v6h6V5h6v11h-6v-5h-6v5h-6V5H0z' fill='none' stroke='%23C9A227' stroke-width='1'/%3E%3C/svg%3E");
+  height: 22px; opacity: .3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='22'%3E%3Cpath d='M0 11h6V5h6v6h6V5h6v11h-6v-5h-6v5h-6V5H0z' fill='none' stroke='%23D4AF37' stroke-width='1'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-position: center;
   transition: opacity var(--ol-tt);
 }
-[data-theme="dark"] .ol-meander { opacity: .3; }
 
 /* ── Intro ───────────────────────────────────────────── */
 .ol-intro {
@@ -245,9 +231,6 @@
 }
 .ol-god-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 55px rgba(0,0,0,.08), 0 0 40px var(--ol-gold-glow);
-}
-[data-theme="dark"] .ol-god-card:hover {
   box-shadow: 0 20px 55px rgba(0,0,0,.45), 0 0 40px var(--ol-gold-glow);
 }
 .ol-god-card:hover::before { opacity: 1; }

@@ -15,7 +15,6 @@ To perfectly recreate the Olympus design using this plugin, follow these steps i
 
 1.  **Page Layout:** Set your Page Layout to `Elementor Canvas` (Settings -> Page Layout).
 2.  **Global Wrapper:** Drag the **01. Olympus Page Container** widget onto the page.
-    *   Set **Theme** to `Light`.
     *   Ensure **Load Google Fonts** is enabled.
 3.  **Hero Section:** Add the **02. Olympus Hero** widget.
     *   Upload/Provide a Video URL.

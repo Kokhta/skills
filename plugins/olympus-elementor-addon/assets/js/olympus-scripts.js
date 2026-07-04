@@ -74,17 +74,6 @@
                 }
             );
         }
-
-        // Dark mode on scroll
-        const $siteBody = $('#ol-site-body');
-        if ($siteBody.length) {
-            ScrollTrigger.create({
-                trigger: '#ol-site-body',
-                start: 'top 88%',
-                onEnter()     { document.documentElement.setAttribute('data-theme', 'dark'); },
-                onLeaveBack() { document.documentElement.removeAttribute('data-theme'); }
-            });
-        }
     };
 
     /**
