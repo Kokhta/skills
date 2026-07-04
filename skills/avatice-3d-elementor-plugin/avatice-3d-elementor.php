@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Avatice 3D Scroll Experience for Elementor
  * Description: Adds advanced 3D scroll-driven effects to Elementor using Three.js.
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: Avatice
  * Text Domain: avatice-3d
  */
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class Avatice_3D_Elementor {
 
-	const VERSION = '1.2.0';
+	const VERSION = '1.3.0';
 
 	private static $_instance = null;
 
@@ -35,20 +35,21 @@ final class Avatice_3D_Elementor {
 			return;
 		}
 
+		// Require Admin logic
+		if ( is_admin() ) {
+			require_once( __DIR__ . '/includes/admin.php' );
+			new Avatice_3D_Admin();
+		}
+
 		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
 		add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'frontend_scripts' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_scripts' ] );
 
-		// Extend Elementor Controls
 		add_action( 'elementor/element/common/_section_style/after_section_end', [ $this, 'register_3d_controls' ], 10, 2 );
 		add_action( 'elementor/element/section/_section_responsive/after_section_end', [ $this, 'register_3d_controls' ], 10, 2 );
 		add_action( 'elementor/element/column/_section_responsive/after_section_end', [ $this, 'register_3d_controls' ], 10, 2 );
 
-		// Inject attributes into elements
 		add_action( 'elementor/element/before_add_render_attributes', [ $this, 'inject_3d_attributes' ], 10, 1 );
-
-		// Page creation on activation
-		register_activation_hook( __FILE__, [ $this, 'create_avatice_page' ] );
 	}
 
 	public function frontend_scripts() {
@@ -152,23 +153,15 @@ final class Avatice_3D_Elementor {
 		}
 	}
 
-	public function create_avatice_page() {
-		$page_title = 'Avatic';
-		$page_check = get_page_by_title($page_title);
-		$page_id = 0;
-
-		if(!isset($page_check->ID)){
-			$new_page = array(
-				'post_type' => 'page',
-				'post_title' => $page_title,
-				'post_content' => '',
-				'post_status' => 'publish',
-				'post_author' => 1,
-			);
-			$page_id = wp_insert_post($new_page);
-		} else {
-			$page_id = $page_check->ID;
-		}
+	public function create_3d_page($title) {
+		$new_page = array(
+			'post_type' => 'page',
+			'post_title' => $title,
+			'post_content' => '',
+			'post_status' => 'publish',
+			'post_author' => get_current_user_id(),
+		);
+		$page_id = wp_insert_post($new_page);
 
 		if ($page_id) {
 			update_post_meta($page_id, '_wp_page_template', 'elementor_canvas');
@@ -250,6 +243,7 @@ final class Avatice_3D_Elementor {
             ];
             update_post_meta($page_id, '_elementor_data', json_encode($elementor_data));
 		}
+        return $page_id;
 	}
 }
 
