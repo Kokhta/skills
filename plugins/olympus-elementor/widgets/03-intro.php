@@ -21,41 +21,18 @@ class Olympus_03_intro_Widget extends \Elementor\Modules\NestedElements\Base\Wid
 		return [ 'olympus' ];
 	}
 
-	public function is_container() {
-		return true;
-	}
-
 	protected function get_default_children_elements() {
-		return [];
+		return [
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => 'The Ancient World', '_class' => 'sec-label reveal' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="g-rule reveal"><div class="g-rule-line"></div><div class="g-rule-sym">⚡</div><div class="g-rule-line rev"></div></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => '"From Chaos came the Earth, and from the Earth came all things divine — the <em>twelve immortals</em> who shaped the fate of gods and men alike from their thrones upon Mount Olympus."', '_class' => 'intro-quote reveal' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="g-rule reveal"><div class="g-rule-line"></div><div class="g-rule-sym">✦</div><div class="g-rule-line rev"></div></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => '— Hesiod · Theogony · 700 BCE', '_class' => 'intro-source reveal' ] ],
+		];
 	}
 
 	protected function get_default_repeater_title_setting_key() {
 		return '';
-	}
-
-	protected function register_controls() {
-		$this->start_controls_section(
-			'section_import',
-			[
-				'label' => esc_html__( 'Setup', 'olympus-elementor' ),
-			]
-		);
-
-		$this->add_control(
-			'import_button',
-			[
-				'label' => esc_html__( 'Import Default Content', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::BUTTON,
-				'button_type' => 'success',
-				'text' => esc_html__( 'Import', 'olympus-elementor' ),
-				'event' => 'olympus:import:default',
-				'event_data' => [
-					'type' => 'intro',
-				],
-			]
-		);
-
-		$this->end_controls_section();
 	}
 
 	protected function render() {

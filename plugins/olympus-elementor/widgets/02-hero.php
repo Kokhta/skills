@@ -21,12 +21,20 @@ class Olympus_02_hero_Widget extends \Elementor\Modules\NestedElements\Base\Widg
 		return [ 'olympus' ];
 	}
 
-	public function is_container() {
-		return true;
-	}
-
 	protected function get_default_children_elements() {
-		return [];
+		return [
+			[ 'elType' => 'widget', 'widgetType' => 'video', 'settings' => [ 'video_type' => 'hosted', 'autoplay' => 'yes', 'loop' => 'yes', 'mute' => 'yes', 'controls' => '', '_class' => 'hero-video' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="hero-overlay"></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="hero-grain"></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="hero-rule"></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'heading', 'settings' => [ 'title' => 'Ἐν ἀρχῇ ἦν τὸ Χάος', 'header_size' => 'div', '_class' => 'hero-eyebrow' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="hero-gem"><div class="hero-gem-line"></div><div class="hero-gem-dot">✦</div><div class="hero-gem-line"></div></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'heading', 'settings' => [ 'title' => 'OLYMPUS <span class="hero-title-greek">ΟΛΥΜΠΟΣ</span>', 'header_size' => 'h1', '_class' => 'hero-title' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => 'Where thunder meets the stars, and mortals kneel<br>before the eternal throne of the divine', '_class' => 'hero-sub' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'heading', 'settings' => [ 'title' => 'Ζεύς · Ποσειδῶν · Ἅιδης · Ἀθηνᾶ · Ἀπόλλων · Ἄρης', 'header_size' => 'div', '_class' => 'hero-gods' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="scroll-cue"><span>Scroll</span><div class="scroll-cue-line"></div></div>' ] ],
+		];
 	}
 
 	protected function get_default_repeater_title_setting_key() {
@@ -34,29 +42,6 @@ class Olympus_02_hero_Widget extends \Elementor\Modules\NestedElements\Base\Widg
 	}
 
 	protected function register_controls() {
-		$this->start_controls_section(
-			'section_import',
-			[
-				'label' => esc_html__( 'Setup', 'olympus-elementor' ),
-			]
-		);
-
-		$this->add_control(
-			'import_button',
-			[
-				'label' => esc_html__( 'Import Default Content', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::BUTTON,
-				'button_type' => 'success',
-				'text' => esc_html__( 'Import', 'olympus-elementor' ),
-				'event' => 'olympus:import:default',
-				'event_data' => [
-					'type' => 'hero',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-
 		$this->start_controls_section(
 			'section_settings',
 			[
@@ -106,15 +91,17 @@ class Olympus_02_hero_Widget extends \Elementor\Modules\NestedElements\Base\Widg
                  data-scale="<?php echo esc_attr($settings['video_scale_end']); ?>"
                  data-fade-percent="<?php echo esc_attr($settings['content_fade_percent']); ?>">
 			<div class="hero-sticky">
-				<?php
-				if ( method_exists( $this, 'print_child_widgets_content' ) ) {
-					$this->print_child_widgets_content();
-				} else {
-					foreach ( $this->get_settings( 'elements' ) as $child_element ) {
-						$child_element->print_element();
+				<div class="hero-content">
+					<?php
+					if ( method_exists( $this, 'print_child_widgets_content' ) ) {
+						$this->print_child_widgets_content();
+					} else {
+						foreach ( $this->get_settings( 'elements' ) as $child_element ) {
+							$child_element->print_element();
+						}
 					}
-				}
-				?>
+					?>
+				</div>
 			</div>
 		</section>
 		<?php
@@ -124,7 +111,9 @@ class Olympus_02_hero_Widget extends \Elementor\Modules\NestedElements\Base\Widg
 		?>
 		<section class="hero-wrap">
 			<div class="hero-sticky">
-				<div class="elementor-child-contents"></div>
+				<div class="hero-content">
+					<div class="elementor-child-contents"></div>
+				</div>
 			</div>
 		</section>
 		<?php

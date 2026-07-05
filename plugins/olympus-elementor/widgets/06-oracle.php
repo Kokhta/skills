@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
-class Olympus_06_oracle_Widget extends \Elementor\Widget_Base {
+class Olympus_06_oracle_Widget extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
 
 	public function get_name() {
 		return '06-oracle';
@@ -21,73 +21,46 @@ class Olympus_06_oracle_Widget extends \Elementor\Widget_Base {
 		return [ 'olympus' ];
 	}
 
-	protected function register_controls() {
-		$this->start_controls_section(
-			'section_content',
-			[
-				'label' => esc_html__( 'Content', 'olympus-elementor' ),
-			]
-		);
+	protected function get_default_children_elements() {
+		return [
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="oracle-bg">ΧΡΗΣΜΟΣ</div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => '🏛️', '_class' => 'oracle-icon reveal' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => 'The Oracle of Delphi', '_class' => 'sec-label reveal' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="g-rule reveal"><div class="g-rule-line"></div><div class="g-rule-sym">✦</div><div class="g-rule-line rev"></div></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => '"Know thyself. Nothing in excess.<br><em>Certainty brings insanity.</em>"', '_class' => 'oracle-quote reveal' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'html', 'settings' => [ 'html' => '<div class="g-rule reveal"><div class="g-rule-line"></div><div class="g-rule-sym">✦</div><div class="g-rule-line rev"></div></div>' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => '— The Three Maxims of Delphi, inscribed at Apollo\'s Temple', '_class' => 'oracle-attr reveal' ] ],
+		];
+	}
 
-		$this->add_control(
-			'watermark',
-			[
-				'label' => esc_html__( 'Watermark Text', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'ΧΡΗΣΜΟΣ',
-			]
-		);
-
-		$this->add_control(
-			'icon',
-			[
-				'label' => esc_html__( 'Icon (Emoji)', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '🏛️',
-			]
-		);
-
-		$this->add_control(
-			'quote',
-			[
-				'label' => esc_html__( 'Quote', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::WYSIWYG,
-				'default' => '"Know thyself. Nothing in excess.<br><em>Certainty brings insanity.</em>"',
-			]
-		);
-
-		$this->add_control(
-			'attribution',
-			[
-				'label' => esc_html__( 'Attribution', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '— The Three Maxims of Delphi, inscribed at Apollo\'s Temple',
-			]
-		);
-
-		$this->end_controls_section();
+	protected function get_default_repeater_title_setting_key() {
+		return '';
 	}
 
 	protected function render() {
-		$settings = $this->get_settings_for_display();
 		?>
 		<section class="oracle site-body">
-			<div class="oracle-bg"><?php echo esc_html( $settings['watermark'] ); ?></div>
 			<div class="oracle-inner">
-				<span class="oracle-icon reveal"><?php echo esc_html( $settings['icon'] ); ?></span>
-				<div class="sec-label reveal"><?php echo esc_html__( 'The Oracle of Delphi', 'olympus-elementor' ); ?></div>
-				<div class="g-rule reveal">
-					<div class="g-rule-line"></div>
-					<div class="g-rule-sym">✦</div>
-					<div class="g-rule-line rev"></div>
-				</div>
-				<div class="oracle-quote reveal"><?php echo $settings['quote']; ?></div>
-				<div class="g-rule reveal">
-					<div class="g-rule-line"></div>
-					<div class="g-rule-sym">✦</div>
-					<div class="g-rule-line rev"></div>
-				</div>
-				<div class="oracle-attr reveal"><?php echo esc_html( $settings['attribution'] ); ?></div>
+				<?php
+				if ( method_exists( $this, 'print_child_widgets_content' ) ) {
+					$this->print_child_widgets_content();
+				} else {
+					foreach ( $this->get_settings( 'elements' ) as $child_element ) {
+						$child_element->print_element();
+					}
+				}
+				?>
+			</div>
+		</section>
+		<div class="olympus-meander"></div>
+		<?php
+	}
+
+	protected function content_template() {
+		?>
+		<section class="oracle site-body">
+			<div class="oracle-inner">
+				<div class="elementor-child-contents"></div>
 			</div>
 		</section>
 		<div class="olympus-meander"></div>

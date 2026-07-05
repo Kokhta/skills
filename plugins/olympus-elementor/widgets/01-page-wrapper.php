@@ -21,12 +21,23 @@ class Olympus_01_page_wrapper_Widget extends \Elementor\Modules\NestedElements\B
 		return [ 'olympus' ];
 	}
 
-	public function is_container() {
-		return true;
-	}
-
 	protected function get_default_children_elements() {
-		return [];
+		return [
+			[
+				'elType' => 'widget',
+				'widgetType' => 'html',
+				'settings' => [
+					'html' => '<style>:root { --bg: #F5EDD6; --text: #1A0E05; --gold: #C9A227; } [data-theme="dark"] { --bg: #05050C; --text: #EAE0C8; --gold: #D4AF37; }</style>',
+				],
+			],
+			[
+				'elType' => 'widget',
+				'widgetType' => 'menu-anchor',
+				'settings' => [
+					'anchor' => 'top',
+				],
+			],
+		];
 	}
 
 	protected function get_default_repeater_title_setting_key() {
@@ -91,15 +102,6 @@ class Olympus_01_page_wrapper_Widget extends \Elementor\Modules\NestedElements\B
 			}
 			?>
 		</div>
-		<style>
-			body {
-				margin: 0;
-				padding: 0;
-			}
-			.olympus-page-wrapper {
-				min-height: 100vh;
-			}
-		</style>
 		<?php
 	}
 

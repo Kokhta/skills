@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
-class Olympus_04_pantheon_Widget extends \Elementor\Widget_Base {
+class Olympus_04_pantheon_Widget extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
 
 	public function get_name() {
 		return '04-pantheon';
@@ -21,116 +21,66 @@ class Olympus_04_pantheon_Widget extends \Elementor\Widget_Base {
 		return [ 'olympus' ];
 	}
 
-	protected function register_controls() {
-		$this->start_controls_section(
-			'section_content',
-			[
-				'label' => esc_html__( 'Content', 'olympus-elementor' ),
-			]
-		);
+	protected function get_default_children_elements() {
+		$defaults = [
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => 'The Twelve Olympians', '_class' => 'sec-label reveal' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'heading', 'settings' => [ 'title' => 'The Divine Pantheon', '_class' => 'sec-title reveal' ] ],
+			[ 'elType' => 'widget', 'widgetType' => 'text-editor', 'settings' => [ 'content' => 'Rulers of the cosmos, shaping the destiny of mortals from their eternal thrones atop sacred Mount Olympus.', '_class' => 'sec-sub reveal' ] ],
+		];
 
-		$this->add_control(
-			'title',
-			[
-				'label' => esc_html__( 'Title', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'The Divine Pantheon', 'olympus-elementor' ),
-			]
-		);
+		$gods = [
+			[ 'sym' => '⚡', 'realm' => 'King of the Gods', 'name' => 'Zeus', 'desc' => 'Lord of sky, thunder, and lightning.', 'num' => 'I' ],
+			[ 'sym' => '🔱', 'realm' => 'God of the Sea', 'name' => 'Poseidon', 'desc' => 'Master of the oceans, earthquakes, and horses.', 'num' => 'II' ],
+			[ 'sym' => '🦉', 'realm' => 'Goddess of Wisdom', 'name' => 'Athena', 'desc' => 'Born fully armored from the head of Zeus.', 'num' => 'III' ],
+		];
 
-		$this->add_control(
-			'subtitle',
-			[
-				'label' => esc_html__( 'Subtitle', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'default' => esc_html__( 'Rulers of the cosmos, shaping the destiny of mortals from their eternal thrones atop sacred Mount Olympus.', 'olympus-elementor' ),
-			]
-		);
-
-		$repeater = new \Elementor\Repeater();
-
-		$repeater->add_control(
-			'symbol',
-			[
-				'label' => esc_html__( 'Symbol', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '⚡',
-			]
-		);
-
-		$repeater->add_control(
-			'realm',
-			[
-				'label' => esc_html__( 'Realm', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'King of the Gods',
-			]
-		);
-
-		$repeater->add_control(
-			'name',
-			[
-				'label' => esc_html__( 'Name', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'Zeus',
-			]
-		);
-
-		$repeater->add_control(
-			'description',
-			[
-				'label' => esc_html__( 'Description', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'default' => 'Lord of sky, thunder, and lightning. Father of gods and men, wielder of the thunderbolt, supreme ruler of Olympus.',
-			]
-		);
-
-		$repeater->add_control(
-			'number',
-			[
-				'label' => esc_html__( 'Number', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'I',
-			]
-		);
-
-		$this->add_control(
-			'gods',
-			[
-				'label' => esc_html__( 'Gods', 'olympus-elementor' ),
-				'type' => \Elementor\Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'default' => [
-					[ 'symbol' => '⚡', 'realm' => 'King of the Gods', 'name' => 'Zeus', 'description' => 'Lord of sky, thunder, and lightning.', 'number' => 'I' ],
-					[ 'symbol' => '🔱', 'realm' => 'God of the Sea', 'name' => 'Poseidon', 'description' => 'Master of the oceans and earthquakes.', 'number' => 'II' ],
-					[ 'symbol' => '🦉', 'realm' => 'Goddess of Wisdom', 'name' => 'Athena', 'description' => 'Goddess of wisdom and strategic war.', 'number' => 'III' ],
+		foreach ( $gods as $god ) {
+			$defaults[] = [
+				'elType' => 'widget',
+				'widgetType' => 'html',
+				'settings' => [
+					'html' => sprintf(
+						'<div class="god-card reveal"><span class="god-sym">%s</span><div class="god-realm">%s</div><div class="god-name">%s</div><p class="god-desc">%s</p><div class="god-num">%s</div></div>',
+						$god['sym'], $god['realm'], $god['name'], $god['desc'], $god['num']
+					),
 				],
-				'title_field' => '{{{ name }}}',
-			]
-		);
+			];
+		}
 
-		$this->end_controls_section();
+		return $defaults;
+	}
+
+	protected function get_default_repeater_title_setting_key() {
+		return '';
 	}
 
 	protected function render() {
-		$settings = $this->get_settings_for_display();
 		?>
 		<section class="sec pantheon site-body">
 			<div class="sec-inner">
-				<div class="sec-label reveal"><?php echo esc_html__( 'The Twelve Olympians', 'olympus-elementor' ); ?></div>
-				<h2 class="sec-title reveal"><?php echo esc_html( $settings['title'] ); ?></h2>
-				<p class="sec-sub reveal"><?php echo esc_html( $settings['subtitle'] ); ?></p>
-
 				<div class="gods-grid">
-					<?php foreach ( $settings['gods'] as $god ) : ?>
-						<div class="god-card reveal">
-							<span class="god-sym"><?php echo esc_html( $god['symbol'] ); ?></span>
-							<div class="god-realm"><?php echo esc_html( $god['realm'] ); ?></div>
-							<div class="god-name"><?php echo esc_html( $god['name'] ); ?></div>
-							<p class="god-desc"><?php echo esc_html( $god['description'] ); ?></p>
-							<div class="god-num"><?php echo esc_html( $god['number'] ); ?></div>
-						</div>
-					<?php endforeach; ?>
+					<?php
+					if ( method_exists( $this, 'print_child_widgets_content' ) ) {
+						$this->print_child_widgets_content();
+					} else {
+						foreach ( $this->get_settings( 'elements' ) as $child_element ) {
+							$child_element->print_element();
+						}
+					}
+					?>
+				</div>
+			</div>
+		</section>
+		<div class="olympus-meander"></div>
+		<?php
+	}
+
+	protected function content_template() {
+		?>
+		<section class="sec pantheon site-body">
+			<div class="sec-inner">
+				<div class="gods-grid">
+					<div class="elementor-child-contents"></div>
 				</div>
 			</div>
 		</section>

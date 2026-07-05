@@ -31,9 +31,6 @@ class Olympus_Elementor_Setup {
 
 		// Enqueue Frontend Assets
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_frontend_assets' ] );
-
-		// Enqueue Editor Assets
-		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_assets' ] );
 	}
 
 	public function register_categories( $elements_manager ) {
@@ -62,10 +59,8 @@ class Olympus_Elementor_Setup {
 			$file = plugin_dir_path( __DIR__ ) . 'widgets/' . $widget_id . '.php';
 			if ( file_exists( $file ) ) {
 				// Safety check for Nested Elements classes
-				if ( in_array( $widget_id, [ '01-page-wrapper', '02-hero', '03-intro' ] ) ) {
-					if ( ! class_exists( '\Elementor\Modules\NestedElements\Base\Widget_Nested_Base' ) ) {
-						continue;
-					}
+				if ( ! class_exists( '\Elementor\Modules\NestedElements\Base\Widget_Nested_Base' ) ) {
+					continue;
 				}
 
 				require_once( $file );
@@ -85,9 +80,5 @@ class Olympus_Elementor_Setup {
 		// Custom Frontend Assets
 		wp_enqueue_style( 'olympus-frontend', plugin_dir_url( __DIR__ ) . 'assets/css/olympus-frontend.css', [], Olympus_Elementor::VERSION );
 		wp_enqueue_script( 'olympus-frontend', plugin_dir_url( __DIR__ ) . 'assets/js/olympus-frontend.js', [ 'gsap', 'gsap-scrolltrigger' ], Olympus_Elementor::VERSION, true );
-	}
-
-	public function enqueue_editor_assets() {
-		wp_enqueue_script( 'olympus-editor', plugin_dir_url( __DIR__ ) . 'assets/js/olympus-editor.js', [ 'jquery' ], Olympus_Elementor::VERSION, true );
 	}
 }
