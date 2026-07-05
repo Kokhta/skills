@@ -18,6 +18,10 @@ class Olympus_Elementor_Setup {
 		return self::$_instance;
 	}
 
+	public function is_nested_elements_enabled() {
+		return \Elementor\Plugin::$instance->experiments->is_feature_active( "nested-elements" );
+	}
+
 	public function __construct() {
 		// Register Category
 		add_action( 'elementor/elements/categories_registered', [ $this, 'register_categories' ] );

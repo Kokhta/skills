@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Olympus_Elementor {
 
 	const VERSION = '1.0.0';
-	const MINIMUM_ELEMENTOR_VERSION = '3.5.0';
+	const MINIMUM_ELEMENTOR_VERSION = '3.10.0';
 	const MINIMUM_PHP_VERSION = '7.4';
 
 	private static $_instance = null;

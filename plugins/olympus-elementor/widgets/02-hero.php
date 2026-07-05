@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
-class Olympus_02_hero_Widget extends \Elementor\Widget_Base {
+class Olympus_02_hero_Widget extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
 
 	public function get_name() {
 		return '02-hero';
