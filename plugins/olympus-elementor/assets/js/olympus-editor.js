@@ -5,25 +5,33 @@
 
         const OlympusEditor = {
             init: function() {
+                // The event 'olympus:import:default' is triggered on the editor channel
+                // but the arguments passed depend on how the button is clicked.
+                // Elementor passes 'view' of the control that triggered the event.
                 elementor.channels.editor.on('olympus:import:default', this.handleImport.bind(this));
             },
 
-            handleImport: function(options) {
-                const { widgetId, type } = options;
-                const container = elementor.getContainer(widgetId);
+            handleImport: function(view) {
+                if (!view || !view.model) return;
+
+                const eventData = view.model.get('event_data');
+                if (!eventData || !eventData.type) return;
+
+                // The container we want to add widgets to is the parent container of the button's widget
+                const container = view.container;
 
                 if (!container) return;
 
-                if (type === 'hero') {
+                if (eventData.type === 'hero') {
                     this.importHero(container);
-                } else if (type === 'intro') {
+                } else if (eventData.type === 'intro') {
                     this.importIntro(container);
                 }
             },
 
             importHero: function(container) {
                 const widgets = [
-                    { widgetType: 'video', settings: { video_type: 'hosted', autoplay: 'yes', loop: 'yes', mute: 'yes', controls: '', show_image_overlay: '', class: 'hero-video' } },
+                    { widgetType: 'video', settings: { video_type: 'hosted', autoplay: 'yes', loop: 'yes', mute: 'yes', controls: '', show_image_overlay: '', _class: 'hero-video' } },
                     { widgetType: 'html', settings: { html: '<div class="hero-overlay"></div>' } },
                     { widgetType: 'html', settings: { html: '<div class="hero-grain"></div>' } },
                     { widgetType: 'html', settings: { html: '<div class="hero-rule"></div>' } },
@@ -52,14 +60,19 @@
             },
 
             addWidgets: async function(container, widgets) {
+                // We add widgets sequentially to maintain order
                 for (const config of widgets) {
-                    await $e.run('document/elements/create', {
-                        container: container,
-                        model: config,
-                        options: {
-                            at: container.children.length
-                        }
-                    });
+                    try {
+                        await $e.run('document/elements/create', {
+                            container: container,
+                            model: config,
+                            options: {
+                                at: container.children.length
+                            }
+                        });
+                    } catch (e) {
+                        console.error('Olympus Editor: Failed to create widget', config, e);
+                    }
                 }
             }
         };
