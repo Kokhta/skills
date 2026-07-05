@@ -1,5 +1,20 @@
-/* ── Tokens (Forced Dark Theme) ────────────────────── */
-:root {
+/* ── Theme Definitions ────────────────────────────── */
+.ol-theme-light {
+  --ol-bg:          #F5EDD6;
+  --ol-bg-alt:      #EDE5C8;
+  --ol-bg-card:     rgba(255, 253, 245, 0.88);
+  --ol-text:        #1A0E05;
+  --ol-text-muted:  #7A6244;
+  --ol-text-faint:  #B0946A;
+  --ol-gold:        #C9A227;
+  --ol-gold-lt:     #E8C84A;
+  --ol-gold-dk:     #9A7510;
+  --ol-gold-dim:    rgba(201,162,39,0.30);
+  --ol-gold-glow:   rgba(201,162,39,0.12);
+  --ol-border:      rgba(201,162,39,0.22);
+}
+
+.ol-theme-dark {
   --ol-bg:          #05050C;
   --ol-bg-alt:      #0A0A18;
   --ol-bg-card:     rgba(12, 12, 24, 0.92);
@@ -12,8 +27,27 @@
   --ol-gold-dim:    rgba(212,175,55,0.28);
   --ol-gold-glow:   rgba(212,175,55,0.09);
   --ol-border:      rgba(212,175,55,0.18);
-  --ol-tt: 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
+:root {
+    --ol-tt: 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Default to dark if no class applied */
+.olympus-global-wrapper:not(.ol-theme-light),
+.ol-hero-wrap:not(.ol-theme-light),
+.ol-intro:not(.ol-theme-light),
+.ol-pantheon:not(.ol-theme-light),
+.ol-myths:not(.ol-theme-light),
+.ol-oracle:not(.ol-theme-light),
+.ol-chronicles:not(.ol-theme-light),
+.ol-footer:not(.ol-theme-light) {
+    @extend .ol-theme-dark;
+}
+
+/* Note: Since we are using class-based theming, we'll apply variables directly */
+.ol-theme-light { background: var(--ol-bg); color: var(--ol-text); }
+.ol-theme-dark { background: var(--ol-bg); color: var(--ol-text); }
 
 .olympus-global-wrapper {
     background: var(--ol-bg);
@@ -24,7 +58,7 @@
 }
 
 /* ── Hero ────────────────────────────────────────────── */
-.ol-hero-wrap { height: 420vh; position: relative; }
+.ol-hero-wrap { height: 420vh; position: relative; background: var(--ol-bg); }
 .ol-hero-sticky {
   position: sticky; top: 0;
   height: 100vh; width: 100%;
@@ -449,4 +483,20 @@
   .ol-sec, .ol-intro, .ol-oracle { padding: 5rem 1.8rem; }
   .ol-foot-top { padding: 3rem 1.8rem; }
   .ol-foot-bottom { padding: 1.4rem 1.8rem; }
+}
+
+/* Base variables to prevent breakage if no theme class */
+.ol-theme-dark, :root {
+  --ol-bg:          #05050C;
+  --ol-bg-alt:      #0A0A18;
+  --ol-bg-card:     rgba(12, 12, 24, 0.92);
+  --ol-text:        #EAE0C8;
+  --ol-text-muted:  #9B8A6E;
+  --ol-text-faint:  #6B5A44;
+  --ol-gold:        #D4AF37;
+  --ol-gold-lt:     #F0D060;
+  --ol-gold-dk:     #B08820;
+  --ol-gold-dim:    rgba(212,175,55,0.28);
+  --ol-gold-glow:   rgba(212,175,55,0.09);
+  --ol-border:      rgba(212,175,55,0.18);
 }

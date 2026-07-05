@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Olympus_Widgets_Manager {
 
 	/**
+require_once( __DIR__ . '/helper-functions.php' );
 	 * Constructor
 	 */
 	public function __construct( $widgets_manager ) {

@@ -15,33 +15,23 @@ To perfectly recreate the Olympus design using this plugin, follow these steps i
 
 1.  **Page Layout:** Set your Page Layout to `Elementor Canvas` (Settings -> Page Layout).
 2.  **Global Wrapper:** Drag the **01. Olympus Page Container** widget onto the page.
+    *   Set **Theme** to `Dark` (default) or `Light`.
     *   Ensure **Load Google Fonts** is enabled.
 3.  **Hero Section:** Add the **02. Olympus Hero** widget.
-    *   Upload/Provide a Video URL.
-    *   Configure the Title, Subtitle, and Gods list.
 4.  **Intro Section:** Add the **04. Olympus Intro** widget.
-    *   Set the Label ("The Ancient World").
-    *   Paste the Quote.
 5.  **Pantheon Grid:** Add the **06. Olympus Pantheon** widget.
-    *   Add cards for each God using the Repeater control.
-    *   Customize Symbols, Realms, and Names.
 6.  **Myths Section:** Add the **08. Olympus Myths** widget.
-    *   Add myth pairs.
-    *   Use the **Reverse Layout** toggle for every second myth to create the "zig-zag" effect.
 7.  **Oracle Section:** Add the **10. Olympus Oracle** widget.
-    *   Configure the background Greek text and the center quote.
 8.  **Chronicles Timeline:** Add the **12. Olympus Chronicles** widget.
-    *   Add timeline events.
-    *   Toggle **Alignment** (Left/Right) for each item to create the staggered timeline look.
 9.  **Footer:** Add the **15. Olympus Footer** widget.
-    *   Set the Logo, Tagline, and Nav links.
 
 ## Customization
 
 Every widget is designed with full editability in mind:
+*   **Theme Options:** Every widget includes a "Theme" section allowing you to force **Dark** or **Light** mode, or inherit from the Global Page Container.
 *   **Typography:** Change font sizes, weights, and letter spacing via the Style tab.
-*   **Colors:** Customize the gold accent, background colors, and text colors.
-*   **Animations:** The GSAP/ScrollTrigger animations (Reveal, Parallax, Video Scrub) are automatically applied to the widgets.
+*   **Colors:** Customize gold accents and colors.
+*   **Animations:** GSAP/ScrollTrigger animations are applied automatically.
 
 ## Requirements
 *   WordPress 7.4+
