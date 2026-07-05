@@ -106,7 +106,15 @@ class Olympus_02_hero_Widget extends \Elementor\Modules\NestedElements\Base\Widg
                  data-scale="<?php echo esc_attr($settings['video_scale_end']); ?>"
                  data-fade-percent="<?php echo esc_attr($settings['content_fade_percent']); ?>">
 			<div class="hero-sticky">
-				<?php $this->print_child_widgets_content(); ?>
+				<?php
+				if ( method_exists( $this, 'print_child_widgets_content' ) ) {
+					$this->print_child_widgets_content();
+				} else {
+					foreach ( $this->get_settings( 'elements' ) as $child_element ) {
+						$child_element->print_element();
+					}
+				}
+				?>
 			</div>
 		</section>
 		<?php

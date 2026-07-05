@@ -62,7 +62,15 @@ class Olympus_03_intro_Widget extends \Elementor\Modules\NestedElements\Base\Wid
 		?>
 		<section class="intro site-body">
 			<div class="intro-inner">
-				<?php $this->print_child_widgets_content(); ?>
+				<?php
+				if ( method_exists( $this, 'print_child_widgets_content' ) ) {
+					$this->print_child_widgets_content();
+				} else {
+					foreach ( $this->get_settings( 'elements' ) as $child_element ) {
+						$child_element->print_element();
+					}
+				}
+				?>
 			</div>
 		</section>
 		<div class="olympus-meander"></div>

@@ -61,6 +61,13 @@ class Olympus_Elementor_Setup {
 		foreach ( $widgets as $widget_id ) {
 			$file = plugin_dir_path( __DIR__ ) . 'widgets/' . $widget_id . '.php';
 			if ( file_exists( $file ) ) {
+				// Safety check for Nested Elements classes
+				if ( in_array( $widget_id, [ '01-page-wrapper', '02-hero', '03-intro' ] ) ) {
+					if ( ! class_exists( '\Elementor\Modules\NestedElements\Base\Widget_Nested_Base' ) ) {
+						continue;
+					}
+				}
+
 				require_once( $file );
 				$class_name = 'Olympus_' . str_replace( '-', '_', $widget_id ) . '_Widget';
 				if ( class_exists( $class_name ) ) {
