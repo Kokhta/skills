@@ -25,6 +25,14 @@ class Olympus_01_page_wrapper_Widget extends \Elementor\Modules\NestedElements\B
 		return true;
 	}
 
+	protected function get_default_children_elements() {
+		return [];
+	}
+
+	protected function get_default_repeater_title_setting_key() {
+		return '';
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_style',
@@ -66,7 +74,6 @@ class Olympus_01_page_wrapper_Widget extends \Elementor\Modules\NestedElements\B
 		$settings = $this->get_settings_for_display();
 		$this->add_render_attribute( 'wrapper', 'class', 'olympus-page-wrapper' );
 		if ( $settings['default_theme'] === 'dark' ) {
-			// Inject script to set theme on html
 			echo '<script>document.documentElement.setAttribute("data-theme", "dark");</script>';
 		}
 

@@ -25,6 +25,14 @@ class Olympus_03_intro_Widget extends \Elementor\Modules\NestedElements\Base\Wid
 		return true;
 	}
 
+	protected function get_default_children_elements() {
+		return [];
+	}
+
+	protected function get_default_repeater_title_setting_key() {
+		return '';
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_import',
