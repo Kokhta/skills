@@ -27552,6 +27552,28 @@
     }
   },
   {
+    "id": "olympus-elements",
+    "path": "skills/olympus-elements",
+    "category": "tool-suite",
+    "name": "olympus-elements",
+    "description": "A specialized WordPress plugin providing high-end, GSAP-powered Elementor Nested Elements for the OLYMPUS divine interface.",
+    "risk": "safe",
+    "source": "personal",
+    "date_added": "2026-07-05",
+    "plugin": {
+      "targets": {
+        "codex": "supported",
+        "claude": "supported"
+      },
+      "setup": {
+        "type": "none",
+        "summary": "",
+        "docs": null
+      },
+      "reasons": []
+    }
+  },
+  {
     "id": "on-call-handoff-patterns",
     "path": "skills/on-call-handoff-patterns",
     "category": "reliability",
