@@ -1,0 +1,74 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "full",
+    "flex_direction": "column",
+    "flex_justify_content": "center",
+    "flex_align_items": "flex-start",
+    "min_height": { "unit": "vh", "size": 70 },
+    "padding": { "unit": "px", "top": "100", "right": "60", "bottom": "100", "left": "60", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "60", "right": "20", "bottom": "60", "left": "20", "isLinked": false },
+    "background_background": "classic",
+    "background_image": { "id": "__ASSET_HERO_BG__", "url": "__ASSET_HERO_BG_URL__" },
+    "background_position": "center center",
+    "background_repeat": "no-repeat",
+    "background_size": "cover",
+    "background_overlay_background": "classic",
+    "background_overlay_color": "#000000",
+    "background_overlay_opacity": { "size": 0.2, "unit": "px" }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "heading",
+      "settings": {
+        "title": "__CONTENT_HEADLINE_HTML__",
+        "header_size": "h1",
+        "size": "xxl",
+        "align": "left",
+        "title_color": "#FFFFFF",
+        "__globals__": {
+          "typography_typography": "globals/typography?id=primary"
+        }
+      },
+      "elements": []
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "text-editor",
+      "settings": {
+        "editor": "<p>__CONTENT_BODY__</p>",
+        "align": "left",
+        "text_color": "#FFFFFF",
+        "__globals__": {
+          "typography_typography": "globals/typography?id=secondary"
+        }
+      },
+      "elements": []
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "button",
+      "settings": {
+        "text": "__CONTENT_CTA_TEXT__",
+        "link": { "url": "__CONTENT_CTA_URL__", "is_external": "", "nofollow": "" },
+        "size": "md",
+        "align": "left",
+        "border_border": "solid",
+        "border_width": { "unit": "px", "top": "1", "right": "1", "bottom": "1", "left": "1", "isLinked": true },
+        "border_color": "#FFFFFF",
+        "button_text_color": "#FFFFFF",
+        "background_color": "rgba(0,0,0,0)",
+        "__globals__": {
+          "typography_typography": "globals/typography?id=accent"
+        }
+      },
+      "elements": []
+    }
+  ],
+  "isInner": false
+}

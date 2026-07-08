@@ -1,0 +1,55 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "full",
+    "flex_direction": "column",
+    "flex_align_items": "stretch",
+    "flex_gap": { "size": 32, "unit": "px", "column": "32", "row": "32", "isLinked": true },
+    "padding": { "unit": "px", "top": "60", "right": "0", "bottom": "60", "left": "0", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "heading",
+      "settings": {
+        "title": "__CONTENT_HEADLINE__",
+        "header_size": "h2",
+        "size": "xl",
+        "align": "center",
+        "__globals__": {
+          "title_color": "globals/colors?id=text",
+          "typography_typography": "globals/typography?id=primary"
+        }
+      },
+      "elements": []
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "posts",
+      "settings": {
+        "posts_post_type": "__CONTENT_POST_TYPE__",
+        "posts_posts_per_page": 6,
+        "classic_columns": "3",
+        "classic_columns_tablet": "2",
+        "classic_columns_mobile": "1",
+        "classic_show_image": "yes",
+        "classic_image_position": "top",
+        "classic_image_size": "medium_large",
+        "classic_show_title": "yes",
+        "classic_show_excerpt": "yes",
+        "classic_excerpt_length": 20,
+        "classic_show_date": "no",
+        "classic_show_meta_data": [],
+        "classic_show_read_more": "yes",
+        "classic_read_more_text": "Crea tu campaña ahora",
+        "classic_columns_gap": { "size": 16, "unit": "px" },
+        "classic_rows_gap": { "size": 32, "unit": "px" }
+      },
+      "elements": []
+    }
+  ],
+  "isInner": false
+}

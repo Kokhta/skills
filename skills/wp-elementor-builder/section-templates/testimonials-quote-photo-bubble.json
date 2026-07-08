@@ -1,0 +1,120 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "boxed",
+    "flex_direction": "row",
+    "flex_align_items": "flex-start",
+    "flex_gap": { "size": 48, "unit": "px", "column": "48", "row": "48", "isLinked": true },
+    "flex_direction_mobile": "column",
+    "padding": { "unit": "px", "top": "60", "right": "20", "bottom": "60", "left": "20", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 30 },
+        "width_mobile": { "unit": "%", "size": 100 },
+        "flex_direction": "column",
+        "flex_align_items": "flex-start",
+        "flex_gap": { "size": 24, "unit": "px", "column": "24", "row": "24", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "__CONTENT_HEADLINE_HTML__",
+            "header_size": "h1",
+            "size": "xxl",
+            "align": "left",
+            "__globals__": {
+              "title_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=primary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "text-editor",
+          "settings": {
+            "editor": "<p>__CONTENT_BODY__</p>",
+            "__globals__": {
+              "text_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=secondary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "button",
+          "settings": {
+            "text": "__CONTENT_CTA_TEXT__",
+            "link": { "url": "__CONTENT_CTA_URL__", "is_external": "", "nofollow": "" },
+            "size": "md",
+            "border_radius": { "unit": "px", "top": "30", "right": "30", "bottom": "30", "left": "30", "isLinked": true },
+            "button_text_color": "#FFFFFF",
+            "__globals__": {
+              "background_color": "globals/colors?id=accent"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 70 },
+        "width_mobile": { "unit": "%", "size": 100 },
+        "flex_direction": "column",
+        "flex_gap": { "size": 32, "unit": "px", "column": "32", "row": "32", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "testimonial-carousel",
+          "settings": {
+            "slides": "__CONTENT_SLIDES__",
+            "slides_to_show": "1",
+            "slides_to_show_tablet": "1",
+            "slides_to_show_mobile": "1",
+            "navigation": "dots",
+            "autoplay": "yes",
+            "autoplay_speed": 5000,
+            "infinite": "yes",
+            "speed": 600,
+            "skin": "default",
+            "image_size": "medium",
+            "show_image": "yes",
+            "show_name": "yes",
+            "show_title": "no",
+            "show_content": "yes",
+            "image_position": "right",
+            "alignment": "left",
+            "__globals__": {
+              "name_color": "globals/colors?id=text",
+              "content_color": "globals/colors?id=text"
+            },
+            "_padding": { "unit": "px", "top": "32", "right": "32", "bottom": "32", "left": "32", "isLinked": true },
+            "_border_radius": { "unit": "px", "top": "20", "right": "20", "bottom": "20", "left": "20", "isLinked": true },
+            "_background_background": "classic",
+            "_background_color": "#0DBDB1"
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    }
+  ],
+  "isInner": false
+}

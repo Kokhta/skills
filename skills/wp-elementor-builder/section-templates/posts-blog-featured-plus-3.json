@@ -1,0 +1,65 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "flex_align_items": "stretch",
+    "flex_gap": { "size": 32, "unit": "px", "column": "32", "row": "32", "isLinked": true },
+    "padding": { "unit": "px", "top": "40", "right": "20", "bottom": "60", "left": "20", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "30", "right": "16", "bottom": "40", "left": "16", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "posts",
+      "settings": {
+        "posts_post_type": "__CONTENT_POST_TYPE__",
+        "posts_posts_per_page": 1,
+        "classic_columns": "1",
+        "classic_show_image": "yes",
+        "classic_image_position": "left",
+        "classic_image_size": "medium_large",
+        "classic_show_title": "yes",
+        "classic_show_excerpt": "yes",
+        "classic_excerpt_length": 30,
+        "classic_show_date": "yes",
+        "classic_show_read_more": "no",
+        "classic_show_meta_data": [ "date" ],
+        "classic_meta_separator": "|",
+        "classic_show_categories": "no",
+        "classic_columns_gap": { "size": 24, "unit": "px" },
+        "classic_rows_gap": { "size": 24, "unit": "px" },
+        "_padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": true }
+      },
+      "elements": []
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "posts",
+      "settings": {
+        "posts_post_type": "__CONTENT_POST_TYPE__",
+        "posts_posts_per_page": 3,
+        "posts_offset": 1,
+        "classic_columns": "3",
+        "classic_columns_tablet": "2",
+        "classic_columns_mobile": "1",
+        "classic_show_image": "yes",
+        "classic_image_position": "top",
+        "classic_image_size": "medium_large",
+        "classic_show_title": "yes",
+        "classic_show_excerpt": "yes",
+        "classic_excerpt_length": 25,
+        "classic_show_date": "yes",
+        "classic_show_read_more": "no",
+        "classic_show_meta_data": [ "date" ],
+        "classic_columns_gap": { "size": 24, "unit": "px" },
+        "classic_rows_gap": { "size": 32, "unit": "px" }
+      },
+      "elements": []
+    }
+  ],
+  "isInner": false
+}

@@ -1,0 +1,33 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "full",
+    "flex_direction": "column",
+    "flex_align_items": "flex-start",
+    "flex_justify_content": "center",
+    "padding": { "unit": "px", "top": "60", "right": "60", "bottom": "60", "left": "60", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "40", "right": "20", "bottom": "40", "left": "20", "isLinked": false },
+    "background_background": "classic",
+    "background_color": "#0F172A"
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "heading",
+      "settings": {
+        "title": "__CONTENT_TITLE__",
+        "header_size": "h1",
+        "size": "xxl",
+        "align": "left",
+        "title_color": "#FFFFFF",
+        "_typography_typography": "custom",
+        "_typography_font_weight": "900",
+        "__globals__": { "typography_typography": "globals/typography?id=primary" }
+      },
+      "elements": []
+    }
+  ],
+  "isInner": false
+}

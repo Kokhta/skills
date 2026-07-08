@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "project": {
+    "ddev_path": "",
+    "site_url": "",
+    "admin_id": null,
+    "kit_id": null,
+    "wp_version": "",
+    "elementor_version": "",
+    "pro_elements_version": ""
+  },
+  "globals": {
+    "design_tokens": {
+      "approval_status": "pending",
+      "colors": [],
+      "fonts": []
+    },
+    "header_template": {
+      "template_id": null,
+      "approval_status": "pending",
+      "build_status": "not_started",
+      "data_path": null
+    },
+    "footer_template": {
+      "template_id": null,
+      "approval_status": "pending",
+      "build_status": "not_started",
+      "data_path": null
+    }
+  },
+  "pages": [],
+  "assets_library": {},
+  "revisions": []
+}

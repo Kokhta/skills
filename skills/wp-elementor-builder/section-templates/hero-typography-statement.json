@@ -1,0 +1,36 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "full",
+    "flex_direction": "column",
+    "flex_justify_content": "center",
+    "flex_align_items": "center",
+    "padding": { "unit": "px", "top": "60", "right": "20", "bottom": "60", "left": "20", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "40", "right": "16", "bottom": "40", "left": "16", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "widget",
+      "widgetType": "heading",
+      "settings": {
+        "title": "__CONTENT_STATEMENT_HTML__",
+        "header_size": "h2",
+        "size": "xxl",
+        "align": "center",
+        "_padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": true },
+        "_typography_typography": "custom",
+        "_typography_font_size": { "unit": "vw", "size": 8 },
+        "_typography_font_size_mobile": { "unit": "vw", "size": 12 },
+        "_typography_line_height": { "unit": "em", "size": 1 },
+        "__globals__": {
+          "title_color": "globals/colors?id=text",
+          "typography_typography": "globals/typography?id=primary"
+        }
+      },
+      "elements": []
+    }
+  ],
+  "isInner": false
+}

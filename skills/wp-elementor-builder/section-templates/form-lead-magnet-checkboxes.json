@@ -1,0 +1,37 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {"content_width":"boxed","flex_direction":"row","flex_align_items":"flex-start","flex_gap":{"size":64,"unit":"px","column":"64","row":"64","isLinked":true},"flex_direction_mobile":"column","padding":{"unit":"px","top":"80","right":"20","bottom":"80","left":"20","isLinked":false},"padding_mobile":{"unit":"px","top":"40","right":"16","bottom":"40","left":"16","isLinked":false}},
+  "elements": [
+    {"id":"PLACEHOLDER","elType":"container","settings":{"width":{"unit":"%","size":45},"width_mobile":{"unit":"%","size":100},"flex_direction":"column","flex_align_items":"flex-start","flex_gap":{"size":24,"unit":"px","column":"24","row":"24","isLinked":true}},"elements":[
+      {"id":"PLACEHOLDER","elType":"widget","widgetType":"heading","settings":{"title":"__CONTENT_HEADLINE__","header_size":"h1","size":"xxl","align":"left","__globals__":{"title_color":"globals/colors?id=primary","typography_typography":"globals/typography?id=primary"}},"elements":[]},
+      {"id":"PLACEHOLDER","elType":"widget","widgetType":"text-editor","settings":{"editor":"<p>__CONTENT_BODY__</p>","__globals__":{"text_color":"globals/colors?id=text","typography_typography":"globals/typography?id=secondary"}},"elements":[]}
+    ],"isInner":true},
+    {"id":"PLACEHOLDER","elType":"container","settings":{"width":{"unit":"%","size":55},"width_mobile":{"unit":"%","size":100}},"elements":[
+      {"id":"PLACEHOLDER","elType":"widget","widgetType":"form","settings":{
+        "form_name":"LeadMagnet",
+        "form_fields":[
+          {"_id":"name","field_label":"Nombre","field_type":"text","placeholder":"Nombre","required":"true","width":"100"},
+          {"_id":"lastname","field_label":"Apellido","field_type":"text","placeholder":"Apellido","required":"true","width":"100"},
+          {"_id":"email","field_label":"Email","field_type":"email","placeholder":"Email","required":"true","width":"100"},
+          {"_id":"phone","field_label":"Teléfono","field_type":"tel","placeholder":"Teléfono","required":"false","width":"100"},
+          {"_id":"tos","field_label":"Acepto términos y condiciones","field_type":"acceptance","required":"true","width":"100","acceptance_text":"Acepto términos y condiciones"},
+          {"_id":"marketing","field_label":"Quiero recibir más recursos","field_type":"acceptance","required":"false","width":"100","acceptance_text":"Quiero recibir más recursos"}
+        ],
+        "button_text":"Enviar",
+        "button_size":"md","button_align":"left",
+        "email_to":"__CONTENT_EMAIL_TO__",
+        "email_subject":"Nueva descarga de recurso",
+        "success_message":"Gracias por confiar en nosotros! Tus recursos ya fueron enviados.",
+        "redirect_url":"__CONTENT_REDIRECT_URL__",
+        "submit_actions":["email","redirect"],
+        "field_background_color":"#FFFFFF",
+        "field_border_color":"#E5E7EB",
+        "button_border_radius":{"unit":"px","top":"30","right":"30","bottom":"30","left":"30","isLinked":true},
+        "button_text_color":"#FFFFFF",
+        "button_background_color":"#0F172A"
+      },"elements":[]}
+    ],"isInner":true}
+  ],
+  "isInner": false
+}

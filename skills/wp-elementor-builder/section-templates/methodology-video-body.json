@@ -1,0 +1,11 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {"content_width":"boxed","flex_direction":"column","flex_align_items":"stretch","flex_gap":{"size":32,"unit":"px","column":"32","row":"32","isLinked":true},"padding":{"unit":"px","top":"60","right":"20","bottom":"60","left":"20","isLinked":false},"padding_mobile":{"unit":"px","top":"40","right":"16","bottom":"40","left":"16","isLinked":false}},
+  "elements": [
+    {"id":"PLACEHOLDER","elType":"widget","widgetType":"heading","settings":{"title":"__CONTENT_HEADLINE__","header_size":"h1","size":"xxl","align":"center","__globals__":{"title_color":"globals/colors?id=text","typography_typography":"globals/typography?id=primary"}},"elements":[]},
+    {"id":"PLACEHOLDER","elType":"widget","widgetType":"video","settings":{"video_type":"youtube","youtube_url":"__CONTENT_YOUTUBE_URL__","show_image_overlay":"yes","image_overlay":{"id":"__ASSET_VIDEO_POSTER__","url":"__ASSET_VIDEO_POSTER_URL__"},"lightbox":"no","show_play_icon":"yes","aspect_ratio":"169","_border_radius":{"unit":"px","top":"16","right":"16","bottom":"16","left":"16","isLinked":true}},"elements":[]},
+    {"id":"PLACEHOLDER","elType":"widget","widgetType":"text-editor","settings":{"editor":"<p style=\"text-align:center\">__CONTENT_PARAGRAPH_1__</p><p style=\"text-align:center\">__CONTENT_PARAGRAPH_2__</p><p style=\"text-align:center\">__CONTENT_PARAGRAPH_3__</p>","align":"center","__globals__":{"text_color":"globals/colors?id=text","typography_typography":"globals/typography?id=secondary"}},"elements":[]}
+  ],
+  "isInner": false
+}

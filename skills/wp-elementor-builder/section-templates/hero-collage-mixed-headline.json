@@ -1,0 +1,135 @@
+{
+  "id": "PLACEHOLDER",
+  "elType": "container",
+  "settings": {
+    "content_width": "boxed",
+    "flex_direction": "row",
+    "flex_align_items": "center",
+    "flex_gap": { "size": 40, "unit": "px", "column": "40", "row": "40", "isLinked": true },
+    "flex_direction_mobile": "column",
+    "padding": { "unit": "px", "top": "60", "right": "20", "bottom": "60", "left": "20", "isLinked": false },
+    "padding_mobile": { "unit": "px", "top": "40", "right": "16", "bottom": "40", "left": "16", "isLinked": false }
+  },
+  "elements": [
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 45 },
+        "width_mobile": { "unit": "%", "size": 100 },
+        "flex_direction": "column",
+        "flex_align_items": "flex-start",
+        "flex_gap": { "size": 24, "unit": "px", "column": "24", "row": "24", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "heading",
+          "settings": {
+            "title": "__CONTENT_HEADLINE_HTML__",
+            "header_size": "h1",
+            "size": "xxl",
+            "align": "left",
+            "title_color": "",
+            "__globals__": {
+              "title_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=primary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "text-editor",
+          "settings": {
+            "editor": "<p>__CONTENT_BODY1__</p><p>__CONTENT_BODY2__</p>",
+            "align": "left",
+            "__globals__": {
+              "text_color": "globals/colors?id=text",
+              "typography_typography": "globals/typography?id=secondary"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "button",
+          "settings": {
+            "text": "__CONTENT_CTA_TEXT__",
+            "link": { "url": "__CONTENT_CTA_URL__", "is_external": "", "nofollow": "" },
+            "size": "md",
+            "align": "left",
+            "border_radius": { "unit": "px", "top": "30", "right": "30", "bottom": "30", "left": "30", "isLinked": true },
+            "button_text_color": "#ffffff",
+            "__globals__": {
+              "background_color": "globals/colors?id=primary",
+              "typography_typography": "globals/typography?id=accent"
+            }
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    },
+    {
+      "id": "PLACEHOLDER",
+      "elType": "container",
+      "settings": {
+        "width": { "unit": "%", "size": 55 },
+        "width_mobile": { "unit": "%", "size": 100 },
+        "flex_direction": "row",
+        "flex_wrap": "wrap",
+        "flex_gap": { "size": 12, "unit": "px", "column": "12", "row": "12", "isLinked": true }
+      },
+      "elements": [
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "image",
+          "settings": {
+            "image": { "id": "__ASSET_COLLAGE_1__", "url": "__ASSET_COLLAGE_1_URL__" },
+            "image_size": "medium",
+            "_css_classes": "collage-item",
+            "_border_radius": { "unit": "px", "top": "16", "right": "16", "bottom": "16", "left": "16", "isLinked": true }
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "image",
+          "settings": {
+            "image": { "id": "__ASSET_COLLAGE_2__", "url": "__ASSET_COLLAGE_2_URL__" },
+            "image_size": "medium"
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "image",
+          "settings": {
+            "image": { "id": "__ASSET_COLLAGE_3__", "url": "__ASSET_COLLAGE_3_URL__" },
+            "image_size": "medium"
+          },
+          "elements": []
+        },
+        {
+          "id": "PLACEHOLDER",
+          "elType": "widget",
+          "widgetType": "image",
+          "settings": {
+            "image": { "id": "__ASSET_COLLAGE_4__", "url": "__ASSET_COLLAGE_4_URL__" },
+            "image_size": "medium"
+          },
+          "elements": []
+        }
+      ],
+      "isInner": true
+    }
+  ],
+  "isInner": false
+}
